@@ -8,7 +8,7 @@ export default {
         screens: {
           Home: {
             screens: {
-              HomeScreen: "홈",
+              HomeScreen: "home",
               NotiScreen: "noti",
               Com1Screen: "com1",
               Com2Screen: "com2",
@@ -17,28 +17,28 @@ export default {
           Jobs: {
             screens: {
               JobsScreen: "jobs",
-              WriteScreen: "writejob",
+              HireScreen: "hire",
               SeejobScreen: "seejob",
             },
           },
           Chat: {
             screens: {
               ChatScreen: "chats",
-              WriteScreen: "writechat",
+              WritechatScreen: "writechat",
               SeechatScreen: "seechat",
             },
           },
           Market: {
             screens: {
               MarketScreen: "market",
-              WriteScreen: "writemarket",
+              WriteproductScreen: "writemarket",
               SeeproductScreen: "seemarket",
             },
           },
           Profile: {
             screens: {
               ProfileScreen: "profile",
-              WriteScreen: "writeprofile",
+              WriteprofileScreen: "writeprofile",
             },
           },
         },

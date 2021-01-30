@@ -7,6 +7,15 @@ import ChatScreen from '../screens/Chat/ChatScreen';
 import MarketScreen from '../screens/Market/MarketScreen';
 import ProfileScreen from '../screens/Profile/ProfileScreen';
 import {HomeParamList, JobsParamList, ChatParamList, MarketParamList, ProfileParamList } from '../types';
+import Com2Screen from '../screens/Home/Com2Screen';
+import NotiScreen from '../screens/Home/NotiScreen';
+import SeejobScreen from '../screens/Jobs/SeejobScreen';
+import SeechatScreen from '../screens/Chat/SeechatScreen';
+import WritechatScreen from '../screens/Chat/WritechatScreen';
+import HireScreen from '../screens/Jobs/HireScreen';
+import SeeproductScreen from '../screens/Market/SeeproductScreen';
+import WriteproductScreen from '../screens/Market/WriteproductScreen';
+import WriteprofileScreen from '../screens/Profile/WriteprofileScreen';
 
 
 const HomeStack = createStackNavigator<HomeParamList>();
@@ -24,6 +33,16 @@ export function HomeNavigator() {
         component={Com1Screen}
         options={{ headerTitle: '커뮤니티' }}
       />
+       <HomeStack.Screen
+        name="Com2Screen"
+        component={Com2Screen}
+        options={{ headerTitle: '자유게시판' }}
+      />
+       <HomeStack.Screen
+        name="NotiScreen"
+        component={NotiScreen}
+        options={{ headerTitle: '알림' }}
+      />
     </HomeStack.Navigator>
   );
 }
@@ -36,7 +55,17 @@ export function JobsNavigator() {
       <JobsStack.Screen
         name="JobsScreen"
         component={JobsScreen}
-        options={{ headerTitle: 'job Title' }}
+        options={{ headerTitle: '구인구직' }}
+      />
+        <JobsStack.Screen
+        name="WriteScreen"
+        component={HireScreen}
+        options={{ headerTitle: '구인글 작성' }}
+      />
+      <JobsStack.Screen
+        name="SeejobScreen"
+        component={SeejobScreen}
+        options={{ headerTitle: '구인글 상세' }}
       />
     </JobsStack.Navigator>
   );
@@ -50,7 +79,17 @@ export function ChatNavigator() {
       <ChatStack.Screen
         name="ChatScreen"
         component={ChatScreen}
-        options={{ headerTitle: 'chat page' }}
+        options={{ headerTitle: '채팅' }}
+      />
+      <ChatStack.Screen
+        name="SeechatScreen"
+        component={SeechatScreen}
+        options={{ headerTitle: '채팅보기' }}
+      />
+      <ChatStack.Screen
+        name="WriteScreen"
+        component={WritechatScreen}
+        options={{ headerTitle: '채팅보내기' }}
       />
     </ChatStack.Navigator>
   );
@@ -63,6 +102,16 @@ export function MarketNavigator() {
       <MarketStack.Screen
         name="MarketScreen"
         component={MarketScreen}
+        options={{ headerTitle: '사고팔고' }}
+      />
+       <MarketStack.Screen
+        name="Seeproduct"
+        component={SeeproductScreen}
+        options={{ headerTitle: '사고팔고' }}
+      />
+       <MarketStack.Screen
+        name="WriteproductScreen"
+        component={WriteproductScreen}
         options={{ headerTitle: '사고팔고' }}
       />
     </MarketStack.Navigator>
@@ -78,6 +127,11 @@ export function ProfileNavigator() {
         name="ProfileScreen"
         component={ProfileScreen}
         options={{ headerTitle: '프로필' }}
+      />
+      <ProfileStack.Screen
+        name="WriteprofileScreen"
+        component={WriteprofileScreen}
+        options={{ headerTitle: '프로필 작성' }}
       />
     </ProfileStack.Navigator>
   );

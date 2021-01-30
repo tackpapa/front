@@ -20,24 +20,24 @@ export type HomeParamList = {
 
 export type JobsParamList = {
   JobsScreen: undefined;
-  WriteScreen: undefined;
+  HireScreen: undefined;
   SeejobScreen:undefined;
 };
 
 export type ChatParamList = {
   ChatScreen: undefined;
-  WriteScreen: undefined;
+  WritechatScreen: undefined;
   SeechatScreen:undefined;
 };
 
 export type MarketParamList = {
   MarketScreen: undefined;
-  WriteScreen: undefined;
+  WriteproductScreen: undefined;
   SeeproductScreen:undefined;
 };
 
 export type ProfileParamList = {
   ProfileScreen: undefined;
-  WriteScreen: undefined;
+  WriteprofileScreen: undefined;
 };
 
