@@ -1,24 +1,49 @@
-import * as Linking from 'expo-linking';
+import * as Linking from "expo-linking";
 
 export default {
-  prefixes: [Linking.makeUrl('/')],
+  prefixes: [Linking.makeUrl("/")],
   config: {
     screens: {
       Root: {
         screens: {
-          TabOne: {
+          Home: {
             screens: {
-              TabOneScreen: 'one',
+              HomeScreen: "홈",
+              NotiScreen: "noti",
+              Com1Screen: "com1",
+              Com2Screen: "com2",
             },
           },
-          TabTwo: {
+          Jobs: {
             screens: {
-              TabTwoScreen: 'two',
+              JobsScreen: "jobs",
+              WriteScreen: "writejob",
+              SeejobScreen: "seejob",
+            },
+          },
+          Chat: {
+            screens: {
+              ChatScreen: "chats",
+              WriteScreen: "writechat",
+              SeechatScreen: "seechat",
+            },
+          },
+          Market: {
+            screens: {
+              MarketScreen: "market",
+              WriteScreen: "writemarket",
+              SeeproductScreen: "seemarket",
+            },
+          },
+          Profile: {
+            screens: {
+              ProfileScreen: "profile",
+              WriteScreen: "writeprofile",
             },
           },
         },
       },
-      NotFound: '*',
+      NotFound: "*",
     },
   },
 };
