@@ -11,10 +11,7 @@ export const makeRequest = (path: String, params: {}) =>
 
 const getAnything = async (path: String, params = {}) => {
   try {
-    const {
-      data: { results },
-      data,
-    } = await makeRequest(path, params);
+    const { data } = await makeRequest(path, params);
     return data;
   } catch (e) {
     console.log(e);
@@ -23,7 +20,7 @@ const getAnything = async (path: String, params = {}) => {
 };
 
 export const myApi = {
-  getHome: () => getAnything("api/stats"),
+  getHome: () => getAnything("api/home"),
   getHotpost: () => getAnything("api/hotpost"),
   search: (query: string) => getAnything("search/", { query }),
   user: (id: string) => getAnything(`user/findone/${id}`),

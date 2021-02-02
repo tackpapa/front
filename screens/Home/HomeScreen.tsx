@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { myApi } from '../../api';
 
 const Container = styled.View`
-background-color:#2B89C6;
+background-color:#eee;
 flex:1;
 `;
 const Texto = styled.Text``;
@@ -16,28 +16,31 @@ background-color:#fff;
 
 
 export default function HomeScreen(){
+  const [info, setInfo] = useState<any>({
+    loading:true,
+    data:[]
+  })
   const getAPI = async () => {
-    try {
-      const  data  = await myApi.getHome();
-      console.log("zzz11zz",data);
-    } catch (error) {
-      console.log(error);
-    }
+    const data = await myApi.getHome();
+    setInfo({
+      data,
+      loading:false
+    })
   };
-  getAPI();
+  useEffect(()=>{
+    getAPI();
+    console.log('강수현바보23123', info)
+  }, [])
+  
   const navigation = useNavigation();
   const move = ()=>{navigation.navigate('Com1Screen')}
   
   return (
         <Container>
             <Texto>
-              hello world 
+                {/* {info.data.jobs[0].title} {info.data.jobs[0]._id} */}
+              ddddd
             </Texto>
-          <Touch onPress={move}>
-            <Texto>
-              hello world
-            </Texto>
-          </Touch>
         </Container>
   );
 }
