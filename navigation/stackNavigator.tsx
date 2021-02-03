@@ -26,7 +26,7 @@ export function HomeNavigator() {
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerTitle: '홈' }}
+        options={{ headerTitle: '홈1' }}
       />
       <HomeStack.Screen
         name="Com1Screen"
@@ -58,7 +58,7 @@ export function JobsNavigator() {
         options={{ headerTitle: '구인구직' }}
       />
         <JobsStack.Screen
-        name="WriteScreen"
+        name="HireScreen"
         component={HireScreen}
         options={{ headerTitle: '구인글 작성' }}
       />
@@ -87,7 +87,7 @@ export function ChatNavigator() {
         options={{ headerTitle: '채팅보기' }}
       />
       <ChatStack.Screen
-        name="WriteScreen"
+        name="WritechatScreen"
         component={WritechatScreen}
         options={{ headerTitle: '채팅보내기' }}
       />
@@ -105,7 +105,7 @@ export function MarketNavigator() {
         options={{ headerTitle: '사고팔고' }}
       />
        <MarketStack.Screen
-        name="Seeproduct"
+        name="SeeproductScreen"
         component={SeeproductScreen}
         options={{ headerTitle: '사고팔고' }}
       />

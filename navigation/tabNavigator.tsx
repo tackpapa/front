@@ -19,33 +19,33 @@ export default function BottomTabNavigator() {
       initialRouteName="Home"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="홈"
+        name="Home"
         component={HomeNavigator}
-        options={{
+        options={{tabBarLabel: '홈',
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-home" color={color} />,
         }} />
       <BottomTab.Screen
-        name="구인구직"
+        name="Jobs"
         component={JobsNavigator}
-        options={{
+        options={{tabBarLabel: '구인구직',
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-earth-outline" color={color} />,
         }} />
          <BottomTab.Screen
-        name="채팅"
+        name="Chat"
         component={ChatNavigator}
-        options={{
+        options={{tabBarLabel: '채팅',
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-chatbubbles-outline" color={color} />,
         }} />
         <BottomTab.Screen
-        name="사고팔고"
+        name="Market"
         component={MarketNavigator}
-        options={{
+        options={{tabBarLabel: '사고팔고',
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-basket-outline" color={color} />,
         }} />
          <BottomTab.Screen
-        name="내 프로필"
+        name="Profile"
         component={ProfileNavigator}
-        options={{
+        options={{tabBarLabel: '내 프로필',
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-person-outline" color={color} />,
         }} />
  
