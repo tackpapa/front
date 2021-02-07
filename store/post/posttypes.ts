@@ -33,7 +33,7 @@ export const initialState: PostState = {
 export interface Post {
   _id: string;
   title: string;
-  author: string;
+  author: any;
   context: string;
   pics: string[];
   tags: string[];

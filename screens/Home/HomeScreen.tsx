@@ -24,7 +24,6 @@ const Header = styled.View`
   height: ${height/3.5}px;
 `;
 const Section = styled.View`
-
 border: 3px;
 border-color:blue;
 height:100%
@@ -59,13 +58,10 @@ export default function HomeScreen(){
   return (
         <Container>
           <Div>
-            <Text>
-              
+              <Text>
+            
               {isUser ? `안녕하세요 ${user.name}님` : '로그인 해주세요'}
               </Text>
-             
-              
-            
           </Div>
           <Header>         
             <Swiper controlsEnabled={false} loop timeout={1}>
@@ -79,9 +75,8 @@ export default function HomeScreen(){
                 <Text> hello3 </Text>
               </Section>
             </Swiper>
-            </Header>
-          <Div>
-          <Text>바이커스</Text>
+          </Header>
+          <Div>          
           {post.data.map((item)=>{
                 return (
                   <View key={`Home-PostTitle-${item._id}`}>
@@ -97,8 +92,7 @@ export default function HomeScreen(){
                 </TouchableOpacity>
                 </View>
               )
-              })}
-         
+              })}        
           </Div>
           
 
