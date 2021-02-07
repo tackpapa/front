@@ -5,10 +5,12 @@ import {
   requestUpdatePost,
   requestGetPost,
   requestGetLatestPost,
+  requestDeletePost,
 } from "./postapi";
 import { createAsyncEpic } from "../utils";
 
 const getPostEpic = createAsyncEpic(actions.getPost, requestGetPost);
+const deletePostEpic = createAsyncEpic(actions.deletePost, requestDeletePost);
 const getLatestPostEpic = createAsyncEpic(
   actions.getLatestPost,
   requestGetLatestPost

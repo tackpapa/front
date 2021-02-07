@@ -8,6 +8,8 @@ import {
   SignUpSuccessPayload,
   UpdateRequestPayload,
   UpdateSuccessPayload,
+  DeleteRequestPayload,
+  DeleteSuccessPayload,
   UploadProfileRequestPayload,
   UploadProfileSuccessPayload,
   UserProfileRequestPayload,
@@ -29,6 +31,13 @@ const fetchUpdate = createAsyncAction(
   Actions.update_IN_FAILURE,
   Actions.update_IN_CANCEL
 )<UpdateRequestPayload, UpdateSuccessPayload, undefined, undefined>();
+
+const fetchDelete = createAsyncAction(
+  Actions.DELETE_IN_REQUEST,
+  Actions.DELETE_IN_SUCCESS,
+  Actions.DELETE_IN_FAILURE,
+  Actions.DELETE_IN_CANCEL
+)<DeleteRequestPayload, DeleteSuccessPayload, undefined, undefined>();
 
 const fetchUploadProfile = createAsyncAction(
   Actions.UploadProfile_IN_REQUEST,
@@ -59,6 +68,7 @@ const fetchSignUp = createAsyncAction(
 export default {
   logout,
   fetchUploadProfile,
+  fetchDelete,
   fetchUpdate,
   fetchSignIn,
   fetchSignUp,

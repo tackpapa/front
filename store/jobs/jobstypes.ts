@@ -10,6 +10,11 @@ export enum Actions {
   GET_JOB_FAILURE = "GETJOB#FAILURE",
   GET_JOB_CANCEL = "GETJOB#CANCEL",
 
+  DELETE_JOB_REQUEST = "DELETEJOB#REQUEST",
+  DELETE_JOB_SUCCESS = "DELETEJOB#SUCCESS",
+  DELETE_JOB_FAILURE = "DELETEJOB#FAILURE",
+  DELETE_JOB_CANCEL = "DELETEJOB#CANCEL",
+
   CREATE_JOB_REQUEST = "CREATE_JOB#REQUEST",
   CREATE_JOB_SUCCESS = "CREATE_JOB#SUCCESS",
   CREATE_JOB_FAILURE = "CREATE_JOB#FAILURE",
@@ -37,24 +42,29 @@ export interface Job {
   context: string;
   pics: string[];
   tags: string[];
+  comments: [];
   views: number;
+  location: String;
 }
 
 export type GetJobRequestPayload = Pick<Job, "_id">;
+export type DeleteJobRequestPayload = Pick<Job, "_id">;
 export type GetLatestJobRequestPayload = void;
 
-export type UpdateJobRequestPayload = Omit<Job, "views">;
+export type UpdateJobRequestPayload = Job;
 
 export interface CreateJobRequestPayload {
   id: string;
   title: string;
   author: string;
   context: string;
+  location: string;
   pics: string[];
   tags: string[];
 }
 
 export type GetJobSuccessPayload = Job;
+export type DeleteJobSuccessPayload = String;
 export type GetLatestJobSuccessPayload = Job[];
 export type CreateJobSuccessPayload = Job;
 export type UpdateJobSuccessPayload = Job;

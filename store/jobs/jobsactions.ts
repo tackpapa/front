@@ -4,6 +4,8 @@ import {
   Actions,
   GetJobRequestPayload,
   GetJobSuccessPayload,
+  DeleteJobRequestPayload,
+  DeleteJobSuccessPayload,
   UpdateJobRequestPayload,
   UpdateJobSuccessPayload,
   CreateJobSuccessPayload,
@@ -18,6 +20,13 @@ const getJob = createAsyncAction(
   Actions.GET_JOB_FAILURE,
   Actions.GET_JOB_CANCEL
 )<GetJobRequestPayload, GetJobSuccessPayload, undefined, undefined>();
+
+const deleteJob = createAsyncAction(
+  Actions.DELETE_JOB_REQUEST,
+  Actions.DELETE_JOB_SUCCESS,
+  Actions.DELETE_JOB_FAILURE,
+  Actions.DELETE_JOB_CANCEL
+)<DeleteJobRequestPayload, DeleteJobSuccessPayload, undefined, undefined>();
 
 const getLatestJob = createAsyncAction(
   Actions.GET_LATEST_JOB_REQUEST,
@@ -50,4 +59,5 @@ export default {
   updateJob,
   createJob,
   getLatestJob,
+  deleteJob,
 };

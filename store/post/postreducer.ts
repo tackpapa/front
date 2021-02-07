@@ -29,6 +29,11 @@ const post = createReducer<PostState>(initialState, {
       data: [payload],
     };
   },
+  [getType(postActions.deletePost.success)]: (_state, { payload }) => {
+    return {
+      data: [payload],
+    };
+  },
 });
 
 export default persistReducer(persistConfig, post);

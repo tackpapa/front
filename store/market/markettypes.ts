@@ -10,6 +10,11 @@ export enum Actions {
   GET_MARKET_FAILURE = "GETMARKET#FAILURE",
   GET_MARKET_CANCEL = "GETMARKET#CANCEL",
 
+  DELETE_MARKET_REQUEST = "DELETEMARKET#REQUEST",
+  DELETE_MARKET_SUCCESS = "DELETEMARKET#SUCCESS",
+  DELETE_MARKET_FAILURE = "DELETEMARKET#FAILURE",
+  DELETE_MARKET_CANCEL = "DELETEMARKET#CANCEL",
+
   CREATE_MARKET_REQUEST = "CREATE_MARKET#REQUEST",
   CREATE_MARKET_SUCCESS = "CREATE_MARKET#SUCCESS",
   CREATE_MARKET_FAILURE = "CREATE_MARKET#FAILURE",
@@ -38,9 +43,12 @@ export interface Market {
   pics: string[];
   tags: string[];
   views: number;
+  price: number;
+  location: string;
 }
 
 export type GetMarketRequestPayload = Pick<Market, "_id">;
+export type DeleteMarketRequestPayload = Pick<Market, "_id">;
 export type GetLatestMarketRequestPayload = void;
 
 export type UpdateMarketRequestPayload = Omit<Market, "views">;
@@ -52,9 +60,12 @@ export interface CreateMarketRequestPayload {
   context: string;
   pics: string[];
   tags: string[];
+  price: number;
+  location: string;
 }
 
 export type GetMarketSuccessPayload = Market;
+export type DeleteMarketSuccessPayload = String;
 export type GetLatestMarketSuccessPayload = Market[];
 export type CreateMarketSuccessPayload = Market;
 export type UpdateMarketSuccessPayload = Market;

@@ -6,6 +6,8 @@ import {
   SignUpSuccessPayload,
   UpdateRequestPayload,
   UpdateSuccessPayload,
+  DeleteRequestPayload,
+  DeleteSuccessPayload,
   UploadProfileRequestPayload,
   UploadProfileSuccessPayload,
   UserProfileSuccessPayload,
@@ -27,6 +29,11 @@ export const requestUpdate = (payload: UpdateRequestPayload) =>
     .post("/user/update", payload)
     .then<UpdateSuccessPayload>(({ data }) => data);
 
+export const requestDelete = (payload: DeleteRequestPayload) =>
+  request
+    .get(`/user/deleteuser/${payload._id}`)
+    .then<DeleteSuccessPayload>(({ data }) => data);
+
 export const requestUploadProfile = (payload: UploadProfileRequestPayload) =>
   request
     .post("/user/uploadProfile", payload)
@@ -34,5 +41,5 @@ export const requestUploadProfile = (payload: UploadProfileRequestPayload) =>
 
 export const requestUserProfile = (payload: UserProfileRequestPayload) =>
   request
-    .get(`/user/profile/${payload}`)
+    .get(`/user/profile/${payload._id}`)
     .then<UserProfileSuccessPayload>(({ data }) => data);

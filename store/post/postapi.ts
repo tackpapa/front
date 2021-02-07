@@ -2,6 +2,8 @@ import { request } from "../utils";
 import {
   GetPostRequestPayload,
   GetPostSuccessPayload,
+  DeletePostRequestPayload,
+  DeletePostSuccessPayload,
   CreatePostRequestPayload,
   CreatePostSuccessPayload,
   UpdatePostRequestPayload,
@@ -29,3 +31,8 @@ export const requestUpdatePost = (payload: UpdatePostRequestPayload) =>
   request
     .post(`/post/update/${payload._id}`, payload)
     .then<UpdatePostSuccessPayload>(({ data }) => data);
+
+export const requestDeletePost = (payload: DeletePostRequestPayload) =>
+  request
+    .post(`/post/deleteone/${payload._id}`, payload)
+    .then<DeletePostSuccessPayload>(({ data }) => data);

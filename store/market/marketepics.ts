@@ -5,10 +5,15 @@ import {
   requestUpdateMarket,
   requestGetMarket,
   requestGetLatestMarket,
+  requestDeleteMarket,
 } from "./marketapi";
 import { createAsyncEpic } from "../utils";
 
 const getMarketEpic = createAsyncEpic(actions.getMarket, requestGetMarket);
+const deleteMarketEpic = createAsyncEpic(
+  actions.deleteMarket,
+  requestDeleteMarket
+);
 const getLatestMarketEpic = createAsyncEpic(
   actions.getLatestMarket,
   requestGetLatestMarket
@@ -26,5 +31,6 @@ export default combineEpics(
   getMarketEpic,
   createMarketEpic,
   updateMarketEpic,
-  getLatestMarketEpic
+  getLatestMarketEpic,
+  deleteMarketEpic
 );

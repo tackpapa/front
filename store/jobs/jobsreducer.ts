@@ -8,8 +8,13 @@ const persistConfig = {
   key: "job",
   storage: AsyncStorage,
 };
-const job = createReducer<JobState>(initialState, {
+const job = createReducer<JobsState>(initialState, {
   [getType(jobActions.getJob.success)]: (_state, { payload }) => {
+    return {
+      data: [payload],
+    };
+  },
+  [getType(jobActions.deleteJob.success)]: (_state, { payload }) => {
     return {
       data: [payload],
     };

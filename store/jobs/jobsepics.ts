@@ -4,11 +4,13 @@ import {
   requestCreateJob,
   requestUpdateJob,
   requestGetJob,
+  requestDeleteJob,
   requestGetLatestJob,
 } from "./jobsapi";
 import { createAsyncEpic } from "../utils";
 
 const getJobEpic = createAsyncEpic(actions.getJob, requestGetJob);
+const deleteJobEpic = createAsyncEpic(actions.deleteJob, requestDeleteJob);
 const getLatestJobEpic = createAsyncEpic(
   actions.getLatestJob,
   requestGetLatestJob
@@ -18,6 +20,7 @@ const updateJobEpic = createAsyncEpic(actions.updateJob, requestUpdateJob);
 
 export default combineEpics(
   getJobEpic,
+  deleteJobEpic,
   createJobEpic,
   updateJobEpic,
   getLatestJobEpic

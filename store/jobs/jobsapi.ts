@@ -2,6 +2,8 @@ import { request } from "../utils";
 import {
   GetJobRequestPayload,
   GetJobSuccessPayload,
+  DeleteJobRequestPayload,
+  DeleteJobSuccessPayload,
   CreateJobRequestPayload,
   CreateJobSuccessPayload,
   UpdateJobRequestPayload,
@@ -14,6 +16,11 @@ export const requestGetJob = (payload: GetJobRequestPayload) =>
   request
     .get(`/job/findone/${payload._id}`)
     .then<GetJobSuccessPayload>(({ data }) => data);
+
+export const requestDeleteJob = (payload: DeleteJobRequestPayload) =>
+  request
+    .get(`/job/deleteone/${payload._id}`)
+    .then<DeleteJobSuccessPayload>(({ data }) => data);
 
 export const requestGetLatestJob = (payload: GetLatestJobRequestPayload) =>
   request

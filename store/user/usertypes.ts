@@ -20,6 +20,11 @@ export enum Actions {
   update_IN_FAILURE = "update#FAILURE",
   update_IN_CANCEL = "update#CANCEL",
 
+  DELETE_IN_REQUEST = "DELETE#REQUEST",
+  DELETE_IN_SUCCESS = "DELETE#SUCCESS",
+  DELETE_IN_FAILURE = "DELETE#FAILURE",
+  DELETE_IN_CANCEL = "DELETE#CANCEL",
+
   UploadProfile_IN_REQUEST = "uploadProfile#REQUEST",
   UploadProfile_IN_SUCCESS = "uploadProfile#SUCCESS",
   UploadProfile_IN_FAILURE = "uploadProfile#FAILURE",
@@ -32,6 +37,7 @@ export enum Actions {
 }
 
 export const initialState = {
+  _id: "",
   token: "",
   email: "",
   name: "",
@@ -39,6 +45,7 @@ export const initialState = {
 };
 
 export interface User {
+  _id: string;
   token: string;
   email: string;
   name: string;
@@ -62,7 +69,11 @@ export interface UploadProfileRequestPayload {
   pic: any;
 }
 export interface UserProfileRequestPayload {
-  id: string;
+  _id: string;
+}
+
+export interface DeleteRequestPayload {
+  _id: string;
 }
 
 export interface SignUpRequestPayload extends SignInRequestPayload {
@@ -74,4 +85,5 @@ export type SignInSuccessPayload = User;
 export type SignUpSuccessPayload = User;
 export type UserProfileSuccessPayload = User;
 export type UpdateSuccessPayload = User;
+export type DeleteSuccessPayload = String;
 export type UploadProfileSuccessPayload = User;

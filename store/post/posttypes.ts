@@ -10,6 +10,11 @@ export enum Actions {
   GET_POST_FAILURE = "GETPOST#FAILURE",
   GET_POST_CANCEL = "GETPOST#CANCEL",
 
+  DELETE_POST_REQUEST = "DELETEPOST#REQUEST",
+  DELETE_POST_SUCCESS = "DELETEPOST#SUCCESS",
+  DELETE_POST_FAILURE = "DELETEPOST#FAILURE",
+  DELETE_POST_CANCEL = "DELETEPOST#CANCEL",
+
   CREATE_POST_REQUEST = "CREATE_POST#REQUEST",
   CREATE_POST_SUCCESS = "CREATE_POST#SUCCESS",
   CREATE_POST_FAILURE = "CREATE_POST#FAILURE",
@@ -37,10 +42,12 @@ export interface Post {
   context: string;
   pics: string[];
   tags: string[];
+  comments: string[];
   views: number;
 }
 
 export type GetPostRequestPayload = Pick<Post, "_id">;
+export type DeletePostRequestPayload = Pick<Post, "_id">;
 export type GetLatestPostRequestPayload = void;
 
 export type UpdatePostRequestPayload = Omit<Post, "views">;
@@ -55,6 +62,7 @@ export interface CreatePostRequestPayload {
 }
 
 export type GetPostSuccessPayload = Post;
+export type DeletePostSuccessPayload = String;
 export type GetLatestPostSuccessPayload = Post[];
 export type CreatePostSuccessPayload = Post;
 export type UpdatePostSuccessPayload = Post;

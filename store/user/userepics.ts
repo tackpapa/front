@@ -4,6 +4,7 @@ import {
   requestFetchSignIn,
   requestFetchSignUp,
   requestUpdate,
+  requestDelete,
   requestUploadProfile,
   requestUserProfile,
 } from "./userapi";
@@ -19,6 +20,7 @@ const fetchSignUpEpic = createAsyncEpic(
 );
 
 const fetchUpdateEpic = createAsyncEpic(actions.fetchUpdate, requestUpdate);
+const fetchDeleteEpic = createAsyncEpic(actions.fetchDelete, requestDelete);
 
 const fetchUploadProfileEpic = createAsyncEpic(
   actions.fetchUploadProfile,
@@ -32,6 +34,7 @@ const fetchUserProfileEpic = createAsyncEpic(
 
 export default combineEpics(
   fetchSignInEpic,
+  fetchDeleteEpic,
   fetchSignUpEpic,
   fetchUploadProfileEpic,
   fetchUpdateEpic,

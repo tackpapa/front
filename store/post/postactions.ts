@@ -10,6 +10,8 @@ import {
   CreatePostRequestPayload,
   GetLatestPostRequestPayload,
   GetLatestPostSuccessPayload,
+  DeletePostRequestPayload,
+  DeletePostSuccessPayload,
 } from "./posttypes";
 
 const getPost = createAsyncAction(
@@ -18,6 +20,13 @@ const getPost = createAsyncAction(
   Actions.GET_POST_FAILURE,
   Actions.GET_POST_CANCEL
 )<GetPostRequestPayload, GetPostSuccessPayload, undefined, undefined>();
+
+const deletePost = createAsyncAction(
+  Actions.DELETE_POST_REQUEST,
+  Actions.DELETE_POST_SUCCESS,
+  Actions.DELETE_POST_FAILURE,
+  Actions.DELETE_POST_CANCEL
+)<DeletePostRequestPayload, DeletePostSuccessPayload, undefined, undefined>();
 
 const getLatestPost = createAsyncAction(
   Actions.GET_LATEST_POST_REQUEST,
@@ -50,4 +59,5 @@ export default {
   updatePost,
   createPost,
   getLatestPost,
+  deletePost,
 };

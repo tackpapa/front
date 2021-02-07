@@ -2,6 +2,8 @@ import { request } from "../utils";
 import {
   GetMarketRequestPayload,
   GetMarketSuccessPayload,
+  DeleteMarketRequestPayload,
+  DeleteMarketSuccessPayload,
   CreateMarketRequestPayload,
   CreateMarketSuccessPayload,
   UpdateMarketRequestPayload,
@@ -14,6 +16,11 @@ export const requestGetMarket = (payload: GetMarketRequestPayload) =>
   request
     .get(`/market/findone/${payload._id}`)
     .then<GetMarketSuccessPayload>(({ data }) => data);
+
+export const requestDeleteMarket = (payload: DeleteMarketRequestPayload) =>
+  request
+    .get(`/market/deleteone/${payload._id}`)
+    .then<DeleteMarketSuccessPayload>(({ data }) => data);
 
 export const requestGetLatestMarket = (
   payload: GetLatestMarketRequestPayload
