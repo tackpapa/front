@@ -26,7 +26,10 @@ const epicMiddleware = createEpicMiddleware<
 //   storage,
 // };
 
-const middlewares: any[] = [epicMiddleware, loggerMiddleware];
+const middlewares: any[] = [
+  epicMiddleware,
+  // loggerMiddleware
+];
 
 const store = createStore(
   rootReducer,
