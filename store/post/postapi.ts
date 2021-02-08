@@ -2,6 +2,8 @@ import { request } from "../utils";
 import {
   GetPostRequestPayload,
   GetPostSuccessPayload,
+  GetCategoryPostRequestPayload,
+  GetCategoryPostSuccessPayload,
   DeletePostRequestPayload,
   DeletePostSuccessPayload,
   CreatePostRequestPayload,
@@ -16,6 +18,13 @@ export const requestGetPost = (payload: GetPostRequestPayload) =>
   request
     .get(`/post/findone/${payload._id}`)
     .then<GetPostSuccessPayload>(({ data }) => data);
+
+export const requestGetCategoryPost = (
+  payload: GetCategoryPostRequestPayload
+) =>
+  request
+    .get(`/post/bycategory/${payload}`)
+    .then<GetCategoryPostSuccessPayload>(({ data }) => data);
 
 export const requestGetLatestPost = (payload: GetLatestPostRequestPayload) =>
   request

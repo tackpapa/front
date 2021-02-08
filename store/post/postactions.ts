@@ -4,6 +4,8 @@ import {
   Actions,
   GetPostRequestPayload,
   GetPostSuccessPayload,
+  GetCategoryPostRequestPayload,
+  GetCategoryPostSuccessPayload,
   UpdatePostRequestPayload,
   UpdatePostSuccessPayload,
   CreatePostSuccessPayload,
@@ -19,7 +21,24 @@ const getPost = createAsyncAction(
   Actions.GET_POST_SUCCESS,
   Actions.GET_POST_FAILURE,
   Actions.GET_POST_CANCEL
-)<GetPostRequestPayload, GetPostSuccessPayload, undefined, undefined>();
+)<
+  GetCategoryPostRequestPayload,
+  GetCategoryPostSuccessPayload,
+  undefined,
+  undefined
+>();
+
+const getCategoryPost = createAsyncAction(
+  Actions.GET_CATEGORY_POST_REQUEST,
+  Actions.GET_CATEGORY_POST_SUCCESS,
+  Actions.GET_CATEGORY_POST_FAILURE,
+  Actions.GET_CATEGORY_POST_CANCEL
+)<
+  GetCategoryPostRequestPayload,
+  GetCategoryPostSuccessPayload,
+  undefined,
+  undefined
+>();
 
 const deletePost = createAsyncAction(
   Actions.DELETE_POST_REQUEST,
@@ -60,4 +79,5 @@ export default {
   createPost,
   getLatestPost,
   deletePost,
+  getCategoryPost,
 };

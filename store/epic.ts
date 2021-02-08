@@ -6,8 +6,17 @@ import marketEpic from "./market/marketepics";
 import jobsEpic from "./jobs/jobsepics";
 import chatEpic from "./chat/chatepics";
 import commentEpic from "./comment/commentepics";
+import bannerEpic from "./banner/bannerepics";
 
-const epics = [userEpic, postEpic, marketEpic, jobsEpic, chatEpic, commentEpic];
+const epics = [
+  userEpic,
+  postEpic,
+  marketEpic,
+  jobsEpic,
+  bannerEpic,
+  chatEpic,
+  commentEpic,
+];
 
 const rootEpic = combineEpics(...epics);
 

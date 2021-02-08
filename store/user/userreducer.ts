@@ -16,11 +16,11 @@ const user = createReducer<UserState>(initialState, {
   [getType(userActions.logout)]: () => initialState,
 
   [getType(userActions.fetchSignIn.success)]: (_state, { payload }) => {
-    handleSignIn(payload.token);
+    handleSignIn(payload.token, payload._id);
     return payload;
   },
   [getType(userActions.fetchSignUp.success)]: (_state, { payload }) => {
-    handleSignIn(payload.token);
+    handleSignIn(payload.token, payload._id);
     return payload;
   },
   [getType(userActions.fetchUpdate.success)]: (_state, { payload }) => {

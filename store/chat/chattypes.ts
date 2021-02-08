@@ -28,7 +28,7 @@ export interface Chat {
 }
 
 export type GetLatestChatRequestPayload = {
-  date: string;
+  date?: number;
 };
 
 export interface CreateChatRequestPayload {

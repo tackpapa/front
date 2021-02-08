@@ -1,5 +1,6 @@
 import axios from "axios";
 import { from } from "rxjs";
+import socket from "../utils/socket";
 
 import { map, exhaustMap, catchError, filter, takeUntil } from "rxjs/operators";
 import { isActionOf } from "typesafe-actions";
@@ -17,8 +18,9 @@ export const setHeader = (name: string, value: string) => {
   };
 };
 
-export const handleSignIn = (token: string) => {
+export const handleSignIn = (token: string, userId: string) => {
   setHeader("authorization", `Bearer ${token}`);
+  socket.init(userId);
 };
 
 export const createAsyncEpic = (

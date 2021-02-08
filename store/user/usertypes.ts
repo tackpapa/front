@@ -66,7 +66,11 @@ export interface UpdateRequestPayload {
 }
 
 export interface UploadProfileRequestPayload {
-  pic: any;
+  pic: {
+    name: string;
+    type: string;
+    uri: string;
+  };
 }
 export interface UserProfileRequestPayload {
   _id: string;

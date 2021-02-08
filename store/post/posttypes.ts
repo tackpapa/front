@@ -1,7 +1,18 @@
 import { State } from "react-native-gesture-handler";
+import { PersistGate } from "redux-persist/integration/react";
 
-export interface PostState {
-  data: Post[];
+export type CategoryPostState = {
+  [key in keyof typeof PostType]: Post[];
+};
+
+export interface PostState extends CategoryPostState {
+  onepost?: Post;
+}
+
+export enum PostType {
+  home = "home",
+  free = "free",
+  humor = "humor",
 }
 
 export enum Actions {
@@ -9,6 +20,11 @@ export enum Actions {
   GET_POST_SUCCESS = "GETPOST#SUCCESS",
   GET_POST_FAILURE = "GETPOST#FAILURE",
   GET_POST_CANCEL = "GETPOST#CANCEL",
+
+  GET_CATEGORY_POST_REQUEST = "GETCATEGORY_POST#REQUEST",
+  GET_CATEGORY_POST_SUCCESS = "GETCATEGORY_POST#SUCCESS",
+  GET_CATEGORY_POST_FAILURE = "GETCATEGORY_POST#FAILURE",
+  GET_CATEGORY_POST_CANCEL = "GETCATEGORY_POST#CANCEL",
 
   DELETE_POST_REQUEST = "DELETEPOST#REQUEST",
   DELETE_POST_SUCCESS = "DELETEPOST#SUCCESS",
@@ -32,7 +48,9 @@ export enum Actions {
 }
 
 export const initialState: PostState = {
-  data: [],
+  home: [],
+  free: [],
+  humor: [],
 };
 
 export interface Post {
@@ -44,9 +62,13 @@ export interface Post {
   tags: string[];
   comments: string[];
   views: number;
+  category: PostType;
 }
 
 export type GetPostRequestPayload = Pick<Post, "_id">;
+export interface GetCategoryPostRequestPayload {
+  _id: string;
+}
 export type DeletePostRequestPayload = Pick<Post, "_id">;
 export type GetLatestPostRequestPayload = void;
 
@@ -59,9 +81,14 @@ export interface CreatePostRequestPayload {
   context: string;
   pics: string[];
   tags: string[];
+  category: PostType;
 }
 
 export type GetPostSuccessPayload = Post;
+export interface GetCategoryPostSuccessPayload {
+  data: Post[];
+  type: PostType;
+}
 export type DeletePostSuccessPayload = String;
 export type GetLatestPostSuccessPayload = Post[];
 export type CreatePostSuccessPayload = Post;

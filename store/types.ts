@@ -8,6 +8,7 @@ import { JobsState } from "./jobs/jobstypes";
 import { MarketState } from "./market/markettypes";
 import { ChatState } from "./chat/chattypes";
 import { CommentState } from "./comment/commenttypes";
+import { BannerState } from "./banner/bannertypes";
 
 import userActions from "./user/useractions";
 import postActions from "./post/postactions";
@@ -15,6 +16,7 @@ import marketActions from "./market/marketactions";
 import jobsActions from "./jobs/jobsactions";
 import chatActions from "./chat/chatactions";
 import commentActions from "./comment/commentactions";
+import bannerActions from "./banner/banneractions";
 
 export interface RootState {
   user: UserState;
@@ -23,6 +25,7 @@ export interface RootState {
   jobs: JobsState;
   chat: ChatState;
   comment: CommentState;
+  banner: BannerState;
 }
 
 export type RootAction =
@@ -31,6 +34,7 @@ export type RootAction =
   | ActionType<typeof marketActions>
   | ActionType<typeof jobsActions>
   | ActionType<typeof commentActions>
+  | ActionType<typeof bannerActions>
   | ActionType<typeof chatActions>;
 
 export type Epic = RxEpic<RootAction, RootAction, RootState>;

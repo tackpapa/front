@@ -8,9 +8,10 @@ import {Provider} from 'react-redux';
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from './store';
 import { LogBox } from 'react-native';
+import socket from './utils/socket'
 
 LogBox.ignoreAllLogs(true);
-
+socket.connectStore(store);
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();

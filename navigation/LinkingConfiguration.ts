@@ -10,7 +10,7 @@ export default {
             screens: {
               HomeScreen: "home",
               NotiScreen: "noti",
-              Com1Screen: "com1",
+              CommunityScreen: "Community",
               Com2Screen: "com2",
             },
           },
@@ -39,6 +39,13 @@ export default {
             screens: {
               ProfileScreen: "profile",
               WriteprofileScreen: "writeprofile",
+            },
+          },
+          Onboarding: {
+            screens: {
+              RegisterScreen: "register",
+              LoginScreen: "login",
+              OnboardingScreen: "onboarding",
             },
           },
         },

@@ -34,10 +34,13 @@ export const requestDelete = (payload: DeleteRequestPayload) =>
     .get(`/user/deleteuser/${payload._id}`)
     .then<DeleteSuccessPayload>(({ data }) => data);
 
-export const requestUploadProfile = (payload: UploadProfileRequestPayload) =>
-  request
-    .post("/user/uploadProfile", payload)
+export const requestUploadProfile = (payload: UploadProfileRequestPayload) => {
+  var form_data = new FormData();
+  form_data.append("pic", (payload.pic as unknown) as Blob);
+  return request
+    .post("/user/uploadProfile", form_data)
     .then<UploadProfileSuccessPayload>(({ data }) => data);
+};
 
 export const requestUserProfile = (payload: UserProfileRequestPayload) =>
   request

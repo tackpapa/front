@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { StyleSheet, Image } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, RouteProp } from '@react-navigation/native';
 import { Text, View } from '../../components/Themed';
+import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
 import styled from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +10,8 @@ import postactions from '../../store/post/postactions'
 import { RootState } from '~/../store/types';
 import { Dimensions } from 'react-native';
 
-const postSelector = ({ post }:RootState)=> post;
+
+const postSelector = ({ post:{home} }:RootState)=> home;
 const {width, height} = Dimensions.get("screen")
 
 const Container = styled.View`
@@ -17,28 +19,39 @@ background-color:#eee;
 flex:1;
 `;
 const Div = styled.View`
-height:50%;
+
 background-color:grey;
 `;
 
-export default function Com1Screen() {
+export default function CommunityScreen() {
+  const navigation = useNavigation();
   const route = useRoute<any>();
   const dispatch = useDispatch();
+  const home = useSelector(postSelector)
+  
   useEffect(() => {
-    if (route.params?._id) {
-      dispatch(postactions.getPost.request({_id:route.params._id}));
-    }
-  },[dispatch, route])
-  const post = useSelector(postSelector)
+    const category = route.params.value
+    navigation.setOptions({headerTitle:category});   
+      dispatch(postactions.getCategoryPost.request(category))
+},[route])
+
+  // useEffect(() => {
+  //     dispatch(postactions.getCategoryPost.request(category)
+  // )},[dispatch])
+
+  useEffect(() => {
+    
+},[route])
+  
   
 
   return (
   
   <Container><View>
-    {post.data.map((item)=>{
+    {home.map((item)=>{
       return (
-        <View>
-      <Text >{item.context} </Text>
+        <View  key={`${item._id}`} >         
+      <Text> {item.context} </Text>
        <Text >{item.tags}</Text>
        <Text >{item.author.name}</Text>
        <Text >{item.author.exp}</Text>
@@ -46,8 +59,8 @@ export default function Com1Screen() {
        <Text >{item.author.profilepic}</Text>
        <Div>
        <Image 
-       style ={{ width:200, height:200}} 
-              source={{uri: item.pics[1]}}/>
+       style ={{ width:100, height:100}} 
+              source={{uri: item.pics[0]}}/>
               </Div>
       </View>
 

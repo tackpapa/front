@@ -1,7 +1,12 @@
 import { createReducer, getType } from "typesafe-actions";
 import { persistReducer } from "redux-persist";
 import AsyncStorage from "@react-native-community/async-storage";
-import { initialState, PostState } from "./posttypes";
+import {
+  CreatePostSuccessPayload,
+  initialState,
+  PostState,
+  UpdatePostSuccessPayload,
+} from "./posttypes";
 import postActions from "./postactions";
 
 const persistConfig = {
@@ -9,29 +14,53 @@ const persistConfig = {
   storage: AsyncStorage,
 };
 const post = createReducer<PostState>(initialState, {
-  [getType(postActions.getPost.success)]: (_state, { payload }) => {
+  [getType(postActions.getPost.success)]: (state, { payload }) => {
     return {
-      data: [payload],
+      ...state,
+      onepost: payload,
     };
   },
-  [getType(postActions.getLatestPost.success)]: (_state, { payload }) => {
+  [getType(postActions.getCategoryPost.success)]: (state, { payload }) => {
     return {
-      data: payload,
+      ...state,
+      [payload.type]: payload.data,
     };
   },
-  [getType(postActions.createPost.success)]: (_state, { payload }) => {
+  [getType(postActions.getLatestPost.success)]: (state, { payload }) => {
     return {
-      data: [payload],
+      ...state,
+      home: payload,
     };
   },
-  [getType(postActions.updatePost.success)]: (_state, { payload }) => {
+  [getType(postActions.createPost.success)]: (
+    state,
+    { payload }: { payload: CreatePostSuccessPayload }
+  ) => {
     return {
-      data: [payload],
+      ...state,
+      // [payload.category]: state[payload.category].concat([payload]),
+      [payload.category]: [...state[payload.category], payload],
     };
   },
-  [getType(postActions.deletePost.success)]: (_state, { payload }) => {
+  [getType(postActions.updatePost.success)]: (
+    state,
+    { payload }: { payload: UpdatePostSuccessPayload }
+  ) => {
+    const index = state[payload.category].findIndex(
+      (item) => item._id === payload._id
+    );
+    if (index === -1) {
+      return state;
+    }
     return {
-      data: [payload],
+      ...state,
+      [payload.category]: state[payload.category].splice(index, 1, payload),
+    };
+  },
+  [getType(postActions.deletePost.success)]: (state, { payload }) => {
+    return {
+      ...state,
+      // data: payload,
     };
   },
 });

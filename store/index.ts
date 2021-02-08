@@ -11,7 +11,7 @@ import storage from "redux-persist/lib/storage";
 const persistHandler = (store: Store<RootState>) => () => {
   const state = store.getState();
   if (state.user.token) {
-    handleSignIn(state.user.token);
+    handleSignIn(state.user.token, state.user._id);
   }
 };
 const loggerMiddleware = createLogger();
