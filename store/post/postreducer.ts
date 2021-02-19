@@ -8,6 +8,7 @@ import {
   UpdatePostSuccessPayload,
 } from "./posttypes";
 import postActions from "./postactions";
+import userActions from "../user/useractions";
 
 const persistConfig = {
   key: "post",
@@ -26,10 +27,16 @@ const post = createReducer<PostState>(initialState, {
       [payload.type]: payload.data,
     };
   },
+  [getType(postActions.searchPost.success)]: (state, { payload }) => {
+    return {
+      ...state,
+      [payload.type]: payload.data,
+    };
+  },
   [getType(postActions.getLatestPost.success)]: (state, { payload }) => {
     return {
       ...state,
-      home: payload,
+      free: payload,
     };
   },
   [getType(postActions.createPost.success)]: (
@@ -38,7 +45,6 @@ const post = createReducer<PostState>(initialState, {
   ) => {
     return {
       ...state,
-      // [payload.category]: state[payload.category].concat([payload]),
       [payload.category]: [...state[payload.category], payload],
     };
   },
@@ -60,7 +66,18 @@ const post = createReducer<PostState>(initialState, {
   [getType(postActions.deletePost.success)]: (state, { payload }) => {
     return {
       ...state,
-      // data: payload,
+    };
+  },
+  [getType(userActions.fetchUserProfile.success)]: (state, { payload }) => {
+    return {
+      ...state,
+      usercall: payload.post,
+    };
+  },
+  [getType(postActions.deleteResult.request)]: (state) => {
+    return {
+      ...state,
+      result: [],
     };
   },
 });

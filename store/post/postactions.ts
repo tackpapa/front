@@ -4,8 +4,12 @@ import {
   Actions,
   GetPostRequestPayload,
   GetPostSuccessPayload,
+  DeleteResultRequestPayload,
+  DeleteResultSuccessPayload,
   GetCategoryPostRequestPayload,
   GetCategoryPostSuccessPayload,
+  SearchPostRequestPayload,
+  SearchPostSuccessPayload,
   UpdatePostRequestPayload,
   UpdatePostSuccessPayload,
   CreatePostSuccessPayload,
@@ -21,9 +25,16 @@ const getPost = createAsyncAction(
   Actions.GET_POST_SUCCESS,
   Actions.GET_POST_FAILURE,
   Actions.GET_POST_CANCEL
+)<GetPostRequestPayload, GetPostSuccessPayload, undefined, undefined>();
+
+const deleteResult = createAsyncAction(
+  Actions.DELETERESULT_REQUEST,
+  Actions.DELETERESULT_SUCCESS,
+  Actions.DELETERESULT_FAILURE,
+  Actions.DELETERESULT_CANCEL
 )<
-  GetCategoryPostRequestPayload,
-  GetCategoryPostSuccessPayload,
+  DeleteResultRequestPayload,
+  DeleteResultSuccessPayload,
   undefined,
   undefined
 >();
@@ -39,6 +50,13 @@ const getCategoryPost = createAsyncAction(
   undefined,
   undefined
 >();
+
+const searchPost = createAsyncAction(
+  Actions.SEARCH_POST_REQUEST,
+  Actions.SEARCH_POST_SUCCESS,
+  Actions.SEARCH_POST_FAILURE,
+  Actions.SEARCH_POST_CANCEL
+)<SearchPostRequestPayload, SearchPostSuccessPayload, undefined, undefined>();
 
 const deletePost = createAsyncAction(
   Actions.DELETE_POST_REQUEST,
@@ -75,6 +93,8 @@ const updatePost = createAsyncAction(
 
 export default {
   getPost,
+  searchPost,
+  deleteResult,
   updatePost,
   createPost,
   getLatestPost,

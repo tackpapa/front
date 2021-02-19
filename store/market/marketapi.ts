@@ -2,6 +2,10 @@ import { request } from "../utils";
 import {
   GetMarketRequestPayload,
   GetMarketSuccessPayload,
+  GetCategoryMarketRequestPayload,
+  GetCategoryMarketSuccessPayload,
+  SearchMarketRequestPayload,
+  SearchMarketSuccessPayload,
   DeleteMarketRequestPayload,
   DeleteMarketSuccessPayload,
   CreateMarketRequestPayload,
@@ -17,6 +21,18 @@ export const requestGetMarket = (payload: GetMarketRequestPayload) =>
     .get(`/market/findone/${payload._id}`)
     .then<GetMarketSuccessPayload>(({ data }) => data);
 
+export const requestGetCategoryMarket = (
+  payload: GetCategoryMarketRequestPayload
+) =>
+  request
+    .get(`/market/bycategory/${payload}`)
+    .then<GetCategoryMarketSuccessPayload>(({ data }) => data);
+
+export const requestSearchMarket = (payload: SearchMarketRequestPayload) =>
+  request
+    .get(`/market/search/${payload}`)
+    .then<SearchMarketSuccessPayload>(({ data }) => data);
+
 export const requestDeleteMarket = (payload: DeleteMarketRequestPayload) =>
   request
     .get(`/market/deleteone/${payload._id}`)
@@ -29,10 +45,27 @@ export const requestGetLatestMarket = (
     .get(`/market/latest`)
     .then<GetLatestMarketSuccessPayload>(({ data }) => data);
 
-export const requestCreateMarket = (payload: CreateMarketRequestPayload) =>
-  request
-    .post("/market/create", payload)
+export const requestCreateMarket = (payload: CreateMarketRequestPayload) => {
+  var form_data = new FormData();
+
+  for (let i = 0; i < payload.pic.length; i++) {
+    form_data.append("pic", (payload.pic[i] as unknown) as Blob);
+  }
+
+  form_data.append("title", payload.title);
+  form_data.append("context", payload.context);
+  for (let i = 0; i < payload.tags.length; i++) {
+    form_data.append("tags", (payload.tags[i] as unknown) as Blob);
+  }
+  form_data.append("category", payload.category);
+  form_data.append("author", payload.author);
+  form_data.append("price", payload.price);
+  form_data.append("location", payload.location);
+
+  return request
+    .post("/market/create", form_data)
     .then<CreateMarketSuccessPayload>(({ data }) => data);
+};
 
 export const requestUpdateMarket = (payload: UpdateMarketRequestPayload) =>
   request

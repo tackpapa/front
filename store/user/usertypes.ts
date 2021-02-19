@@ -1,4 +1,7 @@
 import { FontSource } from "expo-font";
+import { Post } from "../post/posttypes";
+import { Job } from "../jobs/jobstypes";
+import { Market } from "../market/markettypes";
 
 export type UserState = User;
 
@@ -41,15 +44,19 @@ export const initialState = {
   token: "",
   email: "",
   name: "",
+  cell: "",
   exp: 0,
+  profilepic: "",
 };
 
 export interface User {
   _id: string;
   token: string;
+  cell: string;
   email: string;
   name: string;
   exp: number;
+  profilepic: string;
 }
 
 export interface SignInRequestPayload {
@@ -61,7 +68,7 @@ export interface UpdateRequestPayload {
   email: string;
   password: string;
   name?: string;
-  cell?: number;
+  cell?: string;
   memo?: string;
 }
 
@@ -76,8 +83,14 @@ export interface UserProfileRequestPayload {
   _id: string;
 }
 
+export interface UserProfileSuccessPayload {
+  posts: Post[];
+  jobs: Job[];
+  markets: Market[];
+}
+
 export interface DeleteRequestPayload {
-  _id: string;
+  _id: String;
 }
 
 export interface SignUpRequestPayload extends SignInRequestPayload {
@@ -87,7 +100,7 @@ export interface SignUpRequestPayload extends SignInRequestPayload {
 
 export type SignInSuccessPayload = User;
 export type SignUpSuccessPayload = User;
-export type UserProfileSuccessPayload = User;
+
 export type UpdateSuccessPayload = User;
 export type DeleteSuccessPayload = String;
 export type UploadProfileSuccessPayload = User;

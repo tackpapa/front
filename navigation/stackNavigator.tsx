@@ -7,22 +7,22 @@ import JobsScreen from '../screens/Jobs/JobsScreen';
 import CommunityScreen from '../screens/Home/CommunityScreen';
 import ChatScreen from '../screens/Chat/ChatScreen';
 import MarketScreen from '../screens/Market/MarketScreen';
+import CateScreen from '../screens/Market/CateScreen';
 import ProfileScreen from '../screens/Profile/ProfileScreen';
 import SettingScreen from '../screens/Profile/ProfileScreen';
 import SeePostScreen from '../screens/Home/SeePostScreen';
 import NotiScreen from '../screens/Home/NotiScreen';
-import SearchScreen from '../screens/Home/SearchScreen';
-import SeejobScreen from '../screens/Jobs/SeejobScreen';
+import SearchScreen from '../screens/SearchScreen';
+import HireScreen from '../screens/Jobs/HireScreen';
 import SeechatScreen from '../screens/Chat/SeechatScreen';
 import WritechatScreen from '../screens/Chat/WritechatScreen';
-import HireScreen from '../screens/Jobs/HireScreen';
-import SeeproductScreen from '../screens/Market/SeeproductScreen';
-import WriteproductScreen from '../screens/Market/WriteproductScreen';
 import WriteprofileScreen from '../screens/Profile/WriteprofileScreen';
 import RegisterScreen from '../screens/Onboarding/RegisterScreen';
 import LoginScreen from '../screens/Onboarding/LoginScreen';
 import OnboardingScreen from '../screens/Onboarding/OnboardingScreen';
 import { useRoute } from '@react-navigation/native';
+import WriteJobScreen from '../screens/Jobs/WriteJobScreen';
+import { TouchableOpacity, Text } from 'react-native';
 
 function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
   return <Ionicons size={20} style={{ marginBottom: -3 }} {...props} />;
@@ -32,18 +32,22 @@ const HomeStack = createStackNavigator<HomeParamList>();
 
 export function HomeNavigator() {
   const route = useRoute<any>();
+
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={({ navigation }) => ({
-          title: '홈',
+        options={({ navigation }) => ({  
+          title: '',
           headerRight: () => (
-            <TabBarIcon name="ios-notifications-outline" style={{paddingRight:10}} onPress={() => navigation.navigate('NotiScreen')} />
+            <><TabBarIcon name="ios-notifications-outline" style={{ paddingRight: 20 }} onPress={() => navigation.navigate('NotiScreen')} />
+              <TouchableOpacity><Text>dd</Text></TouchableOpacity></>
           ),
-          headerLeft: () => (
-            <TabBarIcon name="ios-search" style={{paddingLeft:10}} onPress={() => navigation.navigate('SearchScreen')} />
+          headerLeft: () => (           
+            <TouchableOpacity onPress={() => navigation.navigate('SearchScreen', "게시판")} >  
+            <Text>sdf</Text>
+            </TouchableOpacity> 
           ),
         })}
       />
@@ -63,11 +67,6 @@ export function HomeNavigator() {
         component={NotiScreen}
         options={{ headerTitle: '알림' }}
       />
-      <HomeStack.Screen
-        name="SearchScreen"
-        component={SearchScreen}
-        options={{ headerTitle: '검색' }}
-      />
     </HomeStack.Navigator>
   );
 }
@@ -80,18 +79,25 @@ export function JobsNavigator() {
       <JobsStack.Screen
         name="JobsScreen"
         component={JobsScreen}
-        options={{ headerTitle: '구인구직' }}
+        options={({ navigation }) => ({
+          title: '구인구직',
+          headerLeft: () => (
+            <TabBarIcon name="ios-search" style={{paddingLeft:20}} onPress={() => navigation.navigate('SearchScreen', "공고")} />
+          ),
+        })}
+      
       />
         <JobsStack.Screen
         name="HireScreen"
         component={HireScreen}
-        options={{ headerTitle: '구인글 작성' }}
+        options={({ navigation }) => ({
+          title: '구인 종류스크린',
+          
+        })}
+      
       />
-      <JobsStack.Screen
-        name="SeejobScreen"
-        component={SeejobScreen}
-        options={{ headerTitle: '구인글 상세' }}
-      />
+
+
     </JobsStack.Navigator>
   );
 }
@@ -151,17 +157,18 @@ export function MarketNavigator() {
       <MarketStack.Screen
         name="MarketScreen"
         component={MarketScreen}
-        options={{ headerTitle: '사고팔고' }}
+        options={({ navigation }) => ({
+          title: '사고팔고',
+          headerLeft: () => (
+            <TabBarIcon name="ios-search" style={{paddingLeft:20}} onPress={() => navigation.navigate('SearchScreen',"상품")} />
+          ),
+        })}
       />
+
        <MarketStack.Screen
-        name="SeeproductScreen"
-        component={SeeproductScreen}
-        options={{ headerTitle: '상품 상세' }}
-      />
-       <MarketStack.Screen
-        name="WriteproductScreen"
-        component={WriteproductScreen}
-        options={{ headerTitle: '상품 등록' }}
+        name="CateScreen"
+        component={CateScreen}
+        options={{ headerTitle: '상품종류' }}
       />
     </MarketStack.Navigator>
   );
@@ -190,3 +197,5 @@ export function ProfileNavigator() {
     </ProfileStack.Navigator>
   );
 }
+
+

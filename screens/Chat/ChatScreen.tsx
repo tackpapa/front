@@ -5,7 +5,6 @@ import { Text, View } from '../../components/Themed';
 import { useEffect } from 'react';
 import styled from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
-import postactions from '../../store/post/postactions'
 import { RootState } from '../../store/types';
 import { Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native';
@@ -22,7 +21,6 @@ const Div = styled.View`
 
 `;
 const Alarm = styled.Text`
-font-size:20;
 justify-content:center;
 text-align:center;
 margin:10px;
@@ -57,7 +55,7 @@ export default function ChatScreen() {
   <Container>
     {participants.map((item)=>{
       return <Div key={`${item._id}`}>
-            <Text> {item.name}{item.msg}</Text>
+            <Alarm> {item.name}{item.msg}</Alarm>
       </Div>
     })}
     

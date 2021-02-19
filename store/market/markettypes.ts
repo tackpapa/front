@@ -1,7 +1,18 @@
-import { State } from "react-native-gesture-handler";
+export type CategoryMarketState = {
+  [key in keyof typeof MarketType]: Market[];
+};
 
-export interface MarketState {
-  data: Market[];
+export interface MarketState extends CategoryMarketState {
+  onemarket?: Market;
+  result?: Market[];
+  usercall: Market[];
+}
+
+export enum MarketType {
+  free = "free",
+  part = "part",
+  safety = "safety",
+  acc = "acc",
 }
 
 export enum Actions {
@@ -9,6 +20,21 @@ export enum Actions {
   GET_MARKET_SUCCESS = "GETMARKET#SUCCESS",
   GET_MARKET_FAILURE = "GETMARKET#FAILURE",
   GET_MARKET_CANCEL = "GETMARKET#CANCEL",
+
+  DELETERESULT_REQUEST = "DELETERESULT#REQUEST",
+  DELETERESULT_SUCCESS = "DELETERESULT#SUCCESS",
+  DELETERESULT_FAILURE = "DELETERESULT#FAILURE",
+  DELETERESULT_CANCEL = "DELETERESULT#CANCEL",
+
+  GET_CATEGORY_MARKET_REQUEST = "GETCATEGORY_MARKET#REQUEST",
+  GET_CATEGORY_MARKET_SUCCESS = "GETCATEGORY_MARKET#SUCCESS",
+  GET_CATEGORY_MARKET_FAILURE = "GETCATEGORY_MARKET#FAILURE",
+  GET_CATEGORY_MARKET_CANCEL = "GETCATEGORY_MARKET#CANCEL",
+
+  SEARCH_MARKET_REQUEST = "SEARCH_MARKET#REQUEST",
+  SEARCH_MARKET_SUCCESS = "SEARCH_MARKET#SUCCESS",
+  SEARCH_MARKET_FAILURE = "SEARCH_MARKET#FAILURE",
+  SEARCH_MARKET_CANCEL = "SEARCH_MARKET#CANCEL",
 
   DELETE_MARKET_REQUEST = "DELETEMARKET#REQUEST",
   DELETE_MARKET_SUCCESS = "DELETEMARKET#SUCCESS",
@@ -32,7 +58,11 @@ export enum Actions {
 }
 
 export const initialState: MarketState = {
-  data: [],
+  free: [],
+  part: [],
+  safety: [],
+  acc: [],
+  usercall: [],
 };
 
 export interface Market {
@@ -41,26 +71,49 @@ export interface Market {
   author: any;
   context: string;
   pics: string[];
+  category: MarketType;
   tags: string[];
   views: number;
   price: number;
   location: string;
 }
+export interface GetCategoryMarketRequestPayload {
+  _id: string;
+}
+export interface SearchMarketRequestPayload {
+  _id: string;
+}
+export type DeleteResultRequestPayload = void;
+export type DeleteResultSuccessPayload = void;
 
 export type GetMarketRequestPayload = Pick<Market, "_id">;
+export interface GetCategoryMarketSuccessPayload {
+  data: Market[];
+  type: MarketType;
+}
+export interface SearchMarketSuccessPayload {
+  data: Market[];
+  type: MarketType;
+}
 export type DeleteMarketRequestPayload = Pick<Market, "_id">;
 export type GetLatestMarketRequestPayload = void;
 
 export type UpdateMarketRequestPayload = Omit<Market, "views">;
 
 export interface CreateMarketRequestPayload {
-  id: string;
   title: string;
   author: string;
   context: string;
-  pics: string[];
+  pic: [
+    {
+      name: string;
+      type: string;
+      uri: string;
+    }
+  ];
+  category: MarketType;
   tags: string[];
-  price: number;
+  price: string;
   location: string;
 }
 

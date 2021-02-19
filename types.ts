@@ -1,6 +1,8 @@
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
+  WriteScreen: undefined;
+  SearchScreen: undefined;
 };
 
 export type BottomTabParamList = {
@@ -16,13 +18,12 @@ export type HomeParamList = {
   NotiScreen: undefined;
   CommunityScreen: undefined;
   SeePostScreen: undefined;
-  SearchScreen: undefined;
+  WritePostScreen: undefined;
 };
 
 export type JobsParamList = {
   JobsScreen: undefined;
   HireScreen: undefined;
-  SeejobScreen: undefined;
 };
 
 export type ChatParamList = {
@@ -33,8 +34,7 @@ export type ChatParamList = {
 
 export type MarketParamList = {
   MarketScreen: undefined;
-  WriteproductScreen: undefined;
-  SeeproductScreen: undefined;
+  CateScreen: undefined;
 };
 
 export type ProfileParamList = {

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
+import { Ionicons } from '@expo/vector-icons';
 import {useSelector, useDispatch} from 'react-redux'
-import {Image, TouchableOpacity, ScrollView} from 'react-native';
+import {Image, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native';
 import {Text, View} from '../../components/Themed';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
@@ -15,46 +16,32 @@ import {Button} from "react-native";
 
 const {width, height} = Dimensions.get("screen")
 
-const Container = styled.ScrollView `
-flexGrow:1
 
-`
-const Div = styled.View `
-
-`
-const Header = styled.View `
-  height: ${height / 5}px;
-`;
-const Section = styled.View `
-border: 3px;
-border-radius:10px;
-
-`;
+function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
+    return <Ionicons size={20} style={{ marginBottom: -3 }} {...props} />;
+  }
 
 const userSelector = ({user} : RootState) => user;
-const homeSelector = ({post:{home}} : RootState) => home;
-// const postSelector = (rootState: RootState) => {
-//   return rootState.post.home
-// }
+const homeSelector = ({post:{free}} : RootState) => free;
 const bannerSelector = ({banner} : RootState) => banner;
 
 export default function HomeScreen() {
 
     const user = useSelector(userSelector);
-    const home = useSelector(homeSelector);
+    const free = useSelector(homeSelector);
     const banner = useSelector(bannerSelector);
-    const isUser = !!user
-        ?.token;
-
+    const isUser = !!user?.token;
     const dispatch = useDispatch();
-
     const navigation = useNavigation();
 
-    const move = (id : Post['_id']) => {
+    const move = (id : string) => {
         navigation.navigate("SeePostScreen", {_id: id});
     }
     const gesi = (value : string) => {
         navigation.navigate("CommunityScreen", {value: value});
+    }
+    const write = (value : string) => {
+        navigation.navigate("WriteScreen", {value: value});
     }
 
     useEffect(() => {
@@ -64,61 +51,55 @@ export default function HomeScreen() {
     }, [dispatch])
 
     return (
-
-        <ScrollView style={{
-            flexGrow: 1
-        }}>
-            <Container>
-                <Div >
-
-                    <Text>
-
-                        {isUser
-                            ? `안녕하세요 ${user.name}님`
-                            : '로그인 해주세요'}
-                    </Text>
-                </Div>
-
-                <Header>
-                    <Swiper controlsEnabled={false} loop timeout={2}>
-
-                        {banner
-                            .data
-                            .map((item) => {
-                                return (
+<SafeAreaView style={{flex:1}}>
+<View>
+    <ScrollView >
+    <Container>
+        {/* <Event1>BYKERS</Event1> */}
+    <Header>
+        <Swiper controlsEnabled={false} loop timeout={2}>
+         {banner.data.map((item) => {return (
                                     <Section key={`${item._id}`}>
-                                        <Image
-                                            style
-                                            ={{ width: 300,height: 200}}
-                                            source={{uri: item.pic}}/>
                                     </Section>
                                 )
-                            })
-                        }       
+                        })
+        }       
+         </Swiper>
+     </Header>                
+     <TouchableOpacity
+        style={{
+        height: 50,         
+        justifyContent: "center",
+        alignContent: "center"
+         }}
+        onPress={() => {gesi('free')}}>
 
-                    </Swiper>
-                </Header>
-                <Div></Div>
-                <Button
-                    onPress={() => {
-                    gesi('free');
-                }}
-                    title="자유게시판"
-                    color="red"/>
-                <TouchableOpacity
-                    style={{
-                    height: 100,
-                    width: 100,
-                    justifyContent: "center",
-                    alignContent: "center"
-                }}
-                    onPress={() => {
-                    gesi('humor');
-                }}>
-                    <Text>유머게시판</Text>
-                </TouchableOpacity>
+        <Text
+            style={{
+                fontSize:20, 
+                textAlign:"center"
+            }}
+        ><TabBarIcon color={'black'}name="ios-home" />자유게시판</Text>
 
-                {home.map((item) => {
+    </TouchableOpacity>
+    <TouchableOpacity
+        style={{
+        height: 50,         
+        justifyContent: "center",
+        alignContent: "center"
+         }}
+        onPress={() => {gesi('scooter')}}>
+
+        <Text
+            style={{
+                fontSize:20, 
+                textAlign:"center"
+            }}
+        ><TabBarIcon color={'black'}name="ios-home" />스쿠터</Text>
+
+    </TouchableOpacity>
+
+                {free.map((item) => {
                         return (
                             <View key={`${item._id}`}>
                                 <Text >
@@ -133,10 +114,8 @@ export default function HomeScreen() {
                                     onPress={() => {
                                     move(item._id);
                                 }}>
-                                    <Image
-                                        style
-                                        ={{
-                                        width: 100,
+                                    <Image style={{
+                                        width: 500,
                                         height: 100
                                     }}
                                         source={{
@@ -147,8 +126,48 @@ export default function HomeScreen() {
                             </View>
                         )
                     })}
-
             </Container>
         </ScrollView>
+<TouchableOpacity onPress={() => {write('posting')}} 
+style={{position: 'absolute',
+bottom: 10,
+right: 10,
+backgroundColor: '#eee',
+width: 50,
+height: 50,
+justifyContent:'flex-end',
+alignContent:'flex-end',
+borderRadius: 45,
+marginRight:20,
+shadowColor: "#000",
+shadowOffset: {
+width: 0,
+height: 3,
+},
+shadowOpacity: 0.27,
+shadowRadius: 4.65,
+elevation: 6,
+marginBottom:20,
+}}>
+<Text style={{textAlign:'center'}}>
+<Ionicons size={40} name="ios-add"/></Text>
+</TouchableOpacity>
+        </View>
+        </SafeAreaView>
     )
 }
+const Container = styled.ScrollView `
+flexGrow:1
+
+`
+const Div = styled.View `
+
+`
+const Header = styled.View `
+  height: ${height / 5}px;
+  border: 3px;
+`;
+const Section = styled.View `
+border-radius:10px;
+
+`;

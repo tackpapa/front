@@ -4,6 +4,7 @@ import {
   requestCreatePost,
   requestUpdatePost,
   requestGetPost,
+  requestSearchPost,
   requestGetCategoryPost,
   requestGetLatestPost,
   requestDeletePost,
@@ -11,10 +12,12 @@ import {
 import { createAsyncEpic } from "../utils";
 
 const getPostEpic = createAsyncEpic(actions.getPost, requestGetPost);
+
 const getCategoryPostEpic = createAsyncEpic(
   actions.getCategoryPost,
   requestGetCategoryPost
 );
+const searchPostEpic = createAsyncEpic(actions.searchPost, requestSearchPost);
 const deletePostEpic = createAsyncEpic(actions.deletePost, requestDeletePost);
 const getLatestPostEpic = createAsyncEpic(
   actions.getLatestPost,
@@ -25,6 +28,7 @@ const updatePostEpic = createAsyncEpic(actions.updatePost, requestUpdatePost);
 
 export default combineEpics(
   getPostEpic,
+  searchPostEpic,
   getCategoryPostEpic,
   createPostEpic,
   updatePostEpic,

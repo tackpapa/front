@@ -28,7 +28,7 @@ const fetchUploadProfileEpic = createAsyncEpic(
 );
 
 const fetchUserProfileEpic = createAsyncEpic(
-  actions.fetchUploadProfile,
+  actions.fetchUserProfile,
   requestUserProfile
 );
 

@@ -5,8 +5,9 @@ import { RootAction, RootState } from "./types";
 import rootReducer from "./reducer";
 import rootEpic from "./epic";
 import { handleSignIn } from "./utils";
-import { createLogger } from "redux-logger";
+// import { createLogger } from "redux-logger";
 import storage from "redux-persist/lib/storage";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 const persistHandler = (store: Store<RootState>) => () => {
   const state = store.getState();
@@ -14,7 +15,7 @@ const persistHandler = (store: Store<RootState>) => () => {
     handleSignIn(state.user.token, state.user._id);
   }
 };
-const loggerMiddleware = createLogger();
+// const loggerMiddleware = createLogger();
 const epicMiddleware = createEpicMiddleware<
   RootAction,
   RootAction,
@@ -26,14 +27,11 @@ const epicMiddleware = createEpicMiddleware<
 //   storage,
 // };
 
-const middlewares: any[] = [
-  epicMiddleware,
-  // loggerMiddleware
-];
+const middlewares: any[] = [epicMiddleware];
 
 const store = createStore(
   rootReducer,
-  compose(applyMiddleware(...middlewares))
+  composeWithDevTools(applyMiddleware(...middlewares))
 );
 
 epicMiddleware.run(rootEpic);

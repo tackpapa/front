@@ -9,7 +9,7 @@ import postactions from '../../store/post/postactions'
 import { RootState } from '~/../store/types';
 import { Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native';
-import { TextInput } from 'react-native';
+
 
 const postSelector = ({ post }:RootState)=> post;
 const {width, height} = Dimensions.get("screen")
@@ -19,7 +19,7 @@ const Div = styled.View`
 
 `;
 const Alarm = styled.Text`
-font-size:20;
+fontSize:20px;
 justify-content:center;
 text-align:center;
 margin:10px;
@@ -31,11 +31,9 @@ export default function Noti() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (route.params?._id) {
-      dispatch(postactions.getPost.request({_id:route.params._id}));
-    }
-  },[dispatch, route])
-  const post = useSelector(postSelector)
+
+  },[])
+  
   
 
   return (
@@ -70,6 +68,7 @@ export default function Noti() {
       <Alarm>알림입니다1</Alarm>
 
     </Div>
+    
     </Container>
   );
 }

@@ -12,6 +12,8 @@ export default {
               NotiScreen: "noti",
               CommunityScreen: "Community",
               Com2Screen: "com2",
+
+              SeePostScreen: "seepost",
             },
           },
           Jobs: {
@@ -51,6 +53,8 @@ export default {
         },
       },
       NotFound: "*",
+      SearchResult: "searchresult",
+      SearchScreen: "search",
     },
   },
 };

@@ -42,7 +42,8 @@ export const requestUploadProfile = (payload: UploadProfileRequestPayload) => {
     .then<UploadProfileSuccessPayload>(({ data }) => data);
 };
 
-export const requestUserProfile = (payload: UserProfileRequestPayload) =>
-  request
+export const requestUserProfile = (payload: UserProfileRequestPayload) => {
+  return request
     .get(`/user/profile/${payload._id}`)
     .then<UserProfileSuccessPayload>(({ data }) => data);
+};

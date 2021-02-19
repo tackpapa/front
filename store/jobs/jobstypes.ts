@@ -1,7 +1,20 @@
 import { State } from "react-native-gesture-handler";
 
-export interface JobsState {
-  data: Job[];
+export type CategoryJobsState = {
+  [key in keyof typeof JobType]: Job[];
+};
+
+export interface JobsState extends CategoryJobsState {
+  onejob?: Job;
+  result?: Job[];
+  usercall: Job[];
+}
+
+export enum JobType {
+  free = "free",
+  ride = "ride",
+  fix = "fix",
+  etc = "etc",
 }
 
 export enum Actions {
@@ -9,6 +22,21 @@ export enum Actions {
   GET_JOB_SUCCESS = "GETJOB#SUCCESS",
   GET_JOB_FAILURE = "GETJOB#FAILURE",
   GET_JOB_CANCEL = "GETJOB#CANCEL",
+
+  DELETERESULT_REQUEST = "DELETERESULT#REQUEST",
+  DELETERESULT_SUCCESS = "DELETERESULT#SUCCESS",
+  DELETERESULT_FAILURE = "DELETERESULT#FAILURE",
+  DELETERESULT_CANCEL = "DELETERESULT#CANCEL",
+
+  GET_CATEGORY_JOB_REQUEST = "GETCATEGORY_JOB#REQUEST",
+  GET_CATEGORY_JOB_SUCCESS = "GETCATEGORY_JOB#SUCCESS",
+  GET_CATEGORY_JOB_FAILURE = "GETCATEGORY_JOB#FAILURE",
+  GET_CATEGORY_JOB_CANCEL = "GETCATEGORY_JOB#CANCEL",
+
+  SEARCH_JOB_REQUEST = "SEARCH_JOB#REQUEST",
+  SEARCH_JOB_SUCCESS = "SEARCH_JOB#SUCCESS",
+  SEARCH_JOB_FAILURE = "SEARCH_JOB#FAILURE",
+  SEARCH_JOB_CANCEL = "SEARCH_JOB#CANCEL",
 
   DELETE_JOB_REQUEST = "DELETEJOB#REQUEST",
   DELETE_JOB_SUCCESS = "DELETEJOB#SUCCESS",
@@ -32,7 +60,11 @@ export enum Actions {
 }
 
 export const initialState: JobsState = {
-  data: [],
+  free: [],
+  ride: [],
+  fix: [],
+  etc: [],
+  usercall: [],
 };
 
 export interface Job {
@@ -42,24 +74,48 @@ export interface Job {
   context: string;
   pics: string[];
   tags: string[];
+  category: JobType;
   comments: [];
   views: number;
   location: String;
 }
-
+export type DeleteResultRequestPayload = void;
+export type DeleteResultSuccessPayload = void;
 export type GetJobRequestPayload = Pick<Job, "_id">;
 export type DeleteJobRequestPayload = Pick<Job, "_id">;
 export type GetLatestJobRequestPayload = void;
 
+export interface GetCategoryJobRequestPayload {
+  _id: string;
+}
+export interface SearchJobRequestPayload {
+  _id: string;
+}
+
+export interface GetCategoryJobSuccessPayload {
+  data: Job[];
+  type: JobType;
+}
+export interface SearchJobSuccessPayload {
+  data: Job[];
+  type: JobType;
+}
+
 export type UpdateJobRequestPayload = Job;
 
 export interface CreateJobRequestPayload {
-  id: string;
   title: string;
   author: string;
   context: string;
+  category: JobType;
   location: string;
-  pics: string[];
+  pic: [
+    {
+      name: string;
+      type: string;
+      uri: string;
+    }
+  ];
   tags: string[];
 }
 

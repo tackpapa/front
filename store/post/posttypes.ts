@@ -1,18 +1,23 @@
-import { State } from "react-native-gesture-handler";
-import { PersistGate } from "redux-persist/integration/react";
-
 export type CategoryPostState = {
   [key in keyof typeof PostType]: Post[];
 };
 
 export interface PostState extends CategoryPostState {
   onepost?: Post;
+  result?: Post[];
+  usercall: Post[];
 }
 
 export enum PostType {
-  home = "home",
   free = "free",
-  humor = "humor",
+  accident = "accident",
+  meeting = "meeting",
+  replica = "replica",
+  scooter = "scooter",
+  bedal = "bedal",
+  domestic = "domestic",
+  imported = "imported",
+  bike = "bike",
 }
 
 export enum Actions {
@@ -20,6 +25,16 @@ export enum Actions {
   GET_POST_SUCCESS = "GETPOST#SUCCESS",
   GET_POST_FAILURE = "GETPOST#FAILURE",
   GET_POST_CANCEL = "GETPOST#CANCEL",
+
+  DELETERESULT_REQUEST = "DELETERESULT#REQUEST",
+  DELETERESULT_SUCCESS = "DELETERESULT#SUCCESS",
+  DELETERESULT_FAILURE = "DELETERESULT#FAILURE",
+  DELETERESULT_CANCEL = "DELETERESULT#CANCEL",
+
+  SEARCH_POST_REQUEST = "SEARCHPOST#REQUEST",
+  SEARCH_POST_SUCCESS = "SEARCHPOST#SUCCESS",
+  SEARCH_POST_FAILURE = "SEARCHPOST#FAILURE",
+  SEARCH_POST_CANCEL = "SEARCHPOST#CANCEL",
 
   GET_CATEGORY_POST_REQUEST = "GETCATEGORY_POST#REQUEST",
   GET_CATEGORY_POST_SUCCESS = "GETCATEGORY_POST#SUCCESS",
@@ -48,9 +63,16 @@ export enum Actions {
 }
 
 export const initialState: PostState = {
-  home: [],
   free: [],
-  humor: [],
+  accident: [],
+  meeting: [],
+  replica: [],
+  scooter: [],
+  bedal: [],
+  bike: [],
+  domestic: [],
+  imported: [],
+  usercall: [],
 };
 
 export interface Post {
@@ -66,8 +88,14 @@ export interface Post {
 }
 
 export type GetPostRequestPayload = Pick<Post, "_id">;
+export type DeleteResultRequestPayload = void;
+export type DeleteResultSuccessPayload = void;
+
 export interface GetCategoryPostRequestPayload {
   _id: string;
+}
+export interface SearchPostRequestPayload {
+  query: string;
 }
 export type DeletePostRequestPayload = Pick<Post, "_id">;
 export type GetLatestPostRequestPayload = void;
@@ -75,17 +103,26 @@ export type GetLatestPostRequestPayload = void;
 export type UpdatePostRequestPayload = Omit<Post, "views">;
 
 export interface CreatePostRequestPayload {
-  id: string;
   title: string;
   author: string;
   context: string;
-  pics: string[];
+  pic: [
+    {
+      name: string;
+      type: string;
+      uri: string;
+    }
+  ];
   tags: string[];
   category: PostType;
 }
 
 export type GetPostSuccessPayload = Post;
 export interface GetCategoryPostSuccessPayload {
+  data: Post[];
+  type: PostType;
+}
+export interface SearchPostSuccessPayload {
   data: Post[];
   type: PostType;
 }
