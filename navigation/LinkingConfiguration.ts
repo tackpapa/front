@@ -10,31 +10,23 @@ export default {
             screens: {
               HomeScreen: "home",
               NotiScreen: "noti",
-              CommunityScreen: "Community",
-              Com2Screen: "com2",
-
-              SeePostScreen: "seepost",
             },
           },
           Jobs: {
             screens: {
               JobsScreen: "jobs",
-              HireScreen: "hire",
-              SeejobScreen: "seejob",
             },
           },
           Chat: {
             screens: {
               ChatScreen: "chats",
-              WritechatScreen: "writechat",
-              SeechatScreen: "seechat",
+
+              SeeChatScreen: "seechat",
             },
           },
           Market: {
             screens: {
               MarketScreen: "market",
-              WriteproductScreen: "writemarket",
-              SeeproductScreen: "seemarket",
             },
           },
           Profile: {
@@ -43,18 +35,15 @@ export default {
               WriteprofileScreen: "writeprofile",
             },
           },
-          Onboarding: {
-            screens: {
-              RegisterScreen: "register",
-              LoginScreen: "login",
-              OnboardingScreen: "onboarding",
-            },
-          },
         },
       },
       NotFound: "*",
       SearchResult: "searchresult",
       SearchScreen: "search",
+      CommunityScreen: "Community",
+      SeePostScreen: "seepost",
+      WebScreen: "webscreen",
+      RegisterScreen: "register",
     },
   },
 };

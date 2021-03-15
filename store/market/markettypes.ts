@@ -6,6 +6,7 @@ export interface MarketState extends CategoryMarketState {
   onemarket?: Market;
   result?: Market[];
   usercall: Market[];
+  isLoading: boolean;
 }
 
 export enum MarketType {
@@ -13,6 +14,7 @@ export enum MarketType {
   part = "part",
   safety = "safety",
   acc = "acc",
+  latest = "latest",
 }
 
 export enum Actions {
@@ -63,6 +65,8 @@ export const initialState: MarketState = {
   safety: [],
   acc: [],
   usercall: [],
+  latest: [],
+  isLoading: false,
 };
 
 export interface Market {
@@ -72,13 +76,16 @@ export interface Market {
   context: string;
   pics: string[];
   category: MarketType;
+  comments: string[];
   tags: string[];
   views: number;
   price: number;
   location: string;
+  createdAt: string;
 }
 export interface GetCategoryMarketRequestPayload {
-  _id: string;
+  category: string;
+  date: string;
 }
 export interface SearchMarketRequestPayload {
   _id: string;
@@ -96,7 +103,7 @@ export interface SearchMarketSuccessPayload {
   type: MarketType;
 }
 export type DeleteMarketRequestPayload = Pick<Market, "_id">;
-export type GetLatestMarketRequestPayload = void;
+export type GetLatestMarketRequestPayload = string;
 
 export type UpdateMarketRequestPayload = Omit<Market, "views">;
 

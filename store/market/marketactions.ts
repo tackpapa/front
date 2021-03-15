@@ -45,8 +45,8 @@ const getCategoryMarket = createAsyncAction(
   Actions.GET_CATEGORY_MARKET_FAILURE,
   Actions.GET_CATEGORY_MARKET_CANCEL
 )<
-  SearchMarketRequestPayload,
-  SearchMarketSuccessPayload,
+  GetCategoryMarketRequestPayload,
+  GetCategoryMarketSuccessPayload,
   undefined,
   undefined
 >();

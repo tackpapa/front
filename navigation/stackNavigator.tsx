@@ -1,71 +1,70 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
-import {HomeParamList, JobsParamList, ChatParamList, MarketParamList, ProfileParamList, OnboardingParamList } from '../types';
+import {HomeParamList, JobsParamList, ChatParamList, MarketParamList, ProfileParamList } from '../types';
 import HomeScreen from '../screens/Home/HomeScreen';
 import JobsScreen from '../screens/Jobs/JobsScreen';
-import CommunityScreen from '../screens/Home/CommunityScreen';
+
 import ChatScreen from '../screens/Chat/ChatScreen';
 import MarketScreen from '../screens/Market/MarketScreen';
-import CateScreen from '../screens/Market/CateScreen';
+
 import ProfileScreen from '../screens/Profile/ProfileScreen';
 import SettingScreen from '../screens/Profile/ProfileScreen';
-import SeePostScreen from '../screens/Home/SeePostScreen';
-import NotiScreen from '../screens/Home/NotiScreen';
-import SearchScreen from '../screens/SearchScreen';
-import HireScreen from '../screens/Jobs/HireScreen';
-import SeechatScreen from '../screens/Chat/SeechatScreen';
-import WritechatScreen from '../screens/Chat/WritechatScreen';
-import WriteprofileScreen from '../screens/Profile/WriteprofileScreen';
-import RegisterScreen from '../screens/Onboarding/RegisterScreen';
-import LoginScreen from '../screens/Onboarding/LoginScreen';
-import OnboardingScreen from '../screens/Onboarding/OnboardingScreen';
-import { useRoute } from '@react-navigation/native';
-import WriteJobScreen from '../screens/Jobs/WriteJobScreen';
-import { TouchableOpacity, Text } from 'react-native';
 
-function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
-  return <Ionicons size={20} style={{ marginBottom: -3 }} {...props} />;
-}
+
+import NotiScreen from '../screens/Home/NotiScreen';
+
+
+import SeeChatScreen from '../screens/Chat/SeeChatScreen';
+
+import WriteprofileScreen from '../screens/Profile/WriteprofileScreen';
+
+
+
+
+import {Text} from 'react-native';
+import { Dimensions } from 'react-native';
+import styled from 'styled-components/native';
+import  Noti from '../icons/group2368.svg';
+
+const {width, height} = Dimensions.get("screen")
+
 
 const HomeStack = createStackNavigator<HomeParamList>();
 
 export function HomeNavigator() {
-  const route = useRoute<any>();
-
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator> 
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
         options={({ navigation }) => ({  
           title: '',
-          headerRight: () => (
-            <><TabBarIcon name="ios-notifications-outline" style={{ paddingRight: 20 }} onPress={() => navigation.navigate('NotiScreen')} />
-              <TouchableOpacity><Text>dd</Text></TouchableOpacity></>
+          headerStyle: {
+            backgroundColor: '#fff',
+            shadowColor: 'transparent',
+            elevation: 0
+          },
+          headerLeft: () => (
+            <>
+              <Notibox onPress={() => navigation.navigate('NotiScreen')}>
+              <Noti style={{bottom:-5, left:-1}}></Noti>
+                </Notibox>
+                </>
           ),
-          headerLeft: () => (           
-            <TouchableOpacity onPress={() => navigation.navigate('SearchScreen', "게시판")} >  
-            <Text>sdf</Text>
-            </TouchableOpacity> 
+          headerRight: () => (           
+            <><Search style={{marginRight:20}} onPress={() => navigation.navigate('SearchScreen', "게시판")} >  
+            <Text style={{textAlign:'center', color:'#5f5f5f',justifyContent:'center', alignItems:'center', fontSize:17}}><Ionicons size={17} name="ios-search"/>검색</Text>
+           </Search></>
           ),
         })}
       />
-      <HomeStack.Screen
-        name="CommunityScreen"
-        component={CommunityScreen}
-        // options={{ headerTitle: '**게시판' }}
+     
        
-      />
-       <HomeStack.Screen
-        name="SeePostScreen"
-        component={SeePostScreen}
-        options={{ headerTitle: '글 상세보기' }}
-      />
        <HomeStack.Screen
         name="NotiScreen"
         component={NotiScreen}
-        options={{ headerTitle: '알림' }}
+        options={{headerShown:false}}
       />
     </HomeStack.Navigator>
   );
@@ -80,51 +79,30 @@ export function JobsNavigator() {
         name="JobsScreen"
         component={JobsScreen}
         options={({ navigation }) => ({
-          title: '구인구직',
-          headerLeft: () => (
-            <TabBarIcon name="ios-search" style={{paddingLeft:20}} onPress={() => navigation.navigate('SearchScreen', "공고")} />
-          ),
+          title: '',
+          headerStyle: {
+            backgroundColor: '#fff',
+            shadowColor: 'transparent',
+            elevation:0
+          },
+          headerRight: () => (           
+            <><Search style={{marginRight:20}} onPress={() => navigation.navigate('SearchScreen', "공고")} >  
+            <Text style={{textAlign:'center', color:'#5f5f5f',justifyContent:'center', alignItems:'center', fontSize:17}}><Ionicons size={17} name="ios-search"/>검색</Text>
+           </Search></>),
+           headerLeft: () => (           
+            <Layer>구인구직</Layer>),
         })}
       
       />
-        <JobsStack.Screen
-        name="HireScreen"
-        component={HireScreen}
-        options={({ navigation }) => ({
-          title: '구인 종류스크린',
-          
-        })}
-      
-      />
+       
 
 
     </JobsStack.Navigator>
   );
 }
 
-const OnboardingStack = createStackNavigator<OnboardingParamList>();
 
-export function OnboardingNavigator() {
-  return (
-    <OnboardingStack.Navigator>
-      <OnboardingStack.Screen
-        name="RegisterScreen"
-        component={RegisterScreen}
-        options={{ headerTitle: '회원가입' }}
-      />
-        <OnboardingStack.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-        options={{ headerTitle: '로그인' }}
-      />
-      <OnboardingStack.Screen
-        name="OnboardingScreen"
-        component={OnboardingScreen}
-        options={{ headerTitle: '온보딩' }}
-      />
-    </OnboardingStack.Navigator>
-  );
-}
+
 
 const ChatStack = createStackNavigator<ChatParamList>();
 
@@ -134,18 +112,25 @@ export function ChatNavigator() {
       <ChatStack.Screen
         name="ChatScreen"
         component={ChatScreen}
-        options={{ headerTitle: '채팅리스트' }}
+        options={({ }) => ({
+          title: '',
+          headerStyle: {
+            backgroundColor: '#fff',
+            height:80,
+            shadowColor:'#eee',
+            elevation:0
+          },
+         
+           headerLeft: () => (           
+            <Layer style={{marginRight:20}}>채팅</Layer>),
+        })}
       />
       <ChatStack.Screen
-        name="SeechatScreen"
-        component={SeechatScreen}
-        options={{ headerTitle: '채팅방' }}
+        name="SeeChatScreen"
+        component={SeeChatScreen}
+        options={{headerShown:false}}
       />
-      <ChatStack.Screen
-        name="WritechatScreen"
-        component={WritechatScreen}
-        options={{ headerTitle: '채팅보내기' }}
-      />
+     
     </ChatStack.Navigator>
   );
 }
@@ -158,18 +143,21 @@ export function MarketNavigator() {
         name="MarketScreen"
         component={MarketScreen}
         options={({ navigation }) => ({
-          title: '사고팔고',
-          headerLeft: () => (
-            <TabBarIcon name="ios-search" style={{paddingLeft:20}} onPress={() => navigation.navigate('SearchScreen',"상품")} />
-          ),
+          title: '',
+          headerStyle: {
+            backgroundColor: '#fff',
+            shadowColor: 'transparent',
+            elevation: 0
+          },
+          headerRight: () => (           
+            <><Search style={{marginRight:20}} onPress={() => navigation.navigate('SearchScreen', "상품")} >  
+            <Text style={{textAlign:'center', color:'#5f5f5f',justifyContent:'center', alignItems:'center', fontSize:17}}><Ionicons size={17} name="ios-search"/>검색</Text>
+           </Search></>),
+           headerLeft: () => (           
+            <Layer>중고장터</Layer>),
         })}
       />
 
-       <MarketStack.Screen
-        name="CateScreen"
-        component={CateScreen}
-        options={{ headerTitle: '상품종류' }}
-      />
     </MarketStack.Navigator>
   );
 }
@@ -179,15 +167,38 @@ const ProfileStack = createStackNavigator<ProfileParamList>();
 export function ProfileNavigator() {
   return (
     <ProfileStack.Navigator>
-      <ProfileStack.Screen
+     
+       <ProfileStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{ headerTitle: '프로필' }}
+        options={({ navigation }) => ({
+          title: '',
+          headerStyle: {
+            backgroundColor: '#fff',
+            height:80,
+            shadowColor:'#eee',
+            elevation:0
+          },
+         
+           headerLeft: () => (           
+            <Layer style={{marginRight:20}}>프로필</Layer>),
+        })}
+      
       />
       <ProfileStack.Screen
         name="WriteprofileScreen"
         component={WriteprofileScreen}
-        options={{ headerTitle: '프로필 작성' }}
+        options={() => ({
+          title: '',
+          headerStyle: {
+            backgroundColor: '#fff',
+            height:0,
+            shadowColor:'#eee',
+            elevation:0
+          },       
+           headerLeft: () => (           
+            <Layer style={{marginRight:20}}></Layer>),
+        })}
       />
        <ProfileStack.Screen
         name="SettingScreen"
@@ -199,3 +210,36 @@ export function ProfileNavigator() {
 }
 
 
+const Search = styled.TouchableOpacity`
+    border-radius: 18px;
+    background-color: #ffffff;
+    width:100px;
+    height:36px;
+    marginRight:20px;
+    shadowColor:#678a9bcb;
+    justify-content:center;
+    shadow-offset:0 3px;
+    shadow-opacity: 0.45; 
+    shadowRadius: 5.65px;
+    elevation:10;
+`
+const Notibox = styled.TouchableOpacity`
+    border-radius: 18px;
+    background-color: #ffffff;
+    width:36px;
+    height:36px;
+    margin-left:20px;
+    shadowColor:#678a9bcb;
+    justify-content:center;
+    shadow-offset:0 3px;
+    shadow-opacity: 0.45;
+    shadowRadius: 5.65px;
+    elevation:10;
+`
+const Layer = styled.Text`
+    font-family: NotoSansCJKkr-Bold;
+    font-size: 20px;
+    text-align: left;
+    color: #3b3b3b;
+    margin-left:20px;
+`

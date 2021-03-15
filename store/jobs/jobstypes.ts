@@ -1,5 +1,3 @@
-import { State } from "react-native-gesture-handler";
-
 export type CategoryJobsState = {
   [key in keyof typeof JobType]: Job[];
 };
@@ -8,6 +6,7 @@ export interface JobsState extends CategoryJobsState {
   onejob?: Job;
   result?: Job[];
   usercall: Job[];
+  isLoading: boolean;
 }
 
 export enum JobType {
@@ -15,6 +14,7 @@ export enum JobType {
   ride = "ride",
   fix = "fix",
   etc = "etc",
+  latest = "latest",
 }
 
 export enum Actions {
@@ -65,6 +65,8 @@ export const initialState: JobsState = {
   fix: [],
   etc: [],
   usercall: [],
+  latest: [],
+  isLoading: false,
 };
 
 export interface Job {
@@ -75,18 +77,20 @@ export interface Job {
   pics: string[];
   tags: string[];
   category: JobType;
-  comments: [];
+  comments: string[];
   views: number;
-  location: String;
+  location: string;
+  createdAt: string;
 }
 export type DeleteResultRequestPayload = void;
 export type DeleteResultSuccessPayload = void;
 export type GetJobRequestPayload = Pick<Job, "_id">;
 export type DeleteJobRequestPayload = Pick<Job, "_id">;
-export type GetLatestJobRequestPayload = void;
+export type GetLatestJobRequestPayload = string;
 
 export interface GetCategoryJobRequestPayload {
-  _id: string;
+  category: string;
+  date: string;
 }
 export interface SearchJobRequestPayload {
   _id: string;

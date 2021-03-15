@@ -27,7 +27,7 @@ export const requestGetCategoryPost = (
   payload: GetCategoryPostRequestPayload
 ) =>
   request
-    .get(`/post/bycategory/${payload}`)
+    .get(`/post/bycategory/${payload.category}/${payload.date}`)
     .then<GetCategoryPostSuccessPayload>(({ data }) => data);
 
 export const requestSearchPost = (payload: SearchPostRequestPayload) =>
@@ -37,7 +37,7 @@ export const requestSearchPost = (payload: SearchPostRequestPayload) =>
 
 export const requestGetLatestPost = (payload: GetLatestPostRequestPayload) =>
   request
-    .get(`/post/latest`)
+    .get(`/post/latest/${payload}`)
     .then<GetLatestPostSuccessPayload>(({ data }) => data);
 
 export const requestCreatePost = (payload: CreatePostRequestPayload) => {
@@ -63,7 +63,8 @@ export const requestUpdatePost = (payload: UpdatePostRequestPayload) =>
     .post(`/post/update/${payload._id}`, payload)
     .then<UpdatePostSuccessPayload>(({ data }) => data);
 
-export const requestDeletePost = (payload: DeletePostRequestPayload) =>
-  request
-    .post(`/post/deleteone/${payload._id}`, payload)
+export const requestDeletePost = (payload: DeletePostRequestPayload) => {
+  return request
+    .get(`/post/deleteone/${payload._id}`)
     .then<DeletePostSuccessPayload>(({ data }) => data);
+};

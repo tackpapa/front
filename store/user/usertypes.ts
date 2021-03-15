@@ -66,7 +66,7 @@ export interface SignInRequestPayload {
 
 export interface UpdateRequestPayload {
   email: string;
-  password: string;
+  password?: string;
   name?: string;
   cell?: string;
   memo?: string;

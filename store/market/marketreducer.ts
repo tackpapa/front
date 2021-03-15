@@ -3,12 +3,14 @@ import { persistReducer } from "redux-persist";
 import AsyncStorage from "@react-native-community/async-storage";
 import {
   CreateMarketSuccessPayload,
+  GetCategoryMarketSuccessPayload,
   initialState,
   MarketState,
   UpdateMarketSuccessPayload,
 } from "./markettypes";
 import marketActions from "./marketactions";
 import userActions from "../user/useractions";
+import commentActions from "../comment/commentactions";
 
 const persistConfig = {
   key: "market",
@@ -21,10 +23,14 @@ const market = createReducer<MarketState>(initialState, {
       onemarket: payload,
     };
   },
-  [getType(marketActions.getCategoryMarket.success)]: (state, { payload }) => {
+  [getType(marketActions.getCategoryMarket.success)]: (
+    state,
+    { payload }: { payload: GetCategoryMarketSuccessPayload }
+  ) => {
     return {
       ...state,
-      [payload.type]: payload.data,
+      // [payload.type]: [],
+      [payload.type]: state[payload.type].concat(payload.data),
     };
   },
   [getType(marketActions.searchMarket.success)]: (state, { payload }) => {
@@ -33,10 +39,37 @@ const market = createReducer<MarketState>(initialState, {
       [payload.type]: payload.data,
     };
   },
-  [getType(marketActions.getLatestMarket.success)]: (state, { payload }) => {
+  [getType(commentActions.createComment.success)]: (state, { payload }) => {
+    if (payload.PostModel === "Market") {
+      return {
+        ...state,
+        onemarket: state.onemarket
+          ? {
+              ...state.onemarket,
+              comments: [payload, ...state.onemarket.comments],
+            }
+          : undefined,
+        latest: state.latest.map((item) => {
+          if (item._id === payload.post) {
+            return {
+              ...item,
+              comments: [payload, ...item.comments],
+            };
+          }
+          return item;
+        }),
+      };
+    }
     return {
       ...state,
-      free: payload,
+    };
+  },
+  [getType(marketActions.getLatestMarket.success)]: (state, { payload }) => {
+    // return initialState;
+    return {
+      ...state,
+      latest: state.latest.concat(payload),
+      // latest: [],
     };
   },
   [getType(userActions.fetchUserProfile.success)]: (state, { payload }) => {
@@ -51,8 +84,8 @@ const market = createReducer<MarketState>(initialState, {
   ) => {
     return {
       ...state,
-      // [payload.category]: state[payload.category].concat([payload]),
-      [payload.category]: [...state[payload.category], payload],
+      [payload.category]: [payload, ...state[payload.category]],
+      latest: [payload, ...state["latest"]],
     };
   },
   [getType(marketActions.deleteResult.request)]: (state) => {
@@ -76,10 +109,22 @@ const market = createReducer<MarketState>(initialState, {
       [payload.category]: state[payload.category].splice(index, 1, payload),
     };
   },
-  [getType(marketActions.deleteMarket.success)]: (state, { payload }) => {
+  [getType(userActions.logout)]: (state) => {
     return {
       ...state,
-      // data: payload,
+      usercall: [],
+    };
+  },
+  [getType(marketActions.deleteMarket.success)]: (state, { payload }) => {
+    const index = state.latest.findIndex((item) => item._id === payload);
+    const index2 = state.usercall.findIndex((item) => item._id === payload);
+    state.latest.splice(index, 1);
+    state.usercall.splice(index2, 1);
+    return {
+      ...state,
+      onepost: undefined,
+      latest: state.latest,
+      usercall: state.usercall,
     };
   },
 });

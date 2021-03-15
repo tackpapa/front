@@ -7,6 +7,7 @@ import market from "./market/marketreducer";
 import chat from "./chat/chatreducer";
 import comment from "./comment/commentreducer";
 import banner from "./banner/bannerreducer";
+import search from "./search/searchreducer";
 
 const rootReducer = combineReducers({
   user,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   chat,
   comment,
   banner,
+  search,
 });
 
 export default rootReducer;

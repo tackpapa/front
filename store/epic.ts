@@ -7,6 +7,7 @@ import jobsEpic from "./jobs/jobsepics";
 import chatEpic from "./chat/chatepics";
 import commentEpic from "./comment/commentepics";
 import bannerEpic from "./banner/bannerepics";
+import searchEpic from "./search/searchepics";
 
 const epics = [
   userEpic,
@@ -16,6 +17,7 @@ const epics = [
   bannerEpic,
   chatEpic,
   commentEpic,
+  searchEpic,
 ];
 
 const rootEpic = combineEpics(...epics);

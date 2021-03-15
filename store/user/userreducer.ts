@@ -5,7 +5,6 @@ import { initialState, UserState } from "./usertypes";
 // import { setToken } from "../../utils/axios";
 // import socket from "../../utils/socket";
 import { handleSignIn } from "../utils";
-import { RootAction } from "../types";
 import userActions from "./useractions";
 
 const persistConfig = {

@@ -10,6 +10,7 @@ import { store, persistor } from './store';
 import { LogBox } from 'react-native';
 import socket from './utils/socket'
 
+
 LogBox.ignoreAllLogs(true);
 socket.connectStore(store);
 export default function App() {
@@ -30,3 +31,5 @@ export default function App() {
     </Provider>);
   }
 }
+
+

@@ -1,5 +1,3 @@
-import { State } from "react-native-gesture-handler";
-
 export interface CommentState {
   data: Comment[];
 }
@@ -35,21 +33,21 @@ export interface Comment {
   author: any;
   target: string;
   recomments: string[];
-  text: string[];
-  post: any;
+  text: string;
+  post: string;
   postmodel: string;
+  createdAt: string;
 }
 
-export type GetCommentRequestPayload = Pick<Comment, "target">;
+export type GetCommentRequestPayload = Pick<Comment, "post" | "postmodel">;
 export type DeleteCommentRequestPayload = Pick<Comment, "_id">;
 
 export type UpdateCommentRequestPayload = Comment;
 
 export interface CreateCommentRequestPayload {
-  author: any;
-  target: string;
-  text: string[];
-  post: any;
+  target?: string;
+  text: string;
+  post: string;
   postmodel: string;
 }
 

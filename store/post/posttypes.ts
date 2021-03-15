@@ -11,13 +11,13 @@ export interface PostState extends CategoryPostState {
 export enum PostType {
   free = "free",
   accident = "accident",
-  meeting = "meeting",
-  replica = "replica",
-  scooter = "scooter",
+  tour = "tour",
+  fraud = "fraud",
   bedal = "bedal",
   domestic = "domestic",
   imported = "imported",
-  bike = "bike",
+  help = "help",
+  latest = "latest",
 }
 
 export enum Actions {
@@ -65,14 +65,14 @@ export enum Actions {
 export const initialState: PostState = {
   free: [],
   accident: [],
-  meeting: [],
-  replica: [],
-  scooter: [],
+  tour: [],
+  fraud: [],
   bedal: [],
-  bike: [],
+  help: [],
   domestic: [],
   imported: [],
   usercall: [],
+  latest: [],
 };
 
 export interface Post {
@@ -85,6 +85,7 @@ export interface Post {
   comments: string[];
   views: number;
   category: PostType;
+  createdAt: string;
 }
 
 export type GetPostRequestPayload = Pick<Post, "_id">;
@@ -92,13 +93,14 @@ export type DeleteResultRequestPayload = void;
 export type DeleteResultSuccessPayload = void;
 
 export interface GetCategoryPostRequestPayload {
-  _id: string;
+  category: string;
+  date: string;
 }
 export interface SearchPostRequestPayload {
   query: string;
 }
 export type DeletePostRequestPayload = Pick<Post, "_id">;
-export type GetLatestPostRequestPayload = void;
+export type GetLatestPostRequestPayload = string;
 
 export type UpdatePostRequestPayload = Omit<Post, "views">;
 

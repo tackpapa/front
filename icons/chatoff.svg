@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16.38" height="15.413" viewBox="0 0 16.38 15.413">
+    <defs>
+        <style>
+            .cls-1{fill:none;stroke:#9d9d9d;stroke-width:.8px}
+        </style>
+    </defs>
+    <g id="Icon_message_wait" transform="translate(-2.6 -3.6)">
+        <g id="Icon_message_wait-2" transform="translate(3 4)">
+            <path id="Path" d="M1.706.853A.853.853 0 1 1 .853 0a.853.853 0 0 1 .853.853z" class="cls-1" transform="translate(3.412 5.97)"/>
+            <path id="Path-2" d="M1.706.853A.853.853 0 1 1 .853 0a.853.853 0 0 1 .853.853z" class="cls-1" transform="translate(6.823 5.97)"/>
+            <path id="Path-3" d="M1.706.853A.853.853 0 1 1 .853 0a.853.853 0 0 1 .853.853z" class="cls-1" transform="translate(10.235 5.97)"/>
+            <path id="Path-4" d="M0 6.823c0 3.768 3.437 6.823 7.676 6.823a8.627 8.627 0 0 0 1.706-.169l5.97 1.022-1.433-3.705a6.3 6.3 0 0 0 1.433-3.971C15.352 3.055 11.916 0 7.676 0S0 3.055 0 6.823z" class="cls-1"/>
+        </g>
+    </g>
+</svg>

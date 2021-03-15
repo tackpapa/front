@@ -3,12 +3,15 @@ import { persistReducer } from "redux-persist";
 import AsyncStorage from "@react-native-community/async-storage";
 import {
   CreateJobSuccessPayload,
+  GetCategoryJobRequestPayload,
+  GetCategoryJobSuccessPayload,
   initialState,
   JobsState,
   UpdateJobSuccessPayload,
 } from "./jobstypes";
 import jobActions from "./jobsactions";
 import userActions from "../user/useractions";
+import commentActions from "../comment/commentactions";
 
 const persistConfig = {
   key: "job",
@@ -21,16 +24,17 @@ const job = createReducer<JobsState>(initialState, {
       onejob: payload,
     };
   },
-  [getType(jobActions.getCategoryJob.success)]: (state, { payload }) => {
+
+  [getType(jobActions.searchJob.success)]: (state, { payload }) => {
     return {
       ...state,
       [payload.type]: payload.data,
     };
   },
-  [getType(jobActions.searchJob.success)]: (state, { payload }) => {
+  [getType(userActions.logout)]: (state) => {
     return {
       ...state,
-      [payload.type]: payload.data,
+      usercall: [],
     };
   },
   [getType(jobActions.deleteJob.success)]: (state, { payload }) => {
@@ -51,19 +55,46 @@ const job = createReducer<JobsState>(initialState, {
     };
   },
   [getType(jobActions.getLatestJob.success)]: (state, { payload }) => {
+    // return initialState;
     return {
       ...state,
-      free: payload,
+      latest: state.latest.concat(payload),
     };
   },
+
   [getType(jobActions.createJob.success)]: (
     state,
     { payload }: { payload: CreateJobSuccessPayload }
   ) => {
     return {
       ...state,
-      // [payload.category]: state[payload.category].concat([payload]),
-      [payload.category]: [...state[payload.category], payload],
+      [payload.category]: [payload, ...state[payload.category]],
+      latest: [payload, ...state["latest"]],
+    };
+  },
+  [getType(commentActions.createComment.success)]: (state, { payload }) => {
+    if (payload.PostModel === "Job") {
+      return {
+        ...state,
+        onepost: state.onejob
+          ? {
+              ...state.onejob,
+              comments: [payload, ...state.onejob.comments],
+            }
+          : undefined,
+        latest: state.latest.map((item) => {
+          if (item._id === payload.post) {
+            return {
+              ...item,
+              comments: [payload, ...item.comments],
+            };
+          }
+          return item;
+        }),
+      };
+    }
+    return {
+      ...state,
     };
   },
   [getType(jobActions.updateJob.success)]: (
@@ -79,6 +110,16 @@ const job = createReducer<JobsState>(initialState, {
     return {
       ...state,
       [payload.category]: state[payload.category].splice(index, 1, payload),
+    };
+  },
+  [getType(jobActions.getCategoryJob.success)]: (
+    state,
+    { payload }: { payload: GetCategoryJobSuccessPayload }
+  ) => {
+    return {
+      ...state,
+      [payload.type]: state[payload.type].concat(payload.data),
+      // [payload.type]: [],
     };
   },
 });

@@ -12,7 +12,7 @@ import {
 
 export const requestGetComment = (payload: GetCommentRequestPayload) =>
   request
-    .get(`/comment/get/${payload.target}`)
+    .get(`/comment/get/${payload.post}`)
     .then<GetCommentSuccessPayload>(({ data }) => data);
 
 export const requestDeleteComment = (payload: DeleteCommentRequestPayload) =>

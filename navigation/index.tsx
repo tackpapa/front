@@ -1,4 +1,4 @@
-import { NavigationContainer, DefaultTheme, DarkTheme, CommonActions } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
@@ -7,11 +7,11 @@ import { RootStackParamList } from '../types';
 import TabNavigator from './tabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import SearchScreen from '../screens/SearchScreen';
-import { Ionicons } from '@expo/vector-icons';
 import WriteScreen from '../screens/WriteScreen';
-function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
-  return <Ionicons size={20} style={{ marginBottom: -3 }} {...props} />;
-}
+import SeePostScreen from '../screens/SeePostScreen';
+import CommunityScreen from '../screens/CommunityScreen';
+import WebScreen from '../screens/WebScreen';
+import RegisterScreen from '../screens/Onboarding/RegisterScreen';
 
 
 
@@ -25,8 +25,6 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
   );
 }
 
-// A root stack navigator is often used for displaying modals on top of all other content
-// Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
@@ -37,12 +35,32 @@ function RootNavigator() {
       <Stack.Screen
         name="WriteScreen"
         component={WriteScreen}
-        // options={{ headerTitle: '검색결과' }}
       />
       <Stack.Screen
         name="SearchScreen"     
         component={SearchScreen}
        
+      />
+      <Stack.Screen
+        name="SeePostScreen"
+        component={SeePostScreen}
+        options={{ headerTitle: '글 상세보기' }}
+      />
+       <Stack.Screen
+        name="CommunityScreen"
+        component={CommunityScreen}
+       
+      />
+       <Stack.Screen
+        name="WebScreen"
+        component={WebScreen}
+        options={{ headerTitle: '브라우저' }}
+       
+      />
+      <Stack.Screen
+        name="RegisterScreen"
+        component={RegisterScreen}
+        options={{ headerTitle: '회원가입' }}       
       />
     </Stack.Navigator>
   );

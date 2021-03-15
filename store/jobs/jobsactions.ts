@@ -52,10 +52,10 @@ const getCategoryJob = createAsyncAction(
 >();
 
 const searchJob = createAsyncAction(
-  Actions.GET_CATEGORY_JOB_REQUEST,
-  Actions.GET_CATEGORY_JOB_SUCCESS,
-  Actions.GET_CATEGORY_JOB_FAILURE,
-  Actions.GET_CATEGORY_JOB_CANCEL
+  Actions.SEARCH_JOB_REQUEST,
+  Actions.SEARCH_JOB_SUCCESS,
+  Actions.SEARCH_JOB_FAILURE,
+  Actions.SEARCH_JOB_CANCEL
 )<SearchJobRequestPayload, SearchJobSuccessPayload, undefined, undefined>();
 
 const deleteJob = createAsyncAction(

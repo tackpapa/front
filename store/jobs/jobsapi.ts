@@ -21,10 +21,13 @@ export const requestGetJob = (payload: GetJobRequestPayload) =>
     .get(`/job/findone/${payload._id}`)
     .then<GetJobSuccessPayload>(({ data }) => data);
 
-export const requestGetCategoryJob = (payload: GetCategoryJobRequestPayload) =>
-  request
-    .get(`/job/bycategory/${payload}`)
+export const requestGetCategoryJob = (
+  payload: GetCategoryJobRequestPayload
+) => {
+  return request
+    .get(`/job/bycategory/${payload.category}/${payload.date}`)
     .then<GetCategoryJobSuccessPayload>(({ data }) => data);
+};
 
 export const requestSearchJob = (payload: SearchJobRequestPayload) =>
   request
@@ -36,10 +39,11 @@ export const requestDeleteJob = (payload: DeleteJobRequestPayload) =>
     .get(`/job/deleteone/${payload._id}`)
     .then<DeleteJobSuccessPayload>(({ data }) => data);
 
-export const requestGetLatestJob = (payload: GetLatestJobRequestPayload) =>
-  request
-    .get(`/job/latest`)
+export const requestGetLatestJob = (payload: GetLatestJobRequestPayload) => {
+  return request
+    .get(`/job/latest/${payload}`)
     .then<GetLatestJobSuccessPayload>(({ data }) => data);
+};
 
 export const requestCreateJob = (payload: CreateJobRequestPayload) => {
   var form_data = new FormData();

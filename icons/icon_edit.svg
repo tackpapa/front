@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21.28" height="21.28" viewBox="0 0 21.28 21.28">
+    <defs>
+        <style>
+            .cls-1{fill:none;stroke:#4e76e0;stroke-width:1.5px}
+        </style>
+    </defs>
+    <g id="Icon_edit" transform="translate(-3.25 -3.47)">
+        <g id="Icon_edit-2" transform="translate(4 4)">
+            <path id="Path" d="M15.294 0L0 15.294V20h4.706L20 4.706" class="cls-1"/>
+            <path id="Path-2" d="M0 0l4.706 4.706" class="cls-1" transform="translate(15.294)"/>
+            <path id="Path-3" d="M0 0l4.706 4.706" class="cls-1" transform="translate(11.765 3.529)"/>
+        </g>
+    </g>
+</svg>

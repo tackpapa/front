@@ -25,7 +25,7 @@ export const requestGetCategoryMarket = (
   payload: GetCategoryMarketRequestPayload
 ) =>
   request
-    .get(`/market/bycategory/${payload}`)
+    .get(`/market/bycategory/${payload.category}/${payload.date}`)
     .then<GetCategoryMarketSuccessPayload>(({ data }) => data);
 
 export const requestSearchMarket = (payload: SearchMarketRequestPayload) =>
@@ -42,7 +42,7 @@ export const requestGetLatestMarket = (
   payload: GetLatestMarketRequestPayload
 ) =>
   request
-    .get(`/market/latest`)
+    .get(`/market/latest/${payload}`)
     .then<GetLatestMarketSuccessPayload>(({ data }) => data);
 
 export const requestCreateMarket = (payload: CreateMarketRequestPayload) => {

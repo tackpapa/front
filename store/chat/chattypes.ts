@@ -25,6 +25,7 @@ export interface Chat {
   from: any;
   to: any;
   msg: string;
+  createdAt: string;
 }
 
 export type GetLatestChatRequestPayload = {
@@ -32,7 +33,6 @@ export type GetLatestChatRequestPayload = {
 };
 
 export interface CreateChatRequestPayload {
-  id: any;
   from: any;
   to: any;
   msg: string;

@@ -17,7 +17,7 @@ export default function useCachedResources() {
           ...Ionicons.font,
           "space-mono": require("../assets/fonts/SpaceMono-Regular.ttf"),
           "NotoSansCJKkr-Regular": require("../assets/fonts/NotoSansCJKkr-Regular.otf"),
-          "NotoSanasCJKkr-Bold": require("../assets/fonts/NotoSansCJKkr-Bold.otf"),
+          "NotoSansCJKkr-Bold": require("../assets/fonts/NotoSansCJKkr-Bold.otf"),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service

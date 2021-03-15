@@ -32,5 +32,6 @@ export default combineEpics(
   getCategoryPostEpic,
   createPostEpic,
   updatePostEpic,
-  getLatestPostEpic
+  getLatestPostEpic,
+  deletePostEpic
 );

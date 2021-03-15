@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="240.513" viewBox="0 0 360 240.513">
+    <defs>
+        <style>
+            .cls-1{fill:#fff;stroke:#1a1818;stroke-miterlimit:10;stroke-width:2px}
+        </style>
+    </defs>
+    <g id="그룹_3524" transform="translate(0 -500.487)">
+        <path id="패스_4343" d="M595.281 228.256h-55.01a11.759 11.759 0 0 0 0 23.519h17.858a3.538 3.538 0 0 1 0 7.075h-2.346v.027h-50.126a11.759 11.759 0 1 0 0 23.519h89.624" class="cls-1" transform="translate(-235.281 273.231)"/>
+        <g id="그룹_3513" transform="translate(0 234.199)">
+            <path id="패스_4344" fill="#1a1818" d="M345.723 444.43V386.1h-26.039v41.748h-34.22v-12.582h-26.039v18.455h-10.459v-10.259l-13.019-16.392-13.02 16.392-13.019-16.392-13.02 16.392-13.019-16.392-13.02 16.392v20.968H150.6v-42.444h-26.038v13.28h-15v-23.457H83.523v41.913H57.134V423.5H40.317v-16.219H25.94V395.6h-6.857v11.679h-4.8v37.151H0v68.17h360v-68.17z" transform="translate(0 -5.804)"/>
+            <path id="사각형_1397" d="M0 0H6.368V6.368H0z" class="cls-1" transform="translate(19.711 410.067)"/>
+            <path id="사각형_1398" d="M0 0H6.368V6.368H0z" class="cls-1" transform="translate(28.03 418.664)"/>
+            <path id="사각형_1399" d="M0 0H6.368V6.368H0z" class="cls-1" transform="translate(97.074 392.986)"/>
+            <path id="사각형_1400" d="M0 0H6.368V6.368H0z" class="cls-1" transform="translate(138.147 403.095)"/>
+            <path id="사각형_1401" d="M0 0H6.368V6.368H0z" class="cls-1" transform="translate(138.147 412.646)"/>
+            <path id="사각형_1402" d="M0 0H6.368V6.368H0z" class="cls-1" transform="translate(175.548 423.195)"/>
+            <path id="사각형_1403" d="M0 0H6.368V6.368H0z" class="cls-1" transform="translate(185.409 423.195)"/>
+            <path id="사각형_1404" d="M0 0H6.368V6.368H0z" class="cls-1" transform="translate(215.328 431.207)"/>
+            <path id="사각형_1405" d="M0 0H6.368V6.368H0z" class="cls-1" transform="translate(227.711 423.195)"/>
+            <path id="사각형_1406" d="M0 0H6.368V6.368H0z" class="cls-1" transform="translate(273.725 415.83)"/>
+            <path id="사각형_1407" d="M0 0H6.368V6.368H0z" class="cls-1" transform="translate(334.324 386.014)"/>
+            <path id="사각형_1408" d="M0 0H6.368V6.368H0z" class="cls-1" transform="translate(325.491 395.566)"/>
+            <g id="그룹_3512" transform="translate(58.732 371.419)">
+                <path id="패스_4345" fill="#ffee06" stroke="#1a1818" stroke-miterlimit="10" stroke-width="2px" d="M101.929 404.548l1.19 3.422 3.623.074-2.887 2.19 1.045 3.466-2.975-2.07-2.975 2.07 1.05-3.466-2.887-2.19 3.623-.074z" transform="translate(-97.116 -384.513)"/>
+                <path id="선_329" d="M20.856 0L0 20.857" class="cls-1" transform="translate(8.421)"/>
+            </g>
+        </g>
+    </g>
+</svg>

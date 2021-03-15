@@ -3,6 +3,10 @@ export type RootStackParamList = {
   NotFound: undefined;
   WriteScreen: undefined;
   SearchScreen: undefined;
+  CommunityScreen: undefined;
+  SeePostScreen: undefined;
+  WebScreen: undefined;
+  RegisterScreen: undefined;
 };
 
 export type BottomTabParamList = {
@@ -16,35 +20,24 @@ export type BottomTabParamList = {
 export type HomeParamList = {
   HomeScreen: undefined;
   NotiScreen: undefined;
-  CommunityScreen: undefined;
-  SeePostScreen: undefined;
-  WritePostScreen: undefined;
 };
 
 export type JobsParamList = {
   JobsScreen: undefined;
-  HireScreen: undefined;
 };
 
 export type ChatParamList = {
   ChatScreen: undefined;
-  WritechatScreen: undefined;
-  SeechatScreen: undefined;
+
+  SeeChatScreen: undefined;
 };
 
 export type MarketParamList = {
   MarketScreen: undefined;
-  CateScreen: undefined;
 };
 
 export type ProfileParamList = {
   ProfileScreen: undefined;
   WriteprofileScreen: undefined;
   SettingScreen: undefined;
-};
-
-export type OnboardingParamList = {
-  RegisterScreen: undefined;
-  LoginScreen: undefined;
-  OnboardingScreen: undefined;
 };
