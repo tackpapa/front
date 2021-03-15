@@ -18,7 +18,7 @@ import { CreateChatRequestPayload } from '~/../store/chat/chattypes';
 
 
 const {width, height} = Dimensions.get("screen")
-
+const postSelector = ({ chat }:RootState)=> chat;
 const userSelector = ({user} : RootState) => user;
 
 export default function SeeChatScreen() {
@@ -27,6 +27,7 @@ export default function SeeChatScreen() {
   const user = useSelector(userSelector);
   const navigation = useNavigation();
   const [text, setText] = useState("");
+  const post = useSelector(postSelector)[route.params?.id];
 
   const submit = ()=>{
     if(text.length > 0 ){
@@ -41,7 +42,6 @@ export default function SeeChatScreen() {
     msg: text
   };
 
-
   return (
   <SafeAreaView style={{flex:1, backgroundColor:'white'}}>
   <Container>
@@ -53,22 +53,29 @@ export default function SeeChatScreen() {
   </TouchableOpacity>   
   </View>
  <Cut></Cut>
-    <Chatcard>
+    {post.map(item=>{
+      return (
+          item.from._id === user._id ?  <Mycard key={item.createdAt}>
+          <View style={{borderRadius:15,backgroundColor:"#bcd3ff", padding:5}}>
+                <Author >{item.msg}</Author>
+                </View>
+          </Mycard>  :   
+          <Chatcard key={item.createdAt}>
       <View style={{}}>
-        <Userpic source={{}}></Userpic>      
+        <Userpic source={{uri: item.from.profilepic  }}></Userpic>      
       </View>
       <View style={{ padding:5}}>
           <Author style={{fontSize:17, fontWeight:'600'}}>connortack</Author>
           <View style={{borderRadius:15,backgroundColor:"#eeeef0", padding:5}}>
-          <Author >connortack내용내용내용consdfsdonnortack내용내용내용connortack내용내용내용connortack내용내용내용</Author>
+          <Author >{item.msg}</Author>
           </View>
      </View>
     </Chatcard>
-    <Mycard>
-    <View style={{borderRadius:15,backgroundColor:"#bcd3ff", padding:5}}>
-          <Author >connortack내용내용내용consdfsdonnortack내용내용내용connortack내용내용내용connortack내용내용내용</Author>
-          </View>
-    </Mycard>
+
+      )
+   
+    })
+  }
 
   
     </Container>

@@ -1,7 +1,6 @@
-import { State } from "react-native-gesture-handler";
-
 export interface ChatState {
   data: Chat[];
+  [key: string]: Chat[];
 }
 
 export enum Actions {

@@ -5,7 +5,6 @@ import {Text, View} from '../../components/Themed';
 import styled from 'styled-components/native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {RootState} from '../../store/types'
-import useractions from '../../store/user/useractions'
 import postactions from '../../store/post/postactions'
 import Swiper from 'react-native-web-swiper'
 import {Dimensions} from "react-native";
@@ -23,7 +22,6 @@ import  Write from '../../icons/icon_edit.svg';
 import tier from '../../constants/Tier';
 import  Circle from '../../icons/ellipse_77.svg';
 import  BlueCircle from '../../icons/ellipse_78.svg';
-import { Banner } from "~/../store/banner/bannertypes";
 
 
 const {width, height} = Dimensions.get("screen")
@@ -41,14 +39,6 @@ export default function HomeScreen() {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const route = useRoute<any>();
-    
-    const homebanner: Banner[] = [];
-    
-    const sort = ()=>banner.data.map(item =>{
-        if( item.category === "post"){
-            homebanner.push(item)
-        }
-    } )
 
     
     const move = (id : string) => {
@@ -69,13 +59,9 @@ export default function HomeScreen() {
         if (!post.length) {
             dispatch(postactions.getLatestPost.request(new Date().toISOString()));
         }     
-        dispatch(banneractions.getBanner.request());
-        sort();
-  
-        dispatch(useractions.fetchSignIn.request({email: 't@t.com', password: '1234'}));      
+        dispatch(banneractions.getBanner.request());  
+        // dispatch(useractions.fetchSignIn.request({email: 't@t.com', password: '1234'}));      
     }, [dispatch, route])
-
-
 
     const refresh =(e: any)=>{
         
@@ -120,8 +106,12 @@ export default function HomeScreen() {
                 return <View style={{margin:2, borderRadius:30, backgroundColor:'white'}}><Circle></Circle></View>;
                 }
 
-                }} controlsEnabled={true} loop timeout={4}>
-                {banner.data.map((item, i) => {
+                }} controlsEnabled={true} loop timeout={4}
+                    key={`banner-${banner.data.filter(item =>item.category === "post").length}`}
+
+                >
+                {banner.data.filter(item =>item.category === "post").map((item, i) => {                  
+                
                 return ( <Section key={`${item._id}`} style={{flex:1}} onPress={() => goweb(i)}>
                 <Bannerr  source={{uri: item.pic}}/>
                 </Section>) }) }
@@ -134,7 +124,7 @@ export default function HomeScreen() {
      <View>
          <GesipanMenu> BYKERS<Gesipan> 게시판 </Gesipan> </GesipanMenu>    
          
-         <View  style={{width:width*0.8, marginLeft:width*0.1, flexWrap: 'wrap', 
+         <View  style={{padding:10, flexWrap: 'wrap', 
                 justifyContent:'space-around',
                 alignItems:'flex-start',
                 flexDirection:'row', marginTop:7}}>
@@ -193,7 +183,7 @@ export default function HomeScreen() {
      <GesipanMenu><Gesipan> 새로운 </Gesipan>게시글 </GesipanMenu>    
      <Cut style={{marginBottom:5}}></Cut>
                 {post.map((item, i) => {
-                    
+                        if (!item) return null
                         return (<Fragment key={`${item._id}`}>
                             
                             <Card>
@@ -415,7 +405,8 @@ const Cate = styled.TouchableOpacity`
     align-items:center;
     justify-content:flex-end;
     background-color:white;
-    margin:${width * 0.02}px;
+    margin:${(width - 20)*0.02}px;
+    width:${(width-20)*0.2}px;
 `
 const Bannerr = styled.Image`
 border-radius:15px;

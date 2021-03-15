@@ -33,19 +33,15 @@ export default function ChatScreen() {
   const user = useSelector(userSelector)
   const post = useSelector(postSelector)
 
-
-  let participants: { _id: string, name: string, msg:string, profilepic:string, createdAt:string }[] = [];
-
-  post.data.reverse().forEach((i)=>{
-    const part = i.from?._id === user._id ? i.to : i.from;
-    part.msg = i.msg
-    if (i.from?._id === i.to?._id) {
-      return;
-    }
-    if (participants.findIndex(participant => participant._id === part.id) === -1) {
-      participants.push(part);
+  const aaaa = Object.entries(post)
+  const bb = aaaa.filter(item=>{
+    if(item[0]==="data" || item[0] === '_persist'){
+      return false
+    }else{
+      return true
     }
   })
+  
 
   return (
   
@@ -55,23 +51,27 @@ export default function ChatScreen() {
      {(user._id === "" ?
      <Text style={{textAlign:'center', fontSize:17, opacity:0.5, marginTop:50}}>로그인 해 주세요</Text> 
      :
-     participants.map((item)=>{
-      return (<Fragment key={`${item._id}`}>
+     bb.map(([id, items])=>{   
+      const item = items[items.length-1];
+      
+      const user2 = item.from._id === user._id ? item.to : item.from;
+    
+      return (<Fragment key={id}>
         <Div>
-        <Card  onPress={()=>move(item.name, item._id)} style={{flexDirection:'row'}}> 
+        <Card  onPress={()=>move(user2.name, id)} style={{flexDirection:'row'}}> 
           
           <View style={{alignItems:'center'}}>
-              <Userpic source={{ uri: item.profilepic  }}/>                                                       
+              <Userpic source={{ uri: user2.profilepic  }}/>                                                       
            </View>
           
-            <View>
+            <View style={{ flex:1}}>
             <View style={{ alignItems:'center', flexDirection:'row', justifyContent:'space-between'}}>
 
-            <View>
-                <Username>{item.name}</Username>
+            <View style={{}}>
+                <Username>{user2.name}</Username>
             </View>
 
-              <View>
+              <View style={{}}>
                 <Chattext style={{fontSize:13}}>{formatDate(item.createdAt as unknown as string)}</Chattext>
               </View>
 
@@ -113,6 +113,7 @@ border-bottom-width:0.5px;
 border-color:#e5e5e5;
 color: #4e76e0;
 align-items:center;
+
 `;
 const Username = styled.Text`
 font-family: NotoSansCJKkr-Bold;
