@@ -7,6 +7,7 @@ export type RootStackParamList = {
   SeePostScreen: undefined;
   WebScreen: undefined;
   RegisterScreen: undefined;
+  KakaoScreen: undefined;
 };
 
 export type BottomTabParamList = {

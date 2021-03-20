@@ -20,6 +20,7 @@ import { Fragment } from 'react';
 import { trimText, formatDate } from "../utils/util"
 import searchactions from '../store/search/searchactions';
 
+
 const {width, height} = Dimensions.get("screen")
 
 const post = ({post:{result}} : RootState) => result;
@@ -27,7 +28,11 @@ const market = ({market:{result}} : RootState) => result;
 const job = ({jobs:{result}} : RootState) => result;
 const hotsearch = ({search:{data}} : RootState) => data;
 
-
+const pageType = {
+  "게시판":"Post",
+  "공고":"Job",
+  "상품":"Market"
+}
 
 export default function SearchScreen() {
   const navigation = useNavigation();
@@ -40,8 +45,9 @@ export default function SearchScreen() {
   const Job = useSelector(job);
   const keywords = useSelector(hotsearch);
 
-  const move = (id : string) => {
-    navigation.navigate("SeePostScreen", {_id: id});
+
+const move = (id : string) => {
+  navigation.navigate("SeePostScreen", {_id: id, page:pageType[route.params as keyof typeof pageType]});
 }
 
 useEffect(() => {

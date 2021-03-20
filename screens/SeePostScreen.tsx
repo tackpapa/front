@@ -20,6 +20,7 @@ import tier from '../constants/Tier';
 import { Fragment } from 'react';
 import { useState } from 'react';
 import { CreateCommentRequestPayload } from '../store/comment/commenttypes';
+import { Post } from '../store/post/posttypes';
 
 
 
@@ -37,7 +38,6 @@ export default function SeePostScreen() {
   const route = useRoute<any>();
   const { comment, Post, Job, Market } = useSelector(postSelector);
   const [text, setText] = useState("");
-  const [target, setTarget] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -60,8 +60,8 @@ export default function SeePostScreen() {
     text,
     post:route.params._id,
     postmodel:route.params.page,
-    target,
   };
+
 
   const submit = ()=>{
     if(text.length > 0 ){
@@ -85,12 +85,12 @@ export default function SeePostScreen() {
   
   const gochat = (id:string)=>{
     if(user._id===""){
-      navigation.navigate("RegisterScreen");
+      navigation.navigate("KakaoScreen");
     }else{     
-      const target = pagetype[route.params.page as keyof typeof pagetype]
+      const target = pagetype[route.params.page as keyof typeof pagetype];
       navigation.navigate('Chat', {
         screen: 'SeeChatScreen',
-        params: { name: target?.author.name, msg:target?.title+"  글보고 연락드립니다.", id:target?._id},
+        params: { name: target?.author.name, msg:target?.title+"  글보고 연락드립니다.", id:target?.author._id},
       });
     }
   }
@@ -336,7 +336,7 @@ export default function SeePostScreen() {
               onChangeText={(val) => setText(val)}
               onSubmitEditing={submit} />
               <Sub>
-                <TouchableOpacity onPress={submit}>
+                <TouchableOpacity style={{alignItems:'center'}} onPress={submit}>
                   <Subtext>입력</Subtext>
                 </TouchableOpacity>
               </Sub></>
@@ -350,10 +350,10 @@ export default function SeePostScreen() {
 const Subtext = styled.Text`
 color:white;
 font-size:18px;
-font-family: NotoSansCJKkr-Bold;
+font-weight:700;
 text-align:center;
 align-items:center;
-margin-top:5px;
+margin-top:10px;
 `
 const Sub = styled.TouchableOpacity`
 width:${width*0.2}px;

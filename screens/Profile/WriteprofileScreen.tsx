@@ -49,6 +49,12 @@ export default function WriteProfileScreen() {
     handlePW();
   }, [handlePW])
 
+  useEffect(() => {
+    if(user._id===""){
+      navigation.navigate("HomeScreen")
+    }
+  }, [user])
+
   const submit = ()=>{
     dispatch(useractions.fetchUpdate.request(payload));
     navigation.navigate("ProfileScreen")

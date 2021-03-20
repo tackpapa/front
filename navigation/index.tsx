@@ -12,6 +12,7 @@ import SeePostScreen from '../screens/SeePostScreen';
 import CommunityScreen from '../screens/CommunityScreen';
 import WebScreen from '../screens/WebScreen';
 import RegisterScreen from '../screens/Onboarding/RegisterScreen';
+import KakaoScreen from '../screens/KakaoScreen';
 
 
 
@@ -44,7 +45,7 @@ function RootNavigator() {
       <Stack.Screen
         name="SeePostScreen"
         component={SeePostScreen}
-        options={{ headerTitle: '글 상세보기' }}
+        
       />
        <Stack.Screen
         name="CommunityScreen"
@@ -54,13 +55,16 @@ function RootNavigator() {
        <Stack.Screen
         name="WebScreen"
         component={WebScreen}
-        options={{ headerTitle: '브라우저' }}
+        
        
       />
       <Stack.Screen
         name="RegisterScreen"
         component={RegisterScreen}
-        options={{ headerTitle: '회원가입' }}       
+      />
+      <Stack.Screen
+        name="KakaoScreen"
+        component={KakaoScreen}
       />
     </Stack.Navigator>
   );

@@ -73,34 +73,27 @@ export default function HomeScreen() {
     <Header>
         
     <Swiper controlsProps={{
-                                 dotsWrapperStyle: {marginLeft:17, marginBottom:10},
-                                 dotsPos:"top-left",
-                                 prevTitle: '',
-                                 nextTitle: '',
-                                DotComponent: ({ index, isActive, onPress }:any) => {
-                            
-                                if (isActive) {
-                                    return <View style={{margin:2, borderRadius:30}}><BlueCircle></BlueCircle></View>;
-                                }
-                                return <View style={{margin:2, borderRadius:30, backgroundColor:'white'}}><Circle></Circle></View>;
-                                }
-                                
-                            }}
-                                       
-                            controlsEnabled={true} loop timeout={4}>
-       
-            {banner.data.map((item, i) => {
-                    return (
-                  
-                                <Section  key={`${item._id}`} style={{flex:1}} onPress={() => goweb(i)}>
-                                    <Banner  source={{uri: item.pic}}/>
-                                    
-                                </Section>
-                                
-                 
-                    ) }) }
+                dotsWrapperStyle: {marginLeft:17, marginBottom:10},
+                dotsPos:"top-left",
+                prevTitle: '',
+                nextTitle: '',
+                DotComponent: ({ index, isActive, onPress }:any) => {                        
+                if (isActive) {
+                return <View style={{margin:2, borderRadius:30}}><BlueCircle></BlueCircle></View>;
+                }
+                return <View style={{margin:2, borderRadius:30, backgroundColor:'white'}}><Circle></Circle></View>;
+                }
 
-                  </Swiper>
+                }} controlsEnabled={true} loop timeout={4}
+                    key={`banner-${banner.data.filter(item =>item.category === "market").length}`}
+
+                >
+                {banner.data.filter(item =>item.category === "market").map((item, i) => {                  
+                
+                return ( <Section key={`${item._id}`} style={{flex:1}} onPress={() => goweb(i)}>
+                <Bannerr  source={{uri: item.pic}}/>
+                </Section>) }) }
+                </Swiper>
     </Header>
 
      <Cut style={{marginTop:10}}></Cut>
@@ -264,11 +257,11 @@ shadowColor:#678a9bcb;
 shadow-offset:0 3px;
 shadow-opacity: 0.45;
 shadowRadius: 4.65px;
-margin-top:20px;
+margin-top:5px;
 `
 
 const Header = styled.View `
-height: 170px;
+height: ${height*0.18}px;
 margin-top:10px;
 background-color:#fff;
 `;
@@ -386,4 +379,13 @@ shadow-opacity: 0.45;
 shadowRadius: 4.65px;
 elevation: 6;
 marginBottom:20px;
+`
+
+const Bannerr = styled.Image`
+border-radius:15px;
+width: ${width * 0.9}px;
+height: 144px;
+margin-left:${width * 0.05}px;
+margin-bottom:2px;
+margin-right:${width * 0.05}px;
 `

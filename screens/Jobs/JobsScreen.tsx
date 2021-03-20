@@ -55,7 +55,7 @@ export default function JobsScreen() {
             dispatch(jobsactions.getLatestJob.request(new Date().toISOString()));
         }     
         dispatch(banneractions.getBanner.request());    
-    }, [dispatch, route])
+    }, [dispatch])
 
 
     const refresh =(e: any)=>{
@@ -83,34 +83,27 @@ export default function JobsScreen() {
     <Header>
         
     <Swiper controlsProps={{
-                                 dotsWrapperStyle: {marginLeft:17, marginBottom:10},
-                                 dotsPos:"top-left",
-                                 prevTitle: '',
-                                 nextTitle: '',
-                                DotComponent: ({ index, isActive, onPress }:any) => {
-                            
-                                if (isActive) {
-                                    return <View style={{margin:2, borderRadius:30}}><BlueCircle></BlueCircle></View>;
-                                }
-                                return <View style={{margin:2, borderRadius:30, backgroundColor:'white'}}><Circle></Circle></View>;
-                                }
-                                
-                            }}
-                                       
-                            controlsEnabled={true} loop timeout={4}>
-       
-            {banner.data.map((item, i) => {
-                    return (
-                  
-                                <Section  key={`${item._id}`} style={{flex:1}} onPress={() => goweb(i)}>
-                                    <Banner  source={{uri: item.pic}}/>
-                                    
-                                </Section>
-                                
-                 
-                    ) }) }
+                dotsWrapperStyle: {marginLeft:17, marginBottom:10},
+                dotsPos:"top-left",
+                prevTitle: '',
+                nextTitle: '',
+                DotComponent: ({ index, isActive, onPress }:any) => {                        
+                if (isActive) {
+                return <View style={{margin:2, borderRadius:30}}><BlueCircle></BlueCircle></View>;
+                }
+                return <View style={{margin:2, borderRadius:30, backgroundColor:'white'}}><Circle></Circle></View>;
+                }
 
-                  </Swiper>
+                }} controlsEnabled={true} loop timeout={4}
+                    key={`banner-${banner.data.filter(item =>item.category === "job").length}`}
+
+                >
+                {banner.data.filter(item =>item.category === "market").map((item, i) => {                  
+                
+                return ( <Section key={`${item._id}`} style={{flex:1}} onPress={() => goweb(i)}>
+                <Bannerr  source={{uri: item.pic}}/>
+                </Section>) }) }
+                </Swiper>
     </Header>
 
      <Cut></Cut>
@@ -265,11 +258,11 @@ shadowColor:#678a9bcb;
 shadow-offset:0 3px;
 shadow-opacity: 0.45;
 shadowRadius: 4.65px;
-marginTop:20px;
+marginTop:5px;
 `
 
 const Header = styled.View `
-height: 160px;
+height: ${height*0.18}px;
 margin-top:10px;
 background-color:#fff;
 `;
@@ -361,14 +354,6 @@ const Cate = styled.TouchableOpacity`
     background-color:white;
     margin:${width * 0.02}px;
 `
-const Banner = styled.Image`
-border-radius:15px;
-width: ${width * 0.9}px;
-height: 144px;
-margin-left:${width * 0.05}px;
-margin-bottom:2px;
-margin-right:${width * 0.05}px;
-`
 
 const Edit = styled.TouchableOpacity`
 position:absolute;
@@ -387,4 +372,12 @@ shadow-opacity: 0.45;
 shadowRadius: 4.65px;
 elevation: 6;
 marginBottom:20px;
+`
+const Bannerr = styled.Image`
+border-radius:15px;
+width: ${width * 0.9}px;
+height: 144px;
+margin-left:${width * 0.05}px;
+margin-bottom:2px;
+margin-right:${width * 0.05}px;
 `

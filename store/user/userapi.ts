@@ -14,10 +14,11 @@ import {
   UserProfileRequestPayload,
 } from "./usertypes";
 
-export const requestFetchSignIn = (payload: SignInRequestPayload) =>
-  request
+export const requestFetchSignIn = (payload: SignInRequestPayload) => {
+  return request
     .post("/user/login", payload)
     .then<SignInSuccessPayload>(({ data }) => data);
+};
 
 export const requestFetchSignUp = (payload: SignUpRequestPayload) =>
   request

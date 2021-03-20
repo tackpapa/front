@@ -16,7 +16,8 @@ export const requestGetLatestChat = (payload: GetLatestChatRequestPayload) => {
     .get(`/chat/bringchats/${payload.date}`)
     .then<GetLatestChatSuccessPayload>(({ data }) => data);
 };
-export const requestCreateChat = (payload: CreateChatRequestPayload) =>
-  request
+export const requestCreateChat = (payload: CreateChatRequestPayload) => {
+  return request
     .post("/chat/send", payload)
     .then<CreateChatSuccessPayload>(({ data }) => data);
+};

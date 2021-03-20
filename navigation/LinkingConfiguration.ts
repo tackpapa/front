@@ -44,6 +44,7 @@ export default {
       SeePostScreen: "seepost",
       WebScreen: "webscreen",
       RegisterScreen: "register",
+      KakaoScreen: "kakao",
     },
   },
 };

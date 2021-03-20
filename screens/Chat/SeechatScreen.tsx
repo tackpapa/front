@@ -2,13 +2,12 @@ import * as React from 'react';
 import {KeyboardAvoidingView } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { Text, View } from '../../components/Themed';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/types';
 import { Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native';
-import { TextInput } from 'react-native';
 import chatactions from '../../store/chat/chatactions';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/build/Ionicons';
@@ -28,6 +27,9 @@ export default function SeeChatScreen() {
   const navigation = useNavigation();
   const [text, setText] = useState("");
   const post = useSelector(postSelector)[route.params?.id];
+  
+
+ 
 
   const submit = ()=>{
     if(text.length > 0 ){
@@ -42,6 +44,7 @@ export default function SeeChatScreen() {
     msg: text
   };
 
+
   return (
   <SafeAreaView style={{flex:1, backgroundColor:'white'}}>
   <Container>
@@ -53,29 +56,31 @@ export default function SeeChatScreen() {
   </TouchableOpacity>   
   </View>
  <Cut></Cut>
-    {post.map(item=>{
+    { post && post.length > 0 ?
+    post.map(item=>{
       return (
-          item.from._id === user._id ?  <Mycard key={item.createdAt}>
-          <View style={{borderRadius:15,backgroundColor:"#bcd3ff", padding:5}}>
+          item.from._id === user._id ? 
+
+           <Mycard key={item.createdAt}>
+                <View style={{borderRadius:15,backgroundColor:"#bcd3ff", padding:5}}>
                 <Author >{item.msg}</Author>
                 </View>
-          </Mycard>  :   
-          <Chatcard key={item.createdAt}>
-      <View style={{}}>
-        <Userpic source={{uri: item.from.profilepic  }}></Userpic>      
-      </View>
-      <View style={{ padding:5}}>
-          <Author style={{fontSize:17, fontWeight:'600'}}>connortack</Author>
-          <View style={{borderRadius:15,backgroundColor:"#eeeef0", padding:5}}>
-          <Author >{item.msg}</Author>
-          </View>
-     </View>
-    </Chatcard>
+          </Mycard> 
+           :   
 
-      )
-   
-    })
-  }
+          <Chatcard key={item.createdAt}>
+              <View style={{}}>
+                <Userpic source={{uri: item.from.profilepic  }}></Userpic>      
+              </View>
+              <View style={{ padding:5}}>
+                  <Author style={{fontSize:17, fontWeight:'600'}}>{item.from.name}</Author>
+                  <View style={{borderRadius:15,backgroundColor:"#eeeef0", padding:5}}>
+                  <Author >{item.msg}</Author>
+                  </View>
+            </View>
+           </Chatcard> 
+    ) }) 
+    : null}
 
   
     </Container>
@@ -86,7 +91,7 @@ export default function SeeChatScreen() {
               placeholder="  메세지를 입력해주세요"
               placeholderTextColor="black"
               selectionColor={'black'}
-              value={(route.params.msg ? route.params.msg : text)}            
+              value={text}            
               onChangeText={(val) => setText(val)}
               onSubmitEditing={submit} />
               <Sub>
@@ -110,8 +115,7 @@ const Chatcard = styled.View `
     marginLeft:${width * 0.01}px;
     marginTop:5px;
     marginBottom:5px;
-    width:${width * 0.6}px;
-    background-color:#E8EAF3;
+ 
     border-radius:25px;
 `;
 const Container = styled.ScrollView`
@@ -138,8 +142,7 @@ flex-direction:row;
 marginLeft:${width * 0.35}px;
 marginTop:5px;
 marginBottom:5px;
-width:${width * 0.6}px;
-background-color:#E8EAF3;
+marginRight:10px;
 border-radius:25px;
 justify-content:flex-end;
 `

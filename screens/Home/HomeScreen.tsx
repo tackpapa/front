@@ -22,6 +22,7 @@ import  Write from '../../icons/icon_edit.svg';
 import tier from '../../constants/Tier';
 import  Circle from '../../icons/ellipse_77.svg';
 import  BlueCircle from '../../icons/ellipse_78.svg';
+import useractions from "../../store/user/useractions";
 
 
 const {width, height} = Dimensions.get("screen")
@@ -45,9 +46,6 @@ export default function HomeScreen() {
         navigation.navigate("SeePostScreen", {_id: id, page:"Post"});
     }
 
-    const reg = () => {
-        navigation.navigate("RegisterScreen");
-    }
     const gesi = (value : string) => {
         navigation.navigate("CommunityScreen", {value: value, page:"posting"});
     }
@@ -59,8 +57,8 @@ export default function HomeScreen() {
         if (!post.length) {
             dispatch(postactions.getLatestPost.request(new Date().toISOString()));
         }     
-        dispatch(banneractions.getBanner.request());  
-        // dispatch(useractions.fetchSignIn.request({email: 't@t.com', password: '1234'}));      
+        dispatch(banneractions.getBanner.request());       
+        
     }, [dispatch, route])
 
     const refresh =(e: any)=>{
@@ -86,12 +84,9 @@ export default function HomeScreen() {
 <SafeAreaView style={{flex:1}}>
 <View>
     <ScrollView onScroll={refresh} scrollEventThrottle={300}>
-        {/* <TouchableOpacity style={{flex:1, backgroundColor:'gray', height:50}} onPress={()=>reg()}>
-            <Text>회원가입</Text>
-        </TouchableOpacity> */}
+
     <Container>
     <Header>
-     
      <Event>바이커스</Event>
      <Subtitle>국내 최고의 라이더 커뮤니티</Subtitle>
                 <Swiper controlsProps={{
@@ -295,11 +290,12 @@ shadowColor:#678a9bcb;
 shadow-offset:0 3px;
 shadow-opacity: 0.45;
 shadowRadius: 4.65px;
-marginTop:20px;
+marginTop:5px;
+elevation:30;
 `
 
 const Header = styled.View `
-height: 245px;
+height:${height*0.25}px;
 background-color:white;
 `;
 

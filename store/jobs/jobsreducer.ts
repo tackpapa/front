@@ -38,8 +38,22 @@ const job = createReducer<JobsState>(initialState, {
     };
   },
   [getType(jobActions.deleteJob.success)]: (state, { payload }) => {
+    const index = state.latest.filter((item) =>
+      item._id === payload.id ? false : true
+    );
+    const index2 = state.usercall.filter((item) =>
+      item._id === payload.id ? false : true
+    );
+    const index3 = (state as any)[payload.category].filter((item: any) =>
+      item._id === payload.id ? false : true
+    );
+
     return {
       ...state,
+      onejob: undefined,
+      latest: index,
+      usercall: index2,
+      [payload.category]: index3,
     };
   },
   [getType(userActions.fetchUserProfile.success)]: (state, { payload }) => {

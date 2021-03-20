@@ -60,8 +60,7 @@ export interface User {
 }
 
 export interface SignInRequestPayload {
-  email: string;
-  password: string;
+  code: string;
 }
 
 export interface UpdateRequestPayload {

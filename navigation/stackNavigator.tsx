@@ -4,24 +4,13 @@ import * as React from 'react';
 import {HomeParamList, JobsParamList, ChatParamList, MarketParamList, ProfileParamList } from '../types';
 import HomeScreen from '../screens/Home/HomeScreen';
 import JobsScreen from '../screens/Jobs/JobsScreen';
-
 import ChatScreen from '../screens/Chat/ChatScreen';
 import MarketScreen from '../screens/Market/MarketScreen';
-
 import ProfileScreen from '../screens/Profile/ProfileScreen';
 import SettingScreen from '../screens/Profile/ProfileScreen';
-
-
 import NotiScreen from '../screens/Home/NotiScreen';
-
-
 import SeeChatScreen from '../screens/Chat/SeeChatScreen';
-
 import WriteprofileScreen from '../screens/Profile/WriteprofileScreen';
-
-
-
-
 import {Text} from 'react-native';
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';

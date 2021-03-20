@@ -60,7 +60,7 @@ export default function ProfileScreen() {
 
   useEffect(() => {
     if(user._id ===""){
-      navigation.navigate('RegisterScreen')
+      navigation.navigate('KakaoScreen')
     }else{
       dispatch(useractions.fetchUserProfile.request({_id:user._id}));
     }

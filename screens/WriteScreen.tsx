@@ -18,11 +18,12 @@ import { useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import * as ImageManipulator from 'expo-image-manipulator'
 import * as ImagePicker from 'expo-image-picker';
-import { PostType } from '../store/post/posttypes';
-import { JobType } from '../store/jobs/jobstypes';
-import { MarketType } from '../store/market/markettypes';
+import { CreatePostRequestPayload, PostType } from '../store/post/posttypes';
+import { CreateJobRequestPayload, JobType } from '../store/jobs/jobstypes';
+import { CreateMarketRequestPayload, MarketType } from '../store/market/markettypes';
 import ICC from '../icons/imageicon.svg'
 import { Fragment } from 'react';
+import { Alert } from 'react-native';
 
 
 const {width, height} = Dimensions.get("screen")
@@ -75,19 +76,28 @@ export default function WriteScreen() {
   const [context, setContext] = useState("");
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
-  const [price, setPrice] = useState("");
-  const [tags, setTags] = useState([""]);
+  const [price, setPrice] = useState(0);
+  const [tags, setTags] = useState(["자유게시판"]);
   const [category, setCategory] = useState("free")
   const [pic, setPic] = useState<any>([]);
+  const [toggle, setToggle] = useState(50);
   const regex = new RegExp(/(#[\d|A-Z|a-z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]*)/gmi);
 
   useEffect(() => {
    if(user._id===""){
-     navigation.navigate("RegisterScreen")
+     navigation.navigate("KakaoScreen")
    }
   }
 ,[user])
 
+function isNumeric(num:any) {
+  return !isNaN(parseInt(num, 10)) && isFinite(num);
+}
+
+useEffect(() => {
+ isNumeric(price)?null:Alert.alert("숫자만 기입해주세요")
+ }
+,[price])
 
 
   const handleTags = (val:string)=>{
@@ -132,7 +142,7 @@ useEffect(() => {
   };
   
 
-  const newPost = {
+  const newPost:CreatePostRequestPayload = {
     context:context,
     title:title,
     category:(category as PostType),
@@ -140,7 +150,7 @@ useEffect(() => {
     author:user._id,
     tags:tags,
   };
-  const newJob = {
+  const newJob:CreateJobRequestPayload = {
     context:context,
     title:title,
     category:(category as JobType),
@@ -149,7 +159,7 @@ useEffect(() => {
     tags:tags,
     location:location
   };
-  const newMarket = {
+  const newMarket:CreateMarketRequestPayload = {
     context:context,
     title:title,
     category:(category as MarketType),
@@ -161,9 +171,10 @@ useEffect(() => {
   };
 
 
+
 const submitPost = ()=>{
 if(user._id === ""){
-  navigation.navigate("RegisterScreen")
+  navigation.navigate("KakaoScreen")
 }else{
   if(pageKind === "posting" && context.length > 0){
   dispatch(postactions.createPost.request(newPost));
@@ -173,7 +184,7 @@ if(user._id === ""){
     dispatch(jobsactions.createJob.request(newJob));
     navigation.navigate("JobsScreen", {value: newJob.category, posting:"jobing"})}else{null}
 
-  if(pageKind === "marketing" && context.length > 0){
+  if(pageKind === "marketing" && context.length > 0 && isNumeric(price)){
     dispatch(marketactions.createMarket.request(newMarket));
     navigation.navigate("MarketScreen", {value: newMarket.category, posting:"marketing"})}else{null}
   }
@@ -193,12 +204,15 @@ if(user._id === ""){
 
        <Cut></Cut>
    
-       <View style={{height:'auto', width:width*1, backgroundColor:'white', zIndex:100}}>
+       <TouchableOpacity  style={{ flex:1, minHeight:toggle, width:width*1, backgroundColor:'white', zIndex:100}}>
         <DropDownPicker
+              onOpen={()=>setToggle(400)}
+              onClose={()=>setToggle(50)}
               items={drop[pageKind]}
+              dropDownMaxHeight={500}
               defaultValue="free"
               containerStyle={{height: 53, width:width*1,justifyContent:'center'}}
-              style={{backgroundColor: 'white', height:'auto', width:width*1, alignContent:'center'}}
+              style={{backgroundColor: 'white', width:width*1, alignContent:'center'}}
               labelStyle={{
                 fontSize: 18,
                 marginLeft:10,
@@ -209,10 +223,10 @@ if(user._id === ""){
                   justifyContent: 'center',
                   
               }}
-              dropDownStyle={{backgroundColor: '#fafafa', position:'absolute', height:'auto'}}
-              onChangeItem={(item) => {setCategory(item.value); setTags(item.value)}}
+              dropDownStyle={{backgroundColor: '#fafafa', position:'absolute', flex:1}}
+              onChangeItem={(item) => {setCategory(item.value); setTags([item.label]);setToggle(50)}}
               />
-        </View>
+        </TouchableOpacity>
 <View style={{height:53}}>
           <TagInput         
           underlineColorAndroid="transparent"
@@ -262,7 +276,7 @@ if(user._id === ""){
           keyboardType = "numeric"
           placeholderTextColor="#7c7c7c"
           selectionColor={'skyblue'}
-          onChangeText={(val)=>setPrice(val)}         
+          onChangeText={(val)=>setPrice(val as any)}         
         />
         <Cut></Cut>
         

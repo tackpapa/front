@@ -12,23 +12,3 @@ export const formatDate = (date: string | number | Date) => {
     year: "numeric",
   });
 };
-
-// const Write = () => {
-//   const user = useSelector(userSelector);
-//   const handlePressWriteButton = () => {
-//     // 글쓰기
-//   }
-//   return (
-//     <Touch onPress={checkLogin(user, handlePressWriteButton)} >
-//     </TouchableOpacity>
-//   )
-// }
-
-// export const checkLogin = (user: UserState, cb: function~~) => {
-//     if (user.logined) {
-//       cb();
-//     } else {
-//       navigation~~~
-//       // 모달띄우기
-//     }
-// }

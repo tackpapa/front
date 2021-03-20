@@ -28,11 +28,14 @@ export default function ChatScreen() {
 }
 
   useEffect(() => {
+    if(user._id ===""){
+      navigation.navigate('KakaoScreen')
+    }else{
       dispatch(chatactions.getLatestChat.request({}));
+    }
   },[dispatch, route])
   const user = useSelector(userSelector)
   const post = useSelector(postSelector)
-
   const aaaa = Object.entries(post)
   const bb = aaaa.filter(item=>{
     if(item[0]==="data" || item[0] === '_persist'){
@@ -52,11 +55,12 @@ export default function ChatScreen() {
      <Text style={{textAlign:'center', fontSize:17, opacity:0.5, marginTop:50}}>로그인 해 주세요</Text> 
      :
      bb.map(([id, items])=>{   
-      const item = items[items.length-1];
-      
+      const item = items[items.length-1];     
       const user2 = item.from._id === user._id ? item.to : item.from;
     
-      return (<Fragment key={id}>
+      return (
+       ( item.to._id !== item.from._id ?
+      <Fragment key={id}>
         <Div>
         <Card  onPress={()=>move(user2.name, id)} style={{flexDirection:'row'}}> 
           
@@ -72,7 +76,7 @@ export default function ChatScreen() {
             </View>
 
               <View style={{}}>
-                <Chattext style={{fontSize:13}}>{formatDate(item.createdAt as unknown as string)}</Chattext>
+                <Chattext style={{fontSize:13, marginRight:10}}>{formatDate(item.createdAt as unknown as string)}</Chattext>
               </View>
 
               </View>
@@ -81,7 +85,7 @@ export default function ChatScreen() {
             </View>
       </Card>
       </Div>
-      </Fragment>
+      </Fragment>: null)
       )
     })
 
@@ -116,14 +120,13 @@ align-items:center;
 
 `;
 const Username = styled.Text`
-font-family: NotoSansCJKkr-Bold;
+font-weight:700;
 font-size: 20px;
 color: #3b3b3b;
 `;
 const Chattext = styled.Text`
-font-family: NotoSansCJKkr-Regular;
-font-size: 15px;
 
+font-size: 15px;
 color: #3b3b3b;
 opacity:0.5;
 `;

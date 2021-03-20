@@ -116,15 +116,22 @@ const market = createReducer<MarketState>(initialState, {
     };
   },
   [getType(marketActions.deleteMarket.success)]: (state, { payload }) => {
-    const index = state.latest.findIndex((item) => item._id === payload);
-    const index2 = state.usercall.findIndex((item) => item._id === payload);
-    state.latest.splice(index, 1);
-    state.usercall.splice(index2, 1);
+    const index = state.latest.filter((item) =>
+      item._id === payload.id ? false : true
+    );
+    const index2 = state.usercall.filter((item) =>
+      item._id === payload.id ? false : true
+    );
+    const index3 = (state as any)[payload.category].filter((item: any) =>
+      item._id === payload.id ? false : true
+    );
+
     return {
       ...state,
-      onepost: undefined,
-      latest: state.latest,
-      usercall: state.usercall,
+      onemarket: undefined,
+      latest: index,
+      usercall: index2,
+      [payload.category]: index3,
     };
   },
 });

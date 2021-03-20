@@ -120,7 +120,7 @@ export interface CreateMarketRequestPayload {
   ];
   category: MarketType;
   tags: string[];
-  price: string;
+  price: number;
   location: string;
 }
 
