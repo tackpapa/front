@@ -7,7 +7,6 @@ const connectStore = (initedStore: Store) => {
   store = initedStore;
 };
 
-console.log("connected");
 const socket = socketio.connect("http://localhost:3000", {
   transports: ["websocket"],
   autoConnect: true,

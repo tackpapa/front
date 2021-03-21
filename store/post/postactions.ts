@@ -4,6 +4,8 @@ import {
   Actions,
   GetPostRequestPayload,
   GetPostSuccessPayload,
+  LikePostRequestPayload,
+  LikePostSuccessPayload,
   DeleteResultRequestPayload,
   DeleteResultSuccessPayload,
   GetCategoryPostRequestPayload,
@@ -16,6 +18,8 @@ import {
   CreatePostRequestPayload,
   GetLatestPostRequestPayload,
   GetLatestPostSuccessPayload,
+  GetHotPostRequestPayload,
+  GetHotPostSuccessPayload,
   DeletePostRequestPayload,
   DeletePostSuccessPayload,
 } from "./posttypes";
@@ -26,6 +30,20 @@ const getPost = createAsyncAction(
   Actions.GET_POST_FAILURE,
   Actions.GET_POST_CANCEL
 )<GetPostRequestPayload, GetPostSuccessPayload, undefined, undefined>();
+
+const likePost = createAsyncAction(
+  Actions.LIKE_POST_REQUEST,
+  Actions.LIKE_POST_SUCCESS,
+  Actions.LIKE_POST_FAILURE,
+  Actions.LIKE_POST_CANCEL
+)<LikePostRequestPayload, LikePostSuccessPayload, undefined, undefined>();
+
+const dislikePost = createAsyncAction(
+  Actions.DISLIKE_POST_REQUEST,
+  Actions.DISLIKE_POST_SUCCESS,
+  Actions.DISLIKE_POST_FAILURE,
+  Actions.DISLIKE_POST_CANCEL
+)<LikePostRequestPayload, LikePostSuccessPayload, undefined, undefined>();
 
 const deleteResult = createAsyncAction(
   Actions.DELETERESULT_REQUEST,
@@ -77,6 +95,13 @@ const getLatestPost = createAsyncAction(
   undefined
 >();
 
+const getHotPost = createAsyncAction(
+  Actions.GET_HOT_POST_REQUEST,
+  Actions.GET_HOT_POST_SUCCESS,
+  Actions.GET_HOT_POST_FAILURE,
+  Actions.GET_HOT_POST_CANCEL
+)<GetHotPostRequestPayload, GetHotPostSuccessPayload, undefined, undefined>();
+
 const createPost = createAsyncAction(
   Actions.CREATE_POST_REQUEST,
   Actions.CREATE_POST_SUCCESS,
@@ -94,6 +119,9 @@ const updatePost = createAsyncAction(
 export default {
   getPost,
   searchPost,
+  likePost,
+  getHotPost,
+  dislikePost,
   deleteResult,
   updatePost,
   createPost,

@@ -18,6 +18,7 @@ export default function Myjob() {
     const move = (id : string) => {
         navigation.navigate("SeePostScreen", {_id: id, page:"Job"});
       }
+      
 return (
     <Container>
  <CardLine>

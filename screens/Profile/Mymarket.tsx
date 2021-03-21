@@ -18,6 +18,7 @@ export default function Mymarket() {
     const move = (id : string) => {
         navigation.navigate("SeePostScreen", {_id: id, page:"Market"});
       }
+      
 return (
     <Container>
    <CardLine>

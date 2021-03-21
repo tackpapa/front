@@ -4,6 +4,9 @@ import {
   requestCreatePost,
   requestUpdatePost,
   requestGetPost,
+  requestGetHotPost,
+  requestLikePost,
+  requestDislikePost,
   requestSearchPost,
   requestGetCategoryPost,
   requestGetLatestPost,
@@ -12,6 +15,11 @@ import {
 import { createAsyncEpic } from "../utils";
 
 const getPostEpic = createAsyncEpic(actions.getPost, requestGetPost);
+const likePostEpic = createAsyncEpic(actions.likePost, requestLikePost);
+const dislikePostEpic = createAsyncEpic(
+  actions.dislikePost,
+  requestDislikePost
+);
 
 const getCategoryPostEpic = createAsyncEpic(
   actions.getCategoryPost,
@@ -23,11 +31,15 @@ const getLatestPostEpic = createAsyncEpic(
   actions.getLatestPost,
   requestGetLatestPost
 );
+const getHotPostEpic = createAsyncEpic(actions.getHotPost, requestGetHotPost);
 const createPostEpic = createAsyncEpic(actions.createPost, requestCreatePost);
 const updatePostEpic = createAsyncEpic(actions.updatePost, requestUpdatePost);
 
 export default combineEpics(
   getPostEpic,
+  likePostEpic,
+  dislikePostEpic,
+  getHotPostEpic,
   searchPostEpic,
   getCategoryPostEpic,
   createPostEpic,

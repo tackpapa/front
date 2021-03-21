@@ -1,29 +1,32 @@
 import React, { useEffect } from "react";
 import { Dimensions } from "react-native";
 import {Image, TouchableOpacity} from 'react-native';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
-import { RootState } from "../../store/types";
-import { Text, View } from '../../components/Themed';
-import { trimText, formatDate } from "../../utils/util";
-import { useNavigation } from "@react-navigation/native";
-
+import { RootState } from "../store/types";
+import { Text, View } from '../components/Themed';
+import { trimText, formatDate } from "../utils/util";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import postactions from "../store/post/postactions";
 
 const {width, height} = Dimensions.get("screen")
-const postSelector = ({post:{usercall}} : RootState) => usercall;
+const postSelector = ({post:{hot30}} : RootState) => hot30;
 
-export default function Mypost() {
+export default function Bestpost3() {
     const post = useSelector(postSelector)
+    const route = useRoute<any>();
+    const dispatch = useDispatch();
     const navigation = useNavigation();
     const move = (id : string) => {
         navigation.navigate("SeePostScreen", {_id: id, page:"Post"});
-    }
-      
+      }
+
+
 
 return (
     <Container>
 <CardLine>
-<GesipanMenu><Gesipan> 내가 작성한 </Gesipan>게시글 </GesipanMenu>    
+<GesipanMenu><Gesipan> 월간 </Gesipan>인기글 </GesipanMenu>    
 <Cut style={{marginBottom:5}}></Cut> 
      {( post.length > 0 ?
        post.map((item)=>{ 
@@ -37,20 +40,20 @@ return (
                                
                            }}>
                                  <View style={{justifyContent:'space-between', alignItems:'center', flexDirection:'row'}}>
-                                <View  style={{flexWrap: 'wrap', 
-                               flexDirection:'row', 
-                               }}>
-                                   { item.tags?.map((tag, i) =>
-                                          ( <Tag key={i}>{tag}</Tag> )                       
-                                       )}    
-                               </View>    
-                               <View>
-                               <Author style={{marginRight:25, marginTop:0}}>
-                                            {item?.views > 0 ?<Author style={{marginRight:25, marginTop:0}}> 좋아요 {item.likes} </Author>:null}
-                                            조회 {item?.views}
+                                     <View  style={{flexWrap: 'wrap', 
+                                    flexDirection:'row', 
+                                    }}>
+                                        { item.tags?.map((tag, i) =>
+                                               ( <Tag key={i}>{tag}</Tag> )                       
+                                            )}    
+                                    </View>    
+                                    <View>
+                                        <Author style={{marginRight:25, marginTop:0}}>
+                                            {item?.views > 0 ?<Author style={{marginRight:25, color:'#4e76e0',marginTop:0}}> 추천 {item.likes} 개 </Author>:null}
+                                            
                                             </Author>
-                               </View>
-                           </View>   
+                                    </View>
+                                </View> 
                            <View style={{flexWrap: 'wrap',flexDirection:'row' }}>       
                                <View style={{justifyContent:"flex-start", flex:5}}>     
                                <CardTitle style={{color:'#4e76e0'}}>{trimText(item.title, 20)} {item.comments?.length > 0?<Text style={{color:'#4e76e0'}}>[{item.comments.length}]</Text>:null}</CardTitle>

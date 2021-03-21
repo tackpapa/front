@@ -1,9 +1,8 @@
 import { request, setHeader } from "../utils";
 import {
   GetPostRequestPayload,
+  LikePostRequestPayload,
   GetPostSuccessPayload,
-  DeleteResultRequestPayload,
-  DeleteResultSuccessPayload,
   SearchPostRequestPayload,
   SearchPostSuccessPayload,
   GetCategoryPostRequestPayload,
@@ -16,11 +15,23 @@ import {
   UpdatePostSuccessPayload,
   GetLatestPostRequestPayload,
   GetLatestPostSuccessPayload,
+  GetHotPostRequestPayload,
+  GetHotPostSuccessPayload,
 } from "./posttypes";
 
 export const requestGetPost = (payload: GetPostRequestPayload) =>
   request
     .get(`/post/findone/${payload._id}`)
+    .then<GetPostSuccessPayload>(({ data }) => data);
+
+export const requestLikePost = (payload: LikePostRequestPayload) =>
+  request
+    .get(`/post/likeone/${payload._id}`)
+    .then<GetPostSuccessPayload>(({ data }) => data);
+
+export const requestDislikePost = (payload: LikePostRequestPayload) =>
+  request
+    .get(`/post/dislikeone/${payload._id}`)
     .then<GetPostSuccessPayload>(({ data }) => data);
 
 export const requestGetCategoryPost = (
@@ -39,6 +50,12 @@ export const requestGetLatestPost = (payload: GetLatestPostRequestPayload) =>
   request
     .get(`/post/latest/${payload}`)
     .then<GetLatestPostSuccessPayload>(({ data }) => data);
+
+export const requestGetHotPost = (payload: GetHotPostRequestPayload) => {
+  return request
+    .get(`/api/hotpost/${payload}`)
+    .then<GetHotPostSuccessPayload>(({ data }) => data);
+};
 
 export const requestCreatePost = (payload: CreatePostRequestPayload) => {
   var form_data = new FormData();

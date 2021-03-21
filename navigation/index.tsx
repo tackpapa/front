@@ -13,6 +13,7 @@ import CommunityScreen from '../screens/CommunityScreen';
 import WebScreen from '../screens/WebScreen';
 import RegisterScreen from '../screens/Onboarding/RegisterScreen';
 import KakaoScreen from '../screens/KakaoScreen';
+import BestScreen from '../screens/BestScreen';
 
 
 
@@ -65,6 +66,10 @@ function RootNavigator() {
       <Stack.Screen
         name="KakaoScreen"
         component={KakaoScreen}
+      />
+      <Stack.Screen
+        name="BestScreen"
+        component={BestScreen}
       />
     </Stack.Navigator>
   );

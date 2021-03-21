@@ -2,17 +2,33 @@ import { createReducer, getType } from "typesafe-actions";
 import { persistReducer } from "redux-persist";
 import AsyncStorage from "@react-native-community/async-storage";
 import { initialState, UserState } from "./usertypes";
-// import { setToken } from "../../utils/axios";
-// import socket from "../../utils/socket";
 import { handleSignIn } from "../utils";
 import userActions from "./useractions";
+import postActions from "../post/postactions";
 
 const persistConfig = {
   key: "user",
   storage: AsyncStorage,
 };
 const user = createReducer<UserState>(initialState, {
-  [getType(userActions.logout)]: () => initialState,
+  [getType(userActions.logout)]: () => {
+    return initialState;
+  },
+  [getType(postActions.likePost.success)]: (state, { payload }) => {
+    return {
+      ...state,
+      liked: [...state.liked, payload],
+    };
+  },
+  [getType(postActions.dislikePost.success)]: (state, { payload }) => {
+    const index = state.liked.filter((item) =>
+      item === payload ? false : true
+    );
+    return {
+      ...state,
+      liked: index,
+    };
+  },
 
   [getType(userActions.fetchSignIn.success)]: (_state, { payload }) => {
     handleSignIn(payload.token, payload._id);

@@ -18,6 +18,9 @@ export enum PostType {
   imported = "imported",
   help = "help",
   latest = "latest",
+  hot1 = "hot1",
+  hot7 = "hot7",
+  hot30 = "hot30",
 }
 
 export enum Actions {
@@ -25,6 +28,16 @@ export enum Actions {
   GET_POST_SUCCESS = "GETPOST#SUCCESS",
   GET_POST_FAILURE = "GETPOST#FAILURE",
   GET_POST_CANCEL = "GETPOST#CANCEL",
+
+  LIKE_POST_REQUEST = "LIKEPOST#REQUEST",
+  LIKE_POST_SUCCESS = "LIKEPOST#SUCCESS",
+  LIKE_POST_FAILURE = "LIKEPOST#FAILURE",
+  LIKE_POST_CANCEL = "LIKEPOST#CANCEL",
+
+  DISLIKE_POST_REQUEST = "DISLIKEPOST#REQUEST",
+  DISLIKE_POST_SUCCESS = "DISLIKEPOST#SUCCESS",
+  DISLIKE_POST_FAILURE = "DISLIKEPOST#FAILURE",
+  DISLIKE_POST_CANCEL = "DISLIKEPOST#CANCEL",
 
   DELETERESULT_REQUEST = "DELETERESULT#REQUEST",
   DELETERESULT_SUCCESS = "DELETERESULT#SUCCESS",
@@ -60,6 +73,11 @@ export enum Actions {
   GET_LATEST_POST_SUCCESS = "GET_LATEST_POST#SUCCESS",
   GET_LATEST_POST_FAILURE = "GET_LATEST_POST#FAILURE",
   GET_LATEST_POST_CANCEL = "GET_LATEST_POST#CANCEL",
+
+  GET_HOT_POST_REQUEST = "GET_HOT_POST#REQUEST",
+  GET_HOT_POST_SUCCESS = "GET_HOT_POST#SUCCESS",
+  GET_HOT_POST_FAILURE = "GET_HOT_POST#FAILURE",
+  GET_HOT_POST_CANCEL = "GET_HOT_POST#CANCEL",
 }
 
 export const initialState: PostState = {
@@ -73,6 +91,9 @@ export const initialState: PostState = {
   imported: [],
   usercall: [],
   latest: [],
+  hot1: [],
+  hot7: [],
+  hot30: [],
 };
 
 export interface Post {
@@ -84,11 +105,13 @@ export interface Post {
   tags: string[];
   comments: string[];
   views: number;
+  likes: number;
   category: PostType;
   createdAt: string;
 }
 
 export type GetPostRequestPayload = Pick<Post, "_id">;
+export type LikePostRequestPayload = Pick<Post, "_id">;
 export type DeleteResultRequestPayload = void;
 export type DeleteResultSuccessPayload = void;
 
@@ -101,6 +124,7 @@ export interface SearchPostRequestPayload {
 }
 export type DeletePostRequestPayload = Pick<Post, "_id">;
 export type GetLatestPostRequestPayload = string;
+export type GetHotPostRequestPayload = string;
 
 export type UpdatePostRequestPayload = Omit<Post, "views">;
 
@@ -120,6 +144,7 @@ export interface CreatePostRequestPayload {
 }
 
 export type GetPostSuccessPayload = Post;
+export type LikePostSuccessPayload = string;
 export interface GetCategoryPostSuccessPayload {
   data: Post[];
   type: PostType;
@@ -130,5 +155,6 @@ export interface SearchPostSuccessPayload {
 }
 export type DeletePostSuccessPayload = String;
 export type GetLatestPostSuccessPayload = Post[];
+export type GetHotPostSuccessPayload = Post[];
 export type CreatePostSuccessPayload = Post;
 export type UpdatePostSuccessPayload = Post;

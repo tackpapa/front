@@ -8,6 +8,7 @@ export type RootStackParamList = {
   WebScreen: undefined;
   RegisterScreen: undefined;
   KakaoScreen: undefined;
+  BestScreen: undefined;
 };
 
 export type BottomTabParamList = {

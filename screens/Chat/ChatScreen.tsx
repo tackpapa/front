@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import styled from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/types';
-import { Dimensions } from 'react-native';
+import { Dimensions, TouchableOpacity } from 'react-native';
 import chatactions from '../../store/chat/chatactions';
 import { Fragment } from 'react';
 import { trimText, formatDate } from "../../utils/util"
@@ -19,7 +19,6 @@ const {width, height} = Dimensions.get("screen")
 
 
 export default function ChatScreen() {
-  const route = useRoute<any>();
   const dispatch = useDispatch();
   const navigation = useNavigation();
   
@@ -27,13 +26,6 @@ export default function ChatScreen() {
     navigation.navigate("SeeChatScreen", {name: name, id:id});
 }
 
-  useEffect(() => {
-    if(user._id ===""){
-      navigation.navigate('KakaoScreen')
-    }else{
-      dispatch(chatactions.getLatestChat.request({}));
-    }
-  },[dispatch, route])
   const user = useSelector(userSelector)
   const post = useSelector(postSelector)
   const aaaa = Object.entries(post)
@@ -44,7 +36,13 @@ export default function ChatScreen() {
       return true
     }
   })
-  
+  useEffect(() => {
+    if(user._id ===""){
+      navigation.navigate('KakaoScreen')
+    }else{
+      dispatch(chatactions.getLatestChat.request({}));
+    }
+  },[user])
 
   return (
   
@@ -52,7 +50,10 @@ export default function ChatScreen() {
     
     <Cut></Cut>
      {(user._id === "" ?
-     <Text style={{textAlign:'center', fontSize:17, opacity:0.5, marginTop:50}}>로그인 해 주세요</Text> 
+      <TouchableOpacity onPress={()=>navigation.navigate("KakaoScreen")}
+      style={{alignItems:"center", justifyContent:'center' ,width:width*0.9, height:50, backgroundColor:'#4e76e0', borderRadius:15, marginLeft:width*0.05, marginTop:height*0.35}}>
+      <Text style={{textAlign:'center', fontSize:17, fontWeight:'bold', color:'white'}}>로그인 하러가기</Text>
+      </TouchableOpacity>   
      :
      bb.map(([id, items])=>{   
       const item = items[items.length-1];     

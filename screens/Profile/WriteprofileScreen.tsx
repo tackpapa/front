@@ -51,9 +51,9 @@ export default function WriteProfileScreen() {
 
   useEffect(() => {
     if(user._id===""){
-      navigation.navigate("HomeScreen")
+      navigation.navigate("KakaoScreen")
     }
-  }, [user])
+  }, [])
 
   const submit = ()=>{
     dispatch(useractions.fetchUpdate.request(payload));
@@ -104,7 +104,8 @@ export default function WriteProfileScreen() {
   return (
     <SafeAreaView style={{flex:1}}>
     <Container>
-    
+ 
+     
 
     <View style={{flexDirection:'row', alignItems:'center', height:50, backgroundColor:'white'}}>
     <TouchableOpacity style={{flexDirection:'row', alignItems:'center'}} onPress={() =>{ navigation.goBack()}}>        
@@ -127,25 +128,7 @@ export default function WriteProfileScreen() {
     selectionColor={'skyblue'}
     onChangeText={(val)=>setName(val)}         
   />
-  <Box
-    underlineColorAndroid="transparent"
-    placeholder="비밀번호"
-    secureTextEntry={true}
-    placeholderTextColor="black"
-    selectionColor={'skyblue'}
-    onChangeText={(val)=>{ setPassword1(val);}}         
-  />
-  <Box
-    underlineColorAndroid="transparent"
-    placeholder="비밀번호 확인"
-    secureTextEntry={true}
-    placeholderTextColor="black"
-    selectionColor={'skyblue'}
-    onChangeText={(val)=>{ setPassword2(val);}}         
-  /> 
-  {(
-      flash ? <Text style={{marginTop:10, color:'red'}} >{flash}</Text> : null
-  )}
+ 
  
   <Box
   underlineColorAndroid="transparent"
@@ -170,6 +153,7 @@ export default function WriteProfileScreen() {
 
 
         </View>
+        
 </Container>
 </SafeAreaView>
   );

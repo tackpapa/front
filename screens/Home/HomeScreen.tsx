@@ -22,7 +22,8 @@ import  Write from '../../icons/icon_edit.svg';
 import tier from '../../constants/Tier';
 import  Circle from '../../icons/ellipse_77.svg';
 import  BlueCircle from '../../icons/ellipse_78.svg';
-import useractions from "../../store/user/useractions";
+import { Ionicons } from "@expo/vector-icons";
+
 
 
 const {width, height} = Dimensions.get("screen")
@@ -45,6 +46,7 @@ export default function HomeScreen() {
     const move = (id : string) => {
         navigation.navigate("SeePostScreen", {_id: id, page:"Post"});
     }
+
 
     const gesi = (value : string) => {
         navigation.navigate("CommunityScreen", {value: value, page:"posting"});
@@ -84,7 +86,6 @@ export default function HomeScreen() {
 <SafeAreaView style={{flex:1}}>
 <View>
     <ScrollView onScroll={refresh} scrollEventThrottle={300}>
-
     <Container>
     <Header>
      <Event>바이커스</Event>
@@ -173,7 +174,15 @@ export default function HomeScreen() {
     
 
     </View>  
-
+    {/* <Cut style={{}}></Cut> */}
+    <View style={{height:40, backgroundColor:'white', justifyContent:'flex-start'}}>
+                  <TouchableOpacity style={{borderColor:'#4e76e0', height:40, borderWidth:1, borderRadius:0, marginLeft:width*0.05, width:width*0.9}}
+                   onPress={()=>navigation.navigate("BestScreen")}>
+                    
+                        <Text style={{fontSize:16, marginTop:10, textAlign:'center'}}> <GesipanMenu style={{fontSize:16}}>인기글 모아보기 </GesipanMenu><Ionicons size={16} name="chevron-forward"/></Text>
+                    
+                    </TouchableOpacity>     
+    </View>     
      <CardLine>
      <GesipanMenu><Gesipan> 새로운 </Gesipan>게시글 </GesipanMenu>    
      <Cut style={{marginBottom:5}}></Cut>
@@ -196,7 +205,10 @@ export default function HomeScreen() {
                                             )}    
                                     </View>    
                                     <View>
-                                        <Author style={{marginRight:25, marginTop:0}}>조회 {item.views}</Author>
+                                        <Author style={{marginRight:25, marginTop:0}}>
+                                            {<Author style={{marginRight:25, color:'#4e76e0',marginTop:0}}> 추천 {item.likes} 개 </Author>}
+                                            
+                                            </Author>
                                     </View>
                                 </View> 
 
@@ -308,7 +320,7 @@ border-radius:15px;
 margin-top:5px;
 width: 20px;
 height:20px;
-background-color:gray;
+
 `;
 const Author = styled.Text `
     font-size: 14px;
@@ -333,10 +345,10 @@ margin-top:20px;
 `;
 
 const Event = styled.Text `
-font-family: NotoSansCJKkr-Bold;
     font-size: 24px;
-    padding-top:10px;  
+    font-weight:bold;
     margin-left:${width * 0.05}px;
+    padding-top:10px;
     letter-spacing:-1px;
     text-align: left;
     color: #4e76e0;
@@ -388,8 +400,6 @@ const Layer = styled.Text`
     font-size: 15px;
     font-weight: normal;
     font-style: normal;
-    line-height: 14px;
-    letter-spacing: 0px;
     text-align: center;
     color: #5f5f5f;
     margin-top:10px;

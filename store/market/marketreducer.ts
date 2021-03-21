@@ -86,6 +86,7 @@ const market = createReducer<MarketState>(initialState, {
       ...state,
       [payload.category]: [payload, ...state[payload.category]],
       latest: [payload, ...state["latest"]],
+      usercall: [...state["usercall"], payload],
     };
   },
   [getType(marketActions.deleteResult.request)]: (state) => {

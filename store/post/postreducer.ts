@@ -23,6 +23,55 @@ const post = createReducer<PostState>(initialState, {
       onepost: payload,
     };
   },
+  [getType(postActions.likePost.success)]: (state, { payload }) => {
+    return {
+      ...state,
+      // [state.onepost?.category]:[state.onepost?.category].map((item) => {
+      //   if (item?._id === payload) {
+      //     return {
+      //       ...item,
+      //       likes: item.likes + 1,
+      //     };
+      //   }
+      //   return item;
+      // }),
+      onepost: state.onepost
+        ? {
+            ...state.onepost,
+            likes: state.onepost.likes + 1,
+          }
+        : undefined,
+      latest: state.latest.map((item) => {
+        if (item._id === payload) {
+          return {
+            ...item,
+            likes: item.likes + 1,
+          };
+        }
+        return item;
+      }),
+    };
+  },
+  [getType(postActions.dislikePost.success)]: (state, { payload }) => {
+    return {
+      ...state,
+      onepost: state.onepost
+        ? {
+            ...state.onepost,
+            likes: state.onepost.likes - 1,
+          }
+        : undefined,
+      latest: state.latest.map((item) => {
+        if (item._id === payload) {
+          return {
+            ...item,
+            likes: item.likes - 1,
+          };
+        }
+        return item;
+      }),
+    };
+  },
   [getType(postActions.getCategoryPost.success)]: (
     state,
     { payload }: { payload: GetCategoryPostSuccessPayload }
@@ -43,7 +92,12 @@ const post = createReducer<PostState>(initialState, {
     return {
       ...state,
       latest: state.latest.concat(payload),
-      // latest: [],
+    };
+  },
+  [getType(postActions.getHotPost.success)]: (state, { payload }) => {
+    return {
+      ...state,
+      [payload.type]: payload.posts,
     };
   },
   [getType(postActions.createPost.success)]: (

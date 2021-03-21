@@ -47,6 +47,7 @@ export const initialState = {
   cell: "",
   exp: 0,
   profilepic: "",
+  liked: [],
 };
 
 export interface User {
@@ -57,6 +58,7 @@ export interface User {
   name: string;
   exp: number;
   profilepic: string;
+  liked: string[];
 }
 
 export interface SignInRequestPayload {

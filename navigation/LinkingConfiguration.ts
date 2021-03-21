@@ -45,6 +45,7 @@ export default {
       WebScreen: "webscreen",
       RegisterScreen: "register",
       KakaoScreen: "kakao",
+      BestScreen: "best",
     },
   },
 };

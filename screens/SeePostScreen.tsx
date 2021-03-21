@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {  KeyboardAvoidingView, Image } from 'react-native';
+import {  KeyboardAvoidingView, Image, Alert } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { Text, View } from '../components/Themed';
 import { useNavigation } from '@react-navigation/native';
@@ -20,7 +20,7 @@ import tier from '../constants/Tier';
 import { Fragment } from 'react';
 import { useState } from 'react';
 import { CreateCommentRequestPayload } from '../store/comment/commenttypes';
-import { Post } from '../store/post/posttypes';
+
 
 
 
@@ -30,7 +30,28 @@ const userSelector = ({user} : RootState) => user;
 
 const {width, height} = Dimensions.get("screen")
 
-
+const dropposting = {
+  'free':'자유게시판',
+  'help':'도와주세요',
+  'accident':'사건사고',
+  'tour':'투어번개',
+  'fraud':'사기꾼신고',
+  'bedal':'배달대행',
+  'domestic':'국산바이크',
+  'imported':'수입바이크'
+}
+const dropjobing = {
+  'free':'자유게시판',
+  'ride':'배달대행',
+  'fix':'수리',
+  'etc':'기타',
+}
+const dropmarketing = {
+  'free':'아무거나',
+  'part':'부품',
+  'safety':'안전용품',
+  'acc':'액세서리',
+}
 
 export default function SeePostScreen() {
   const user = useSelector(userSelector);
@@ -38,6 +59,7 @@ export default function SeePostScreen() {
   const route = useRoute<any>();
   const { comment, Post, Job, Market } = useSelector(postSelector);
   const [text, setText] = useState("");
+  const [heart, setHeart] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,6 +71,23 @@ export default function SeePostScreen() {
     }
     }
   ,[dispatch, route])
+
+  useEffect(()=>{
+    if(user.liked.includes(`${route.params._id}`)){
+      setHeart(true)
+    }
+  },[user])
+
+  const handlelike = (id:string)=>{
+    if(user._id === ""){Alert.alert("로그인해주세요")}else{
+    if(user.liked.includes(`${route.params._id}`)){
+      setHeart(false)
+      dispatch(postactions.dislikePost.request({_id:id}))
+    }else{
+      dispatch(postactions.likePost.request({_id:id}))
+      setHeart(true)
+    }}
+  }
 
   const pagetype = {
     "Post":Post,
@@ -81,6 +120,7 @@ export default function SeePostScreen() {
     dispatch(marketactions.deleteMarket.request({_id:id}))
     navigation.goBack()
   }
+
   
   
   const gochat = (id:string)=>{
@@ -99,11 +139,10 @@ export default function SeePostScreen() {
   <SafeAreaView style={{flex:1}}>
   <Container>
     
-  <View style={{flexDirection:'row', alignItems:'center', height:60, justifyContent:'space-between'}}>
-    <TouchableOpacity style={{flexDirection:'row', alignItems:'center'}} onPress={() =>{ navigation.goBack()}}>   
-    
-      <Ionicons size={30} name="chevron-back-outline"/>
-      <Text style={{fontSize:20}}>목록으로</Text>   
+  <View style={{flexDirection:'row', alignItems:'center', height:50, justifyContent:'space-between'}}>
+    <TouchableOpacity style={{flexDirection:'row', alignItems:'center'}} onPress={() =>{ navigation.goBack()}}>    
+      <Ionicons size={18} name="chevron-back-outline"/>
+      <Text style={{fontSize:16}}>목록으로</Text>   
     </TouchableOpacity>
 
     {(Post && Post?.author?._id === user._id ?
@@ -145,8 +184,9 @@ export default function SeePostScreen() {
 
                 </View>    
 
-    <View style={{}}>                                   
+    <View style={{flexDirection:'row',alignItems:'center', justifyContent:'space-between'}}>                                   
        <Title >{Post.title} </Title>
+       <Author style={{marginRight:20, color:'#4e76e0'}}>{dropposting[Post.category as keyof typeof dropposting]}</Author>
     </View>
 
   <View style={{flexDirection:'row', marginLeft:20, alignItems:'center', justifyContent:'space-between'}}>
@@ -154,6 +194,7 @@ export default function SeePostScreen() {
     <AuthorPic style={{ width: 20,height: 20}} source={{uri: Post.author.profilepic }}/>
     <Image style={{height:25, width:25}} source={tier(Post.author?.exp).img} />
     <Author>{Post.author.name}  </Author>
+   
     </View>
     <View>
     <Author style={{marginRight:25}}>{formatDate(Post.createdAt as unknown as string)}</Author>
@@ -171,8 +212,9 @@ export default function SeePostScreen() {
             <View style={{}}>
                <Context style={{}}>{Post.context}</Context>
             </View>   
-                          
-              </View>               
+                                            
+              </View>     
+                      
           :null        
         )
       }
@@ -193,9 +235,10 @@ export default function SeePostScreen() {
 
 </View>   
 
-<View style={{}}>                                   
-<Title >{Job.title} </Title>
-</View>
+<View style={{flexDirection:'row',alignItems:'center', justifyContent:'space-between'}}>                                   
+       <Title >{Job.title} </Title>
+       <Author style={{marginRight:20, color:'#4e76e0'}}>{dropjobing[Job.category as keyof typeof dropjobing]}</Author>
+    </View>
 
 <View style={{flexDirection:'row', marginLeft:20, alignItems:'center', justifyContent:'space-between'}}>
     <View style={{flexDirection:'row'}}>
@@ -242,9 +285,10 @@ export default function SeePostScreen() {
 
 </View>   
 
-<View style={{}}>                                   
-  <Title ><Title style={{color:"#4e76e0"}}>[{Market.price}원]</Title>{Market.title} </Title>
-</View>
+<View style={{flexDirection:'row',alignItems:'center', justifyContent:'space-between'}}>                                   
+       <Title >{Market.title} </Title>
+       <Author style={{marginRight:20, color:'#4e76e0'}}>{dropmarketing[Market.category as keyof typeof dropmarketing]}</Author>
+    </View>
 
 <View style={{flexDirection:'row', marginLeft:20, alignItems:'center', justifyContent:'space-between'}}>
     <View style={{flexDirection:'row'}}>
@@ -278,6 +322,21 @@ export default function SeePostScreen() {
         }
         
       <View style={{flex:1}}>
+
+
+        {Post && Post !== undefined ?
+
+        <View style={{height:30, backgroundColor:'white', justifyContent:'center', alignItems:'center'}}>
+          <TouchableOpacity onPress={()=>handlelike(Post._id)}>
+          <Text style={{fontSize:18,  justifyContent:'center', alignItems:'center'}}> 
+          {(heart === true ? <Ionicons size={20} name="heart"/>  : <Ionicons size={20} name="heart-outline"/>)} 추천 {Post.likes} 개                  
+          </Text>
+          </TouchableOpacity>
+        </View> 
+        
+        :null}
+
+
       <Cut></Cut>
      {(comment.length > 0 ? <Text style={{fontSize:15, marginLeft:20, marginTop:10, marginBottom:15}}>댓글 {comment.length}개</Text> :null)} 
         {    ( comment ? 

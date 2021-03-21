@@ -141,13 +141,21 @@ const refresh =(e: any)=>{
                                    move(item._id);
                                    
                                }}>
-                               <View  style={{flexWrap: 'wrap', 
-                                   flexDirection:'row', 
-                                   }}>
-                                       { item.tags?.map((tag, i) =>
-                                              ( <Tag key={`com-tag-${i}`}>{tag}</Tag> )                       
-                                           )}    
-                               </View>    
+                                <View style={{justifyContent:'space-between', alignItems:'center', flexDirection:'row'}}>
+                                     <View  style={{flexWrap: 'wrap', 
+                                    flexDirection:'row', 
+                                    }}>
+                                        { item.tags?.map((tag, i) =>
+                                               ( <Tag key={i}>{tag}</Tag> )                       
+                                            )}    
+                                    </View>    
+                                    <View>
+                                        <Author style={{marginRight:25, marginTop:0}}>
+                                            {item?.views > 0 ?<Author style={{marginRight:25, color:'#4e76e0',marginTop:0}}> 추천 {item.likes} 개 </Author>:null}
+                                            
+                                            </Author>
+                                    </View>
+                                </View> 
                                <View style={{flexWrap: 'wrap',flexDirection:'row' }}>       
                                    <View style={{justifyContent:"flex-start", flex:5}}>     
                                      <CardTitle>{trimText(item.title, 20)}</CardTitle>
@@ -169,15 +177,19 @@ const refresh =(e: any)=>{
                                        </View>
                                    </View>
                                </View>  
-                               <View  style={{display:"flex",flexWrap: 'wrap', flexDirection:'row', alignItems:'center'}}>
-                                   <AuthorPic style={{ width: 20,height: 20}}
-                                       source={{
-                                       uri: item?.author.profilepic
-                                   }}/>
-                                   <Image style={{height:25, width:25, marginTop:5}} source={tier(item.author?.exp).img} />
-                                   <Author>{item?.author.name}</Author>
-                                   <Author style={{textAlign:'right', justifyContent:'flex-end'}}>{formatDate(item?.createdAt as unknown as string)}</Author>
-                               </View>
+
+                            
+
+                               <View  style={{justifyContent:"space-between",flexWrap: 'wrap', flexDirection:'row', alignItems:'center'}}>
+                                    <View style={{flexDirection:'row', alignItems:'center'}}>
+                                    <AuthorPic style={{ width: 20,height: 20}} source={{uri: item?.author.profilepic }}/>
+                                            <Image style={{height:25, width:25, marginTop:5}} source={tier(item.author?.exp).img} />
+                                            <Author>{item.author?.name}</Author>
+                                    </View>
+                                    <View>
+                                             <Author style={{marginRight:25}}>{formatDate(item?.createdAt as unknown as string)}</Author>
+                                    </View>
+                                </View>
 
                                </TouchableOpacity>
                                

@@ -64,14 +64,15 @@ export default function ProfileScreen() {
     }else{
       dispatch(useractions.fetchUserProfile.request({_id:user._id}));
     }
-  },[dispatch,route])
+  },[])
+
 
   useEffect(() => {
     (async () => {
       if (Platform.OS !== 'web') {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
-          alert('Sorry, we need camera roll permissions to make this work!');
+          alert('허락을 해주셔야 프로필사진을 수정 할 수 있어요..');
         }
       }
     })();
@@ -88,8 +89,13 @@ export default function ProfileScreen() {
       setY(py);
   })}
   return (
-    <SafeAreaView style={{ flex: 1}}>
-    {(user._id ==="" ? <Text style={{textAlign:'center', fontSize:17, opacity:0.5, marginTop:50}}>로그인 해 주세요</Text> :
+    <SafeAreaView style={{ flex: 1, backgroundColor:'white'}}>
+    {(user._id ==="" ? 
+    <TouchableOpacity onPress={()=>navigation.navigate("KakaoScreen")}
+    style={{alignItems:"center", justifyContent:'center' ,width:width*0.9, height:50, backgroundColor:'#4e76e0', borderRadius:15, marginLeft:width*0.05, marginTop:height*0.35}}>
+    <Text style={{textAlign:'center', fontSize:17, fontWeight:'bold', color:'white'}}>로그인 하러가기</Text>
+    </TouchableOpacity>   
+     :
       <Container >
       <Topbox style={{flexDirection:"row", flex:1}}>
         <View style={{flex:2}}>                     
