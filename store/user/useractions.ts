@@ -8,6 +8,8 @@ import {
   SignUpSuccessPayload,
   UpdateRequestPayload,
   UpdateSuccessPayload,
+  TokenRequestPayload,
+  TokenSuccessPayload,
   DeleteRequestPayload,
   DeleteSuccessPayload,
   UploadProfileRequestPayload,
@@ -31,6 +33,13 @@ const fetchUpdate = createAsyncAction(
   Actions.update_IN_FAILURE,
   Actions.update_IN_CANCEL
 )<UpdateRequestPayload, UpdateSuccessPayload, undefined, undefined>();
+
+const fetchToken = createAsyncAction(
+  Actions.TOKEN_IN_REQUEST,
+  Actions.TOKEN_IN_SUCCESS,
+  Actions.TOKEN_IN_FAILURE,
+  Actions.TOKEN_IN_CANCEL
+)<TokenRequestPayload, TokenSuccessPayload, undefined, undefined>();
 
 const fetchDelete = createAsyncAction(
   Actions.DELETE_IN_REQUEST,
@@ -70,6 +79,7 @@ export default {
   fetchUploadProfile,
   fetchDelete,
   fetchUpdate,
+  fetchToken,
   fetchSignIn,
   fetchSignUp,
   fetchUserProfile,

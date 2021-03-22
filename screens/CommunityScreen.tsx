@@ -151,7 +151,7 @@ const refresh =(e: any)=>{
                                     </View>    
                                     <View>
                                         <Author style={{marginRight:25, marginTop:0}}>
-                                            {item?.views > 0 ?<Author style={{marginRight:25, color:'#4e76e0',marginTop:0}}> 추천 {item.likes} 개 </Author>:null}
+                                            <Author style={{marginRight:25, color:'#4e76e0',marginTop:0}}> 추천 {item.likes} 개 </Author>
                                             
                                             </Author>
                                     </View>

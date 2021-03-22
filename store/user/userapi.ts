@@ -6,6 +6,8 @@ import {
   SignUpSuccessPayload,
   UpdateRequestPayload,
   UpdateSuccessPayload,
+  TokenRequestPayload,
+  TokenSuccessPayload,
   DeleteRequestPayload,
   DeleteSuccessPayload,
   UploadProfileRequestPayload,
@@ -29,6 +31,12 @@ export const requestUpdate = (payload: UpdateRequestPayload) =>
   request
     .post("/user/update", payload)
     .then<UpdateSuccessPayload>(({ data }) => data);
+
+export const requestToken = (payload: TokenRequestPayload) => {
+  return request
+    .post("/user/token", { expotoken: payload })
+    .then<TokenSuccessPayload>(({ data }) => data);
+};
 
 export const requestDelete = (payload: DeleteRequestPayload) =>
   request

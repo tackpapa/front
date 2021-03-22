@@ -64,7 +64,7 @@ export default function ProfileScreen() {
     }else{
       dispatch(useractions.fetchUserProfile.request({_id:user._id}));
     }
-  },[])
+  },[user._id])
 
 
   useEffect(() => {
@@ -77,6 +77,7 @@ export default function ProfileScreen() {
       }
     })();
   }, []);
+
   
 
   const navigation = useNavigation();
@@ -86,8 +87,10 @@ export default function ProfileScreen() {
 }
   const handleLayoutChange = () => {
     feed.current?.measure( (fx, fy, width, height, px, py) => {
-      setY(py);
+      if (fy) setY(fy);
   })}
+
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor:'white'}}>
     {(user._id ==="" ? 
@@ -115,7 +118,7 @@ export default function ProfileScreen() {
             </View>             
         </View>
         <View style={{flex:2, alignItems:'center', justifyContent:'center'}}>                     
-           <TouchableOpacity style={{borderRadius:5, backgroundColor:'#DEDFDF'}} onPress={()=>write(user._id)}>
+           <TouchableOpacity style={{borderRadius:5, backgroundColor:'#C7CFF3'}} onPress={()=>write(user._id)}>
              <Text style={{fontSize:15, padding:5}}>프로필수정</Text>
            </TouchableOpacity>
         </View>
@@ -123,7 +126,7 @@ export default function ProfileScreen() {
       <View onLayout={handleLayoutChange}
           ref={feed}
         >
-    
+
       <TabView
           navigationState={{ index, routes }}
           renderScene={renderScene}

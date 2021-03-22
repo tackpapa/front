@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, NativeModules, Linking, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { WebView } from 'react-native-webview';
 import { Dimensions } from 'react-native';
@@ -11,7 +11,6 @@ import useractions from '../store/user/useractions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/types';
 
-
 const {width, height} = Dimensions.get("screen")
 const userSelector = ({user} : RootState) => user;
 
@@ -21,10 +20,14 @@ export default function KakaoScreen() {
     const user = useSelector(userSelector);
     const dispatch = useDispatch();
     const navigation = useNavigation();
-    const handleCode = async (nextCode: string) => {
-        if (!nextCode) return null;
-        setCode(nextCode);
-    } 
+
+                                       
+                                        
+        
+        const handleCode = async (nextCode: string) => {
+            if (!nextCode) return null;
+            setCode(nextCode);
+        } 
     React.useEffect(() => {
         if (code) {
             dispatch(useractions.fetchSignIn.request({ code }));
@@ -47,7 +50,15 @@ return (
 
         
         source={{uri: 'http://byker.s3-website.ap-northeast-2.amazonaws.com/' }}
-   
+        bounces={false}
+        originWhitelist={["https://*", "http://*", 'intent://*']}
+        allowFileAccess={true}
+        userAgent='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'
+        geolocationEnabled={true}
+        saveFormDataDisabled={true}
+        allowFileAccessFromFileURLS={true}
+        allowUniversalAccessFromFileURLs={true}
+
         javaScriptEnabled={true}
         domStorageEnabled={true}
         style={{ width: width, height: height }}

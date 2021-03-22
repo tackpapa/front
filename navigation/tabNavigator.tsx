@@ -1,8 +1,10 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Platform } from 'react-native';
 import * as React from 'react';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import {HomeNavigator, JobsNavigator, ChatNavigator, ProfileNavigator, MarketNavigator} from './stackNavigator';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { BottomTabParamList} from '../types';
 import Home from '../icons/home.svg';
 import Hire from '../icons/hire.svg';
@@ -20,13 +22,14 @@ import Profileoff from '../icons/profileoff.svg';
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
-  
+  // const and = Platform.OS === 'android' ? style:{height:50}, : View;
+
   const colorScheme = useColorScheme();
   return (
    <BottomTab.Navigator
       initialRouteName="Home"     
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint, inactiveTintColor: 'gray', adaptive:true, labelStyle:{fontSize:13, padding:0}}}>
-              
+      tabBarOptions={{  inactiveTintColor: 'gray', adaptive:true,  labelStyle:{fontSize:13, padding:0}}}>
+   
       <BottomTab.Screen
         name="Home"
         component={HomeNavigator}
@@ -54,17 +57,22 @@ export default function BottomTabNavigator() {
            width="20" height="20"/>
        },
      }}/>
-         <BottomTab.Screen
-        name="Chat"
-        component={ChatNavigator}
-        options={{tabBarLabel: '채팅',
-        tabBarIcon: ({ focused, color, size }) => {
-         
-          return focused
-           ? <Chat/>
-           : <Chatoff/>
-       },
-     }} />
+        <BottomTab.Screen
+          name="Chat"
+          component={ChatNavigator}
+          options={({ route }) => {
+            const routeName = getFocusedRouteNameFromRoute(route) ?? route.name;
+            return {
+              tabBarLabel: '채팅',
+              tabBarVisible: routeName === 'SeeChatScreen' ? false : true,
+              tabBarIcon: ({ focused, color, size }) => {
+                return focused
+                ? <Chat/>
+                : <Chatoff/>
+              },
+            };
+          }}
+        />
         <BottomTab.Screen
         name="Market"
         component={MarketNavigator}

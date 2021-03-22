@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {KeyboardAvoidingView } from 'react-native';
+import {KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { Text, View } from '../../components/Themed';
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import styled from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/types';
@@ -13,7 +13,8 @@ import { useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/build/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CreateChatRequestPayload } from '~/../store/chat/chattypes';
-
+import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
+import { useRef } from 'react';
 
 
 const {width, height} = Dimensions.get("screen")
@@ -29,8 +30,6 @@ export default function SeeChatScreen() {
   const post = useSelector(postSelector)[route.params?.id];
   
 
- 
-
   const submit = ()=>{
     if(text.length > 0 ){
       dispatch(chatactions.createChat.request(newMsg));
@@ -44,10 +43,15 @@ export default function SeeChatScreen() {
     msg: text
   };
 
+  const KeyboardComponent = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
+
+  const scrollRef = React.createRef<ScrollView>();
 
   return (
   <SafeAreaView style={{flex:1, backgroundColor:'white'}}>
-  <Container>
+  <Container ref={scrollRef}
+   onContentSizeChange={(contentHeight) => scrollRef.current?.scrollToEnd({animated: false})}>
+    
 
   <View style={{flexDirection:'row', alignItems:'center', height:60}}>
     <TouchableOpacity style={{flexDirection:'row', alignItems:'center'}} onPress={() =>{ navigation.navigate("ChatScreen")}}>        
@@ -84,7 +88,7 @@ export default function SeeChatScreen() {
 
   
     </Container>
-    <KeyboardAvoidingView  behavior="padding" enabled>
+    <KeyboardComponent  behavior="padding" enabled>
         <Rec>          
             <><Com
               underlineColorAndroid="transparent"
@@ -94,7 +98,7 @@ export default function SeeChatScreen() {
               value={text}            
               onChangeText={(val) => setText(val)}
               onSubmitEditing={submit} />
-              <Sub>
+              <Sub  style={{justifyContent:'center', alignItems:'center'}}>
                 <TouchableOpacity onPress={submit}>
                   <Subtext>전송</Subtext>
                 </TouchableOpacity>
@@ -102,7 +106,7 @@ export default function SeeChatScreen() {
           
         
         </Rec>
-        </KeyboardAvoidingView>
+        </KeyboardComponent>
     </SafeAreaView>
   );
 }
@@ -150,10 +154,10 @@ justify-content:flex-end;
 const Subtext = styled.Text`
 color:white;
 font-size:18px;
-font-family: NotoSansCJKkr-Bold;
 text-align:center;
 align-items:center;
-margin-top:5px;
+font-weight:bold;
+
 `
 const Sub = styled.TouchableOpacity`
 width:${width*0.2}px;
@@ -192,3 +196,4 @@ const Cut = styled.View`
     justify-content:center;
     margin-bottom:10px;
 `
+

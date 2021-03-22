@@ -13,6 +13,8 @@ export enum Actions {
   GET_LATEST_CHAT_SUCCESS = "GET_LATEST_CHAT#SUCCESS",
   GET_LATEST_CHAT_FAILURE = "GET_LATEST_CHAT#FAILURE",
   GET_LATEST_CHAT_CANCEL = "GET_LATEST_CHAT#CANCEL",
+
+  GET_CHAT = "GET_CHAT",
 }
 
 export const initialState: ChatState = {
@@ -39,3 +41,4 @@ export interface CreateChatRequestPayload {
 
 export type GetLatestChatSuccessPayload = Chat[];
 export type CreateChatSuccessPayload = Chat;
+export type GetChatPayload = Chat;

@@ -4,6 +4,7 @@ import {
   requestFetchSignIn,
   requestFetchSignUp,
   requestUpdate,
+  requestToken,
   requestDelete,
   requestUploadProfile,
   requestUserProfile,
@@ -20,6 +21,7 @@ const fetchSignUpEpic = createAsyncEpic(
 );
 
 const fetchUpdateEpic = createAsyncEpic(actions.fetchUpdate, requestUpdate);
+const fetchTokenEpic = createAsyncEpic(actions.fetchToken, requestToken);
 const fetchDeleteEpic = createAsyncEpic(actions.fetchDelete, requestDelete);
 
 const fetchUploadProfileEpic = createAsyncEpic(
@@ -36,6 +38,7 @@ export default combineEpics(
   fetchSignInEpic,
   fetchDeleteEpic,
   fetchSignUpEpic,
+  fetchTokenEpic,
   fetchUploadProfileEpic,
   fetchUpdateEpic,
   fetchUserProfileEpic

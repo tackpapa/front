@@ -23,6 +23,8 @@ import tier from '../../constants/Tier';
 import  Circle from '../../icons/ellipse_77.svg';
 import  BlueCircle from '../../icons/ellipse_78.svg';
 import { Ionicons } from "@expo/vector-icons";
+import { getPushToken } from "../../utils/push";
+import useractions from "../../store/user/useractions";
 
 
 
@@ -41,6 +43,17 @@ export default function HomeScreen() {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const route = useRoute<any>();
+
+    React.useEffect(() => {
+        if(user._id !== ""){       
+        (async () => {
+          const token = await getPushToken();
+          if (token){
+              dispatch(useractions.fetchToken.request(token));       
+          }
+        })();
+    }
+      }, [user._id]);
 
     
     const move = (id : string) => {
@@ -128,58 +141,57 @@ export default function HomeScreen() {
      <Cate
         style={{}}
         onPress={() => {gesi('free')}}>
-        <Free></Free>
+        <Free style={{top:10}}></Free>
         <Layer>자유게시판</Layer>
     </Cate>
     <Cate
         style={{}}
         onPress={() => {gesi('accident')}}>
-        <Acc></Acc>
+        <Acc style={{top:10}}></Acc>
         <Layer>사건사고</Layer>
     </Cate><Cate
         style={{}}
         onPress={() => {gesi('help')}}>
-        <Tour></Tour>
+        <Tour style={{top:10}}></Tour>
         <Layer>도와주세요</Layer>
     </Cate><Cate
         style={{}}
         onPress={() => {gesi('fraud')}}>
-        <Fraud></Fraud>
+        <Fraud style={{top:10}}></Fraud>
         <Layer>사기꾼신고</Layer>
     </Cate>
 
      <Cate
         style={{}}
         onPress={() => {gesi('domestic')}}>
-        <Dom></Dom>
+        <Dom style={{top:10}}></Dom>
         <Layer>국산바이크</Layer>
     </Cate>
     <Cate
         style={{}}
         onPress={() => {gesi('imported')}}>
-        <Imp></Imp>
+        <Imp style={{top:10}}></Imp>
         <Layer>수입바이크</Layer>
     </Cate><Cate
         style={{}}
         onPress={() => {gesi('tour')}}>
-        <Help></Help>
+        <Help style={{top:10}}></Help>
         <Layer>투어번개</Layer>
     </Cate><Cate
         style={{ paddingTop:15}}
         onPress={() => {gesi('bedal')}}>
-        <Bedal></Bedal>
+        <Bedal style={{top:10}}></Bedal>
         <Layer>배달대행</Layer>
     </Cate>
     </View>
     
 
     </View>  
-    {/* <Cut style={{}}></Cut> */}
     <View style={{height:40, backgroundColor:'white', justifyContent:'flex-start'}}>
-                  <TouchableOpacity style={{borderColor:'#4e76e0', height:40, borderWidth:1, borderRadius:0, marginLeft:width*0.05, width:width*0.9}}
+                  <TouchableOpacity style={{borderColor:'#4e76e0', height:40, marginTop:5, borderWidth:1, borderRadius:0, marginLeft:width*0.05, width:width*0.9, alignItems:'center', justifyContent:'center'}}
                    onPress={()=>navigation.navigate("BestScreen")}>
                     
-                        <Text style={{fontSize:16, marginTop:10, textAlign:'center'}}> <GesipanMenu style={{fontSize:16}}>인기글 모아보기 </GesipanMenu><Ionicons size={16} name="chevron-forward"/></Text>
+                        <Text style={{fontSize:16,textAlign:'center'}}> <Text style={{fontSize:16, fontWeight:'bold', color:'#4e76e0'}}>인기글 모아보기 </Text><Ionicons size={16} name="chevron-forward"/></Text>
                     
                     </TouchableOpacity>     
     </View>     
@@ -302,7 +314,7 @@ shadowColor:#678a9bcb;
 shadow-offset:0 3px;
 shadow-opacity: 0.45;
 shadowRadius: 4.65px;
-marginTop:5px;
+marginTop:10px;
 elevation:30;
 `
 
@@ -335,7 +347,6 @@ const Author = styled.Text `
 const GesipanMenu = styled.Text `
 font-size: 16px;
 font-weight: bold;
-font-style: normal;
 margin-left:10px;
 line-height: 23px;
 letter-spacing: 0px;
@@ -411,7 +422,9 @@ const Cate = styled.TouchableOpacity`
     align-items:center;
     justify-content:flex-end;
     background-color:white;
-    margin:${(width - 20)*0.02}px;
+    margin-left:${(width - 20)*0.02}px;
+    margin-right:${(width - 20)*0.02}px;
+    margin-top:${(width - 20)*0.02}px;
     width:${(width-20)*0.2}px;
 `
 const Bannerr = styled.Image`

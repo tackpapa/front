@@ -7,6 +7,7 @@ import { RootState } from "../../store/types";
 import { Text, View } from '../../components/Themed';
 import { trimText, formatDate } from "../../utils/util";
 import { useNavigation } from "@react-navigation/native";
+import tier from "../../constants/Tier";
 
 
 const {width, height} = Dimensions.get("screen")
@@ -14,6 +15,7 @@ const postSelector = ({post:{usercall}} : RootState) => usercall;
 
 export default function Mypost() {
     const post = useSelector(postSelector)
+
     const navigation = useNavigation();
     const move = (id : string) => {
         navigation.navigate("SeePostScreen", {_id: id, page:"Post"});
@@ -29,63 +31,66 @@ return (
        post.map((item)=>{ 
          return ( 
            <React.Fragment key={`${item._id}`}>                            
-                       <Card>
-                            <TouchableOpacity
-                               style={{flex:1}}
-                               onPress={() => {
-                               move(item._id);
-                               
-                           }}>
-                                 <View style={{justifyContent:'space-between', alignItems:'center', flexDirection:'row'}}>
-                                <View  style={{flexWrap: 'wrap', 
-                               flexDirection:'row', 
-                               }}>
-                                   { item.tags?.map((tag, i) =>
-                                          ( <Tag key={i}>{tag}</Tag> )                       
-                                       )}    
-                               </View>    
-                               <View>
-                               <Author style={{marginRight:25, marginTop:0}}>
-                                            {item?.views > 0 ?<Author style={{marginRight:25, marginTop:0}}> 좋아요 {item.likes} </Author>:null}
-                                            조회 {item?.views}
-                                            </Author>
-                               </View>
-                           </View>   
-                           <View style={{flexWrap: 'wrap',flexDirection:'row' }}>       
-                               <View style={{justifyContent:"flex-start", flex:5}}>     
-                               <CardTitle style={{color:'#4e76e0'}}>{trimText(item.title, 20)} {item.comments?.length > 0?<Text style={{color:'#4e76e0'}}>[{item.comments.length}]</Text>:null}</CardTitle>
-                               <CardContext >{trimText(item.context, 90)}</CardContext>
-                               </View>
+                         <Card>
+                                 <TouchableOpacity
+                                    style={{flex:1}}
+                                    onPress={() => {
+                                    move(item._id);}}>
 
-                               <View style={{flex:2, alignItems:'center'}}>
-                               <View>{!!item.pics?.length && (
-                                       <AuthorPic style={{
-                                               width: 60,
-                                               height: 60,
-                                           }}
-                                               source={{
-                                               uri: item.pics[0]
-                                           }}/>
-                                           )}
-                                   </View>
-                               </View>
-                           </View>  
-                           <View  style={{justifyContent:"space-between",flexWrap: 'wrap', flexDirection:'row', alignItems:'center'}}>
-                               <View style={{flexDirection:'row', alignItems:'center'}}>
-                               <AuthorPic style={{ width: 20,height: 20}}
+                                <View style={{justifyContent:'space-between', alignItems:'center', flexDirection:'row'}}>
+                                     <View  style={{flexWrap: 'wrap', 
+                                    flexDirection:'row', 
+                                    }}>
+                                        { item.tags?.map((tag, i) =>
+                                               ( <Tag key={i}>{tag}</Tag> )                       
+                                            )}    
+                                    </View>    
+                                    <View>
+                                        <Author style={{marginRight:25, marginTop:0}}>
+                                            {<Author style={{marginRight:25, color:'#4e76e0',marginTop:0}}> 추천 {item.likes} 개 </Author>}
+                                            
+                                            </Author>
+                                    </View>
+                                </View> 
+
+
+                                <View style={{flexWrap: 'wrap',flexDirection:'row' }}>       
+                                    <View style={{justifyContent:"flex-start", flex:5}}>     
+                                    <CardTitle style={{color:'#4e76e0'}}>{trimText(item.title, 20)} {item.comments?.length > 0?<Text style={{color:'#4e76e0'}}>[{item.comments.length}]</Text>:null}</CardTitle>
+                                    <CardContext >{trimText(item.context, 90)}</CardContext>
+                                    </View>
+
+                                    <View style={{flex:2, alignItems:'center'}}>
+                                    <View>{!!item.pics?.length && (
+                                            <AuthorPic style={{
+                                                    width: 60,
+                                                    height: 60,
+                                                }}
+                                                    source={{
+                                                    uri: item.pics[0]
+                                                }}/>
+                                                )}
+                                                
+                                        </View>
+                                    </View>
+                                </View>  
+                                <View  style={{justifyContent:"space-between",flexWrap: 'wrap', flexDirection:'row', alignItems:'center'}}>
+                                    <View style={{flexDirection:'row', alignItems:'center'}}>
+                                    <AuthorPic style={{ width: 20,height: 20}}
                                    source={{
                                    uri: item.author?.profilepic
                                }}/>
-                               <Author>{item.author?.name}</Author>
-                               </View>
-                               <View>
-                               <Author style={{marginRight:25}}>{formatDate(item.createdAt as unknown as string)}</Author>
-                               </View>
-                           </View>
+                                            <Image style={{height:25, width:25, marginTop:5}} source={tier(item.author?.exp).img} />
+                                            <Author>{item.author?.name}</Author>
+                                    </View>
+                                    <View>
+                                             <Author style={{marginRight:25}}>{formatDate(item?.createdAt as unknown as string)}</Author>
+                                    </View>
+                                </View>
 
-                           </TouchableOpacity>
-                           
-                       </Card>
+                                </TouchableOpacity>
+                                
+                            </Card>
                        <Cut style={{marginTop:5, marginBottom:5}}></Cut>
                        </React.Fragment>
           )

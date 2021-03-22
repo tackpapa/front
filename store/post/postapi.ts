@@ -57,7 +57,8 @@ export const requestGetHotPost = (payload: GetHotPostRequestPayload) => {
     .then<GetHotPostSuccessPayload>(({ data }) => data);
 };
 
-export const requestCreatePost = (payload: CreatePostRequestPayload) => {
+export const requestCreatePost = async (payload: CreatePostRequestPayload) => {
+  console.log("오나");
   var form_data = new FormData();
   for (let i = 0; i < payload.pic.length; i++) {
     form_data.append("pic", (payload.pic[i] as unknown) as Blob);
@@ -70,9 +71,10 @@ export const requestCreatePost = (payload: CreatePostRequestPayload) => {
   form_data.append("context", payload.context);
   form_data.append("category", payload.category);
   form_data.append("author", payload.author);
-  return request
-    .post("/post/create", form_data)
-    .then<CreatePostSuccessPayload>(({ data }) => data);
+  console.log(form_data);
+  const { data } = await request.post("/post/create", form_data);
+  const result: CreatePostSuccessPayload = data;
+  return result;
 };
 
 export const requestUpdatePost = (payload: UpdatePostRequestPayload) =>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {  KeyboardAvoidingView, Image, Alert } from 'react-native';
+import {  KeyboardAvoidingView, Image, Alert, Platform } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { Text, View } from '../components/Themed';
 import { useNavigation } from '@react-navigation/native';
@@ -123,7 +123,7 @@ export default function SeePostScreen() {
 
   
   
-  const gochat = (id:string)=>{
+  const gochat = ()=>{
     if(user._id===""){
       navigation.navigate("KakaoScreen");
     }else{     
@@ -134,7 +134,7 @@ export default function SeePostScreen() {
       });
     }
   }
-  
+  const KeyboardComponent = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
   return (
   <SafeAreaView style={{flex:1}}>
   <Container>
@@ -261,9 +261,11 @@ export default function SeePostScreen() {
      <View style={{}}>
         <Context style={{}}>{Job.context}</Context>
      </View>   
-  <Update onPress={()=>gochat("dd")} style={{backgroundColor:'#4e76e0'}}>
+{ Job.author._id !== user._id     ?
+  <Update onPress={()=>gochat()} style={{backgroundColor:'#4e76e0'}}>
    <Btntext>지원하기</Btntext>
   </Update>     
+: null}
        </View>               
    :null         
           )
@@ -311,11 +313,11 @@ export default function SeePostScreen() {
        <View style={{height:'auto'}}>
           <Context style={{}}>{Market.context}</Context>
        </View>   
-       <Update
-  onPress={()=>gochat("dd")} style={{backgroundColor:'#4e76e0'}}
-  >
-  <Btntext>구매요청</Btntext>
-  </Update>      
+       { Market.author._id !== user._id     ?
+  <Update onPress={()=>gochat()} style={{backgroundColor:'#4e76e0'}}>
+   <Btntext>지원하기</Btntext>
+  </Update>     
+: null} 
          </View>               
      :null        
           )
@@ -383,7 +385,7 @@ export default function SeePostScreen() {
      
     </Container>
     <Cut></Cut>
-    <KeyboardAvoidingView behavior="padding" enabled>
+    <KeyboardComponent behavior="padding" enabled>
         <Rec>
           {(user._id === "" ? <Text>댓글을 입력하시려면 로그인해주세요</Text> : 
             <><Com
@@ -402,19 +404,20 @@ export default function SeePostScreen() {
           )}
         
         </Rec>
-        </KeyboardAvoidingView>
+        </KeyboardComponent>
     </SafeAreaView>
   )
 }
 const Subtext = styled.Text`
 color:white;
 font-size:18px;
-font-weight:700;
+font-weight:bold;
 text-align:center;
 align-items:center;
-margin-top:10px;
 `
 const Sub = styled.TouchableOpacity`
+justify-content:center;
+align-items:center;
 width:${width*0.2}px;
 background-color:#4e76e0;
 height:40px;

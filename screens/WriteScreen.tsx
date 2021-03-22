@@ -100,6 +100,8 @@ useEffect(() => {
 ,[price])
 
 
+
+
   const handleTags = (val:string)=>{
     var result = val.match(regex);
     if(result ===null){return null};
@@ -170,9 +172,13 @@ useEffect(() => {
     location:location
   };
 
-
+  useEffect(() => {
+   console.log(newPost)
+    }
+   ,[newPost])
 
 const submitPost = ()=>{
+  console.log("온다")
 if(user._id === ""){
   navigation.navigate("KakaoScreen")
 }else{

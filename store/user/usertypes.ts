@@ -23,6 +23,11 @@ export enum Actions {
   update_IN_FAILURE = "update#FAILURE",
   update_IN_CANCEL = "update#CANCEL",
 
+  TOKEN_IN_REQUEST = "TOKEN#REQUEST",
+  TOKEN_IN_SUCCESS = "TOKEN#SUCCESS",
+  TOKEN_IN_FAILURE = "TOKEN#FAILURE",
+  TOKEN_IN_CANCEL = "TOKEN#CANCEL",
+
   DELETE_IN_REQUEST = "DELETE#REQUEST",
   DELETE_IN_SUCCESS = "DELETE#SUCCESS",
   DELETE_IN_FAILURE = "DELETE#FAILURE",
@@ -48,6 +53,7 @@ export const initialState = {
   exp: 0,
   profilepic: "",
   liked: [],
+  expotoken: "",
 };
 
 export interface User {
@@ -59,6 +65,7 @@ export interface User {
   exp: number;
   profilepic: string;
   liked: string[];
+  expotoken: string;
 }
 
 export interface SignInRequestPayload {
@@ -93,6 +100,9 @@ export interface UserProfileSuccessPayload {
 export interface DeleteRequestPayload {
   _id: String;
 }
+
+export type TokenRequestPayload = string;
+export type TokenSuccessPayload = void;
 
 export interface SignUpRequestPayload extends SignInRequestPayload {
   name: string;

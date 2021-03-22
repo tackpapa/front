@@ -25,6 +25,17 @@ const chat = createReducer<ChatState>(initialState, {
       data: [...state.data, ...payload.chats],
     };
   },
+  [getType(chatActions.getChat)]: (state, { payload }) => {
+    return {
+      ...state,
+      [payload.from._id]: (state[payload.from._id]
+        ? state[payload.from._id]
+        : []
+      ).concat([payload]),
+      data: [...state["data"]],
+    };
+  },
+
   [getType(userActions.logout)]: () => initialState,
 
   [getType(chatActions.createChat.success)]: (state, { payload }) => {

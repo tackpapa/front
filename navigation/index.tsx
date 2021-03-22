@@ -30,6 +30,7 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  // useEffect. background change 되었을 때 서버로 socket message 보내서 서버의 socket.ts에서 세션 삭제
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }} headerMode={'screen'}>
       <Stack.Screen name="Root" component={TabNavigator} />

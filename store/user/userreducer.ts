@@ -41,6 +41,9 @@ const user = createReducer<UserState>(initialState, {
   [getType(userActions.fetchUpdate.success)]: (_state, { payload }) => {
     return payload;
   },
+  [getType(userActions.fetchToken.success)]: (state, { payload }) => {
+    return state;
+  },
 
   [getType(userActions.fetchDelete.success)]: (_state, { payload }) => {
     return payload;

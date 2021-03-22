@@ -64,11 +64,11 @@ export default function BestScreen() {
 
   const handleLayoutChange = () => {
     feed.current?.measure( (fx, fy, width, height, px, py) => {
-      setY(py);
+      if(fy) setY(fy);
   })}
   
   return (
-    <SafeAreaView style={{ flex: 1}}>
+    <SafeAreaView style={{ flex: 1, paddingTop:40, backgroundColor:'white'}}>
          <View style={{height:40}}>
     <TouchableOpacity style={{flexDirection:'row', alignItems:'center', margin:10}} onPress={() =>{ navigation.goBack();}}>        
     <Ionicons size={20} name="ios-arrow-back"/>

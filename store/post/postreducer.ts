@@ -26,15 +26,21 @@ const post = createReducer<PostState>(initialState, {
   [getType(postActions.likePost.success)]: (state, { payload }) => {
     return {
       ...state,
-      // [state.onepost?.category]:[state.onepost?.category].map((item) => {
-      //   if (item?._id === payload) {
-      //     return {
-      //       ...item,
-      //       likes: item.likes + 1,
-      //     };
-      //   }
-      //   return item;
-      // }),
+      ...(state.onepost?.category
+        ? {
+            [state.onepost.category]: state[state.onepost?.category].map(
+              (item) => {
+                if (item._id === payload) {
+                  return {
+                    ...item,
+                    likes: item.likes + 1,
+                  };
+                }
+                return item;
+              }
+            ),
+          }
+        : {}),
       onepost: state.onepost
         ? {
             ...state.onepost,
@@ -55,6 +61,21 @@ const post = createReducer<PostState>(initialState, {
   [getType(postActions.dislikePost.success)]: (state, { payload }) => {
     return {
       ...state,
+      ...(state.onepost?.category
+        ? {
+            [state.onepost.category]: state[state.onepost?.category].map(
+              (item) => {
+                if (item._id === payload) {
+                  return {
+                    ...item,
+                    likes: item.likes - 1,
+                  };
+                }
+                return item;
+              }
+            ),
+          }
+        : {}),
       onepost: state.onepost
         ? {
             ...state.onepost,
