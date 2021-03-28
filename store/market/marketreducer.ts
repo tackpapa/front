@@ -23,6 +23,13 @@ const market = createReducer<MarketState>(initialState, {
       onemarket: payload,
     };
   },
+  [getType(marketActions.getNewMarket.success)]: (state, { payload }) => {
+    const index = payload.filter((val: any) => !state.latest.includes(val));
+    return {
+      ...state,
+      latest: [...index, ...state["latest"]],
+    };
+  },
   [getType(marketActions.getCategoryMarket.success)]: (
     state,
     { payload }: { payload: GetCategoryMarketSuccessPayload }
@@ -46,14 +53,14 @@ const market = createReducer<MarketState>(initialState, {
         onemarket: state.onemarket
           ? {
               ...state.onemarket,
-              comments: [payload, ...state.onemarket.comments],
+              comments: [...state.onemarket.comments, payload],
             }
           : undefined,
         latest: state.latest.map((item) => {
           if (item._id === payload.post) {
             return {
               ...item,
-              comments: [payload, ...item.comments],
+              comments: [...item.comments, payload],
             };
           }
           return item;

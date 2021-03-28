@@ -5,6 +5,7 @@ import {
   CreateChatSuccessPayload,
   CreateChatRequestPayload,
   GetChatPayload,
+  SetLastRedPayload,
   GetLatestChatRequestPayload,
   GetLatestChatSuccessPayload,
 } from "./chattypes";
@@ -23,6 +24,8 @@ const getLatestChat = createAsyncAction(
 
 const getChat = createAction(Actions.GET_CHAT)<GetChatPayload>();
 
+const setLastred = createAction(Actions.SET_LAST_RED)<SetLastRedPayload>();
+
 const createChat = createAsyncAction(
   Actions.CREATE_CHAT_REQUEST,
   Actions.CREATE_CHAT_SUCCESS,
@@ -32,6 +35,7 @@ const createChat = createAsyncAction(
 
 export default {
   createChat,
+  setLastred,
   getChat,
   getLatestChat,
 };

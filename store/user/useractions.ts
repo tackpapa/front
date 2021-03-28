@@ -2,6 +2,10 @@ import { createAction, createAsyncAction } from "typesafe-actions";
 
 import {
   Actions,
+  DeleteNotiRequestPayload,
+  DeleteNotiSuccessPayload,
+  GetOneRequestPayload,
+  GetOneSuccessPayload,
   SignInRequestPayload,
   SignInSuccessPayload,
   SignUpRequestPayload,
@@ -33,6 +37,19 @@ const fetchUpdate = createAsyncAction(
   Actions.update_IN_FAILURE,
   Actions.update_IN_CANCEL
 )<UpdateRequestPayload, UpdateSuccessPayload, undefined, undefined>();
+
+const deleteNoti = createAsyncAction(
+  Actions.DELETE_NOTI,
+  Actions.DELETE_NOTI_SUCCESS,
+  Actions.DELETE_NOTI_FAILURE
+)<DeleteNotiRequestPayload, DeleteNotiSuccessPayload>();
+
+const getOne = createAsyncAction(
+  Actions.GETONE_IN_REQUEST,
+  Actions.GETONE_IN_SUCCESS,
+  Actions.GETONE_IN_FAILURE,
+  Actions.GETONE_IN_CANCEL
+)<GetOneRequestPayload, GetOneSuccessPayload>();
 
 const fetchToken = createAsyncAction(
   Actions.TOKEN_IN_REQUEST,
@@ -77,6 +94,8 @@ const fetchSignUp = createAsyncAction(
 export default {
   logout,
   fetchUploadProfile,
+  getOne,
+  deleteNoti,
   fetchDelete,
   fetchUpdate,
   fetchToken,

@@ -11,6 +11,7 @@ import { Fragment } from 'react';
 import { trimText, formatDate } from "../../utils/util"
 
 
+const backSelector = ({ config }:RootState)=> config.isBackground;
 
 const postSelector = ({ chat }:RootState)=> chat;
 const userSelector = ({ user }:RootState)=> user;
@@ -25,24 +26,31 @@ export default function ChatScreen() {
   const move = (name:string, id:string) => {
     navigation.navigate("SeeChatScreen", {name: name, id:id});
 }
-
+const back = useSelector(backSelector)
   const user = useSelector(userSelector)
   const post = useSelector(postSelector)
-  const aaaa = Object.entries(post)
-  const bb = aaaa.filter(item=>{
-    if(item[0]==="data" || item[0] === '_persist'){
-      return false
-    }else{
-      return true
-    }
-  })
+  const aaaa = Object.entries(post.users)
+  
+
   useEffect(() => {
     if(user._id ===""){
       navigation.navigate('KakaoScreen')
     }else{
-      dispatch(chatactions.getLatestChat.request({}));
+      
+      dispatch(chatactions.getLatestChat.request({
+        date: post.data.length ? new Date(post.data[post.data.length-1].createdAt).getTime() : undefined
+      }));
     }
   },[user])
+
+  useEffect(() => {
+    
+    if(back === false)
+     {        
+       dispatch(chatactions.getLatestChat.request({
+        date: post.data.length ? new Date(post.data[post.data.length-1].createdAt).getTime() : undefined
+      })); }
+  },[back])
 
   return (
   
@@ -55,8 +63,8 @@ export default function ChatScreen() {
       <Text style={{textAlign:'center', fontSize:17, fontWeight:'bold', color:'white'}}>로그인 하러가기</Text>
       </TouchableOpacity>   
      :
-     bb.map(([id, items])=>{   
-      const item = items[items.length-1];     
+     aaaa.map(([id, items])=>{   
+       const item = items.data[items.data.length-1];     
       const user2 = item.from._id === user._id ? item.to : item.from;
     
       return (
@@ -72,8 +80,13 @@ export default function ChatScreen() {
             <View style={{ flex:1}}>
             <View style={{ alignItems:'center', flexDirection:'row', justifyContent:'space-between'}}>
 
-            <View style={{}}>
+            <View style={{flexDirection:'row', alignItems:'center'}}>
                 <Username>{user2.name}</Username>
+                {( items.lastred < items.data.length ?  <View style={{backgroundColor:'red', borderRadius:50, paddingLeft: 6, paddingRight:6, paddingTop:3, paddingBottom:3, margin:5}}>
+                <Text style={{ color:'white'}}>{items.data.length-items.lastred}</Text>
+                </View>:null)}
+               
+               
             </View>
 
               <View style={{}}>
@@ -113,8 +126,8 @@ background-color:white;
 `;
 
 const Div = styled.View`
-height:${height*0.1}px;
-border-bottom-width:0.5px;
+height:${height*0.11}px;
+border-bottom-width:0.7px;
 border-color:#e5e5e5;
 color: #4e76e0;
 align-items:center;

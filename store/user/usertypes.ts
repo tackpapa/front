@@ -1,4 +1,3 @@
-import { FontSource } from "expo-font";
 import { Post } from "../post/posttypes";
 import { Job } from "../jobs/jobstypes";
 import { Market } from "../market/markettypes";
@@ -17,6 +16,16 @@ export enum Actions {
   FETCH_SIGN_UP_CANCEL = "FETCH_SIGN_UP#CANCEL",
 
   SIGN_OUT = "SIGN_OUT",
+  fetchSession = "FETCH_SESSION",
+
+  DELETE_NOTI = "DELETE_NOTI",
+  DELETE_NOTI_SUCCESS = "DELETE_NOTI_SUCCESS",
+  DELETE_NOTI_FAILURE = "DELETE_NOTI_FAILURE",
+
+  GETONE_IN_REQUEST = "GETONE_IN_REQUEST",
+  GETONE_IN_SUCCESS = "GETONE_IN_SUCCESS",
+  GETONE_IN_FAILURE = "GETONE_IN_FAILURE",
+  GETONE_IN_CANCEL = "GETONE_IN_CANCEL",
 
   update_IN_REQUEST = "update#REQUEST",
   update_IN_SUCCESS = "update#SUCCESS",
@@ -54,6 +63,7 @@ export const initialState = {
   profilepic: "",
   liked: [],
   expotoken: "",
+  Noti: [],
 };
 
 export interface User {
@@ -66,11 +76,14 @@ export interface User {
   profilepic: string;
   liked: string[];
   expotoken: string;
+  Noti: string[];
 }
 
 export interface SignInRequestPayload {
   code: string;
 }
+
+export type GetOneRequestPayload = string;
 
 export interface UpdateRequestPayload {
   email: string;
@@ -90,6 +103,7 @@ export interface UploadProfileRequestPayload {
 export interface UserProfileRequestPayload {
   _id: string;
 }
+export type fetchSessionPayload = boolean;
 
 export interface UserProfileSuccessPayload {
   posts: Post[];
@@ -102,7 +116,10 @@ export interface DeleteRequestPayload {
 }
 
 export type TokenRequestPayload = string;
+export type DeleteNotiRequestPayload = string;
+export type DeleteNotiSuccessPayload = void;
 export type TokenSuccessPayload = void;
+export type GetOneSuccessPayload = User;
 
 export interface SignUpRequestPayload extends SignInRequestPayload {
   name: string;

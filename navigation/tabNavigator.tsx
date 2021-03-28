@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Platform } from 'react-native';
 import * as React from 'react';
-import Colors from '../constants/Colors';
+
 import useColorScheme from '../hooks/useColorScheme';
 import {HomeNavigator, JobsNavigator, ChatNavigator, ProfileNavigator, MarketNavigator} from './stackNavigator';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
@@ -22,7 +22,7 @@ import Profileoff from '../icons/profileoff.svg';
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
-  // const and = Platform.OS === 'android' ? style:{height:50}, : View;
+  
 
   const colorScheme = useColorScheme();
   return (

@@ -29,6 +29,11 @@ export enum Actions {
   GET_POST_FAILURE = "GETPOST#FAILURE",
   GET_POST_CANCEL = "GETPOST#CANCEL",
 
+  GET_NEW_POST_REQUEST = "GET_NEW_POST#REQUEST",
+  GET_NEW_POST_SUCCESS = "GET_NEW_POST#SUCCESS",
+  GET_NEW_POST_FAILURE = "GET_NEW_POST#FAILURE",
+  GET_NEW_POST_CANCEL = "GET_NEW_POST#CANCEL",
+
   LIKE_POST_REQUEST = "LIKEPOST#REQUEST",
   LIKE_POST_SUCCESS = "LIKEPOST#SUCCESS",
   LIKE_POST_FAILURE = "LIKEPOST#FAILURE",
@@ -123,8 +128,10 @@ export interface SearchPostRequestPayload {
   query: string;
 }
 export type DeletePostRequestPayload = Pick<Post, "_id">;
-export type GetLatestPostRequestPayload = string;
+export type GetLatestPostRequestPayload = string; // date
 export type GetHotPostRequestPayload = string;
+export type NewPostRequestPayload = string;
+export type NewPostSuccessPayload = Post[];
 
 export type UpdatePostRequestPayload = Omit<Post, "views">;
 

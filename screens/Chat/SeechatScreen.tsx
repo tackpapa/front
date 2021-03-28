@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import {KeyboardAvoidingView, Platform } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { Text, View } from '../../components/Themed';
-import {  useState } from 'react';
+import {  useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/types';
@@ -13,9 +13,6 @@ import { useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/build/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CreateChatRequestPayload } from '~/../store/chat/chattypes';
-import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
-import { useRef } from 'react';
-
 
 const {width, height} = Dimensions.get("screen")
 const postSelector = ({ chat }:RootState)=> chat;
@@ -27,8 +24,15 @@ export default function SeeChatScreen() {
   const user = useSelector(userSelector);
   const navigation = useNavigation();
   const [text, setText] = useState("");
-  const post = useSelector(postSelector)[route.params?.id];
-  
+  const post = useSelector(postSelector).users[route.params?.id].data;
+
+  useEffect(() => {
+    if(user._id ===""){
+      navigation.navigate('KakaoScreen')
+    }else{
+      dispatch(chatactions.setLastred({_id: route.params?.id, lastred: post.length }))
+    }
+  },[user, post])
 
   const submit = ()=>{
     if(text.length > 0 ){
@@ -45,27 +49,29 @@ export default function SeeChatScreen() {
 
   const KeyboardComponent = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
 
-  const scrollRef = React.createRef<ScrollView>();
+  const scrollRef = React.useRef<any>();
+
 
   return (
   <SafeAreaView style={{flex:1, backgroundColor:'white'}}>
-  <Container ref={scrollRef}
-   onContentSizeChange={(contentHeight) => scrollRef.current?.scrollToEnd({animated: false})}>
-    
-
-  <View style={{flexDirection:'row', alignItems:'center', height:60}}>
+    <View style={{flexDirection:'row', alignItems:'center', height:60}}>
     <TouchableOpacity style={{flexDirection:'row', alignItems:'center'}} onPress={() =>{ navigation.navigate("ChatScreen")}}>        
     <Ionicons size={25} name="chevron-back-outline"/>
     <Text style={{fontSize:20, marginBottom:3}}>{route.params?.name}</Text>
   </TouchableOpacity>   
   </View>
+  <Container ref={scrollRef}
+   onContentSizeChange={(contentHeight) =>{ 
+      scrollRef.current?.scrollToEnd({animated: false})
+   }}>
+    
  <Cut></Cut>
     { post && post.length > 0 ?
     post.map(item=>{
       return (
           item.from._id === user._id ? 
 
-           <Mycard key={item.createdAt}>
+           <Mycard key={`chat-${item._id}-${item.createdAt}`}>
                 <View style={{borderRadius:15,backgroundColor:"#bcd3ff", padding:5}}>
                 <Author >{item.msg}</Author>
                 </View>
@@ -76,7 +82,7 @@ export default function SeeChatScreen() {
               <View style={{}}>
                 <Userpic source={{uri: item.from.profilepic  }}></Userpic>      
               </View>
-              <View style={{ padding:5}}>
+              <View style={{ padding:5}}> 
                   <Author style={{fontSize:17, fontWeight:'600'}}>{item.from.name}</Author>
                   <View style={{borderRadius:15,backgroundColor:"#eeeef0", padding:5}}>
                   <Author >{item.msg}</Author>
@@ -92,7 +98,7 @@ export default function SeeChatScreen() {
         <Rec>          
             <><Com
               underlineColorAndroid="transparent"
-              placeholder="  메세지를 입력해주세요"
+              placeholder="  댓글을 입력해주세요"
               placeholderTextColor="black"
               selectionColor={'black'}
               value={text}            

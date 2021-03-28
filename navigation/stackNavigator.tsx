@@ -15,13 +15,18 @@ import {Text} from 'react-native';
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import  Noti from '../icons/group2368.svg';
+import  Ring from '../icons/group_2369.svg';
+import { RootState } from '../store/types';
+import { useSelector } from 'react-redux';
 
 const {width, height} = Dimensions.get("screen")
 
+const userSelector = ({user} : RootState) => user;
 
 const HomeStack = createStackNavigator<HomeParamList>();
 
 export function HomeNavigator() {
+  const user = useSelector(userSelector);
   return (
     <HomeStack.Navigator> 
       <HomeStack.Screen
@@ -35,11 +40,15 @@ export function HomeNavigator() {
             elevation: 0
           },
           headerLeft: () => (
-            <>
-              <Notibox onPress={() => navigation.navigate('NotiScreen')}>
+            
+           (user.Noti.length > 0 ? <Notibox onPress={() => navigation.navigate('NotiScreen')}>
+           <Ring style={{bottom:0, left:-12}}></Ring>
+             </Notibox>     
+           :  <Notibox onPress={() => navigation.navigate('NotiScreen')}>
               <Noti style={{bottom:-5, left:-1}}></Noti>
                 </Notibox>
-                </>
+           )
+                
           ),
           headerRight: () => (           
             <><Search style={{marginRight:20}} onPress={() => navigation.navigate('SearchScreen', "게시판")} >  

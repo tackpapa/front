@@ -1,6 +1,11 @@
 export interface ChatState {
   data: Chat[];
-  [key: string]: Chat[];
+  users: {
+    [key: string]: {
+      lastred: number;
+      data: Chat[];
+    };
+  };
 }
 
 export enum Actions {
@@ -15,10 +20,12 @@ export enum Actions {
   GET_LATEST_CHAT_CANCEL = "GET_LATEST_CHAT#CANCEL",
 
   GET_CHAT = "GET_CHAT",
+  SET_LAST_RED = "SET_LAST_RED",
 }
 
 export const initialState: ChatState = {
   data: [],
+  users: {},
 };
 
 export interface Chat {
@@ -42,3 +49,7 @@ export interface CreateChatRequestPayload {
 export type GetLatestChatSuccessPayload = Chat[];
 export type CreateChatSuccessPayload = Chat;
 export type GetChatPayload = Chat;
+export interface SetLastRedPayload {
+  _id: string;
+  lastred: number;
+}

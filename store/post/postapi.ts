@@ -1,6 +1,8 @@
 import { request, setHeader } from "../utils";
 import {
   GetPostRequestPayload,
+  NewPostRequestPayload,
+  NewPostSuccessPayload,
   LikePostRequestPayload,
   GetPostSuccessPayload,
   SearchPostRequestPayload,
@@ -51,6 +53,12 @@ export const requestGetLatestPost = (payload: GetLatestPostRequestPayload) =>
     .get(`/post/latest/${payload}`)
     .then<GetLatestPostSuccessPayload>(({ data }) => data);
 
+export const requestNewPost = (payload: NewPostRequestPayload) => {
+  return request
+    .get(`/post/newones/${payload}`)
+    .then<NewPostSuccessPayload>(({ data }) => data);
+};
+
 export const requestGetHotPost = (payload: GetHotPostRequestPayload) => {
   return request
     .get(`/api/hotpost/${payload}`)
@@ -58,23 +66,27 @@ export const requestGetHotPost = (payload: GetHotPostRequestPayload) => {
 };
 
 export const requestCreatePost = async (payload: CreatePostRequestPayload) => {
-  console.log("오나");
   var form_data = new FormData();
   for (let i = 0; i < payload.pic.length; i++) {
-    form_data.append("pic", (payload.pic[i] as unknown) as Blob);
+    form_data.append("pic", ({
+      ...payload.pic[i],
+      type: "image/jpeg",
+    } as unknown) as Blob);
   }
   for (let i = 0; i < payload.tags.length; i++) {
     form_data.append("tags", (payload.tags[i] as unknown) as Blob);
   }
-
   form_data.append("title", payload.title);
   form_data.append("context", payload.context);
   form_data.append("category", payload.category);
   form_data.append("author", payload.author);
-  console.log(form_data);
-  const { data } = await request.post("/post/create", form_data);
-  const result: CreatePostSuccessPayload = data;
-  return result;
+  try {
+    const { data } = await request.post("/post/create", form_data);
+    const result: CreatePostSuccessPayload = data;
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const requestUpdatePost = (payload: UpdatePostRequestPayload) =>

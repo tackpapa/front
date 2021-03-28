@@ -23,6 +23,11 @@ export enum Actions {
   GET_JOB_FAILURE = "GETJOB#FAILURE",
   GET_JOB_CANCEL = "GETJOB#CANCEL",
 
+  GET_NEW_JOB_REQUEST = "GET_NEW_JOB#REQUEST",
+  GET_NEW_JOB_SUCCESS = "GET_NEW_JOB#SUCCESS",
+  GET_NEW_JOB_FAILURE = "GET_NEW_JOB#FAILURE",
+  GET_NEW_JOB_CANCEL = "GET_NEW_JOB#CANCEL",
+
   DELETERESULT_REQUEST = "DELETERESULT#REQUEST",
   DELETERESULT_SUCCESS = "DELETERESULT#SUCCESS",
   DELETERESULT_FAILURE = "DELETERESULT#FAILURE",
@@ -106,6 +111,8 @@ export interface SearchJobSuccessPayload {
 }
 
 export type UpdateJobRequestPayload = Job;
+export type NewJobRequestPayload = string;
+export type NewJobSuccessPayload = Job[];
 
 export interface CreateJobRequestPayload {
   title: string;

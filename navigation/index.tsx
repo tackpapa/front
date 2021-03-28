@@ -1,7 +1,7 @@
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { ColorSchemeName } from 'react-native';
+import { AppState, ColorSchemeName } from 'react-native';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
 import TabNavigator from './tabNavigator';
@@ -14,10 +14,38 @@ import WebScreen from '../screens/WebScreen';
 import RegisterScreen from '../screens/Onboarding/RegisterScreen';
 import KakaoScreen from '../screens/KakaoScreen';
 import BestScreen from '../screens/BestScreen';
+import configactions from '../store/config/configactions';
+import { useDispatch } from 'react-redux';
 
 
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+  const dispatch = useDispatch();
+  const appState = React.useRef<string>(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = React.useState(appState.current);
+
+  React.useEffect(() => {
+    AppState.addEventListener("change", _handleAppStateChange);
+
+    return () => {
+      AppState.removeEventListener("change", _handleAppStateChange);
+    };
+  }, []);
+
+  const _handleAppStateChange = (nextAppState:string) => {
+    if (
+      appState.current.match(/inactive|background/) &&
+      nextAppState === "active"
+    ) {
+      dispatch(configactions.fetchSession(true));
+    } else {
+      dispatch(configactions.fetchSession(false));
+    }
+
+    appState.current = nextAppState;
+    setAppStateVisible(appState.current);
+    
+  };
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
@@ -30,7 +58,6 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  // useEffect. background change 되었을 때 서버로 socket message 보내서 서버의 socket.ts에서 세션 삭제
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }} headerMode={'screen'}>
       <Stack.Screen name="Root" component={TabNavigator} />

@@ -115,6 +115,13 @@ const post = createReducer<PostState>(initialState, {
       latest: state.latest.concat(payload),
     };
   },
+  [getType(postActions.getNewPost.success)]: (state, { payload }) => {
+    const index = payload.filter((val: any) => !state.latest.includes(val));
+    return {
+      ...state,
+      latest: [...index, ...state["latest"]],
+    };
+  },
   [getType(postActions.getHotPost.success)]: (state, { payload }) => {
     return {
       ...state,
@@ -138,14 +145,14 @@ const post = createReducer<PostState>(initialState, {
         onepost: state.onepost
           ? {
               ...state.onepost,
-              comments: [payload, ...state.onepost.comments],
+              comments: [...state.onepost.comments, payload],
             }
           : undefined,
         latest: state.latest.map((item) => {
           if (item._id === payload.post) {
             return {
               ...item,
-              comments: [payload, ...item.comments],
+              comments: [...item.comments, payload],
             };
           }
           return item;

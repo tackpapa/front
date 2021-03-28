@@ -22,7 +22,12 @@ const init = (userId: string) => {
   socket.emit("createSession", userId);
 };
 
+const background = () => {
+  socket.emit("background");
+};
+
 export default {
   connectStore,
   init,
+  background,
 };

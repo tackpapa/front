@@ -2,6 +2,8 @@ import { request } from "../utils";
 import {
   GetMarketRequestPayload,
   GetMarketSuccessPayload,
+  NewMarketRequestPayload,
+  NewMarketSuccessPayload,
   GetCategoryMarketRequestPayload,
   GetCategoryMarketSuccessPayload,
   SearchMarketRequestPayload,
@@ -45,11 +47,20 @@ export const requestGetLatestMarket = (
     .get(`/market/latest/${payload}`)
     .then<GetLatestMarketSuccessPayload>(({ data }) => data);
 
+export const requestNewMarket = (payload: NewMarketRequestPayload) => {
+  return request
+    .get(`/post/newones/${payload}`)
+    .then<NewMarketSuccessPayload>(({ data }) => data);
+};
+
 export const requestCreateMarket = (payload: CreateMarketRequestPayload) => {
   var form_data = new FormData();
 
   for (let i = 0; i < payload.pic.length; i++) {
-    form_data.append("pic", (payload.pic[i] as unknown) as Blob);
+    form_data.append("pic", ({
+      ...payload.pic[i],
+      type: "image/jpeg",
+    } as unknown) as Blob);
   }
 
   form_data.append("title", payload.title);
@@ -59,7 +70,7 @@ export const requestCreateMarket = (payload: CreateMarketRequestPayload) => {
   }
   form_data.append("category", payload.category);
   form_data.append("author", payload.author);
-  form_data.append("price", payload.price);
+  form_data.append("price", `${payload.price}`);
   form_data.append("location", payload.location);
 
   return request

@@ -4,6 +4,8 @@ import {
   Actions,
   GetPostRequestPayload,
   GetPostSuccessPayload,
+  NewPostRequestPayload,
+  NewPostSuccessPayload,
   LikePostRequestPayload,
   LikePostSuccessPayload,
   DeleteResultRequestPayload,
@@ -102,6 +104,13 @@ const getHotPost = createAsyncAction(
   Actions.GET_HOT_POST_CANCEL
 )<GetHotPostRequestPayload, GetHotPostSuccessPayload, undefined, undefined>();
 
+const getNewPost = createAsyncAction(
+  Actions.GET_NEW_POST_REQUEST,
+  Actions.GET_NEW_POST_SUCCESS,
+  Actions.GET_NEW_POST_FAILURE,
+  Actions.GET_NEW_POST_CANCEL
+)<NewPostRequestPayload, NewPostSuccessPayload, undefined, undefined>();
+
 const createPost = createAsyncAction(
   Actions.CREATE_POST_REQUEST,
   Actions.CREATE_POST_SUCCESS,
@@ -119,6 +128,7 @@ const updatePost = createAsyncAction(
 export default {
   getPost,
   searchPost,
+  getNewPost,
   likePost,
   getHotPost,
   dislikePost,

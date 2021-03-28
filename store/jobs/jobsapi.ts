@@ -2,6 +2,8 @@ import { request } from "../utils";
 import {
   GetJobRequestPayload,
   GetJobSuccessPayload,
+  NewJobRequestPayload,
+  NewJobSuccessPayload,
   SearchJobRequestPayload,
   SearchJobSuccessPayload,
   GetCategoryJobRequestPayload,
@@ -39,6 +41,12 @@ export const requestDeleteJob = (payload: DeleteJobRequestPayload) =>
     .get(`/job/deleteone/${payload._id}`)
     .then<DeleteJobSuccessPayload>(({ data }) => data);
 
+export const requestNewJob = (payload: NewJobRequestPayload) => {
+  return request
+    .get(`/post/newones/${payload}`)
+    .then<NewJobSuccessPayload>(({ data }) => data);
+};
+
 export const requestGetLatestJob = (payload: GetLatestJobRequestPayload) => {
   return request
     .get(`/job/latest/${payload}`)
@@ -48,7 +56,10 @@ export const requestGetLatestJob = (payload: GetLatestJobRequestPayload) => {
 export const requestCreateJob = (payload: CreateJobRequestPayload) => {
   var form_data = new FormData();
   for (let i = 0; i < payload.pic.length; i++) {
-    form_data.append("pic", (payload.pic[i] as unknown) as Blob);
+    form_data.append("pic", ({
+      ...payload.pic[i],
+      type: "image/jpeg",
+    } as unknown) as Blob);
   }
   form_data.append("title", payload.title);
   form_data.append("context", payload.context);

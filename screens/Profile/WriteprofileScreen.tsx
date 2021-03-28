@@ -92,7 +92,7 @@ export default function WriteProfileScreen() {
     if (!result.cancelled) {
       const resizedPhoto = await ImageManipulator.manipulateAsync(
         result.uri,
-        [{ resize: { width: 60, height:60 } }],
+        [{ resize: { width: 200, height:200 } }],
         { compress: 0.7, format:ImageManipulator.SaveFormat.JPEG },
        );
        

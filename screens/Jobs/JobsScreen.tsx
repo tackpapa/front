@@ -1,6 +1,6 @@
 import React, {useEffect, useState, Fragment} from "react";
 import {useSelector, useDispatch} from 'react-redux'
-import {Image, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native';
+import {Image, TouchableOpacity, ScrollView, SafeAreaView, RefreshControl} from 'react-native';
 import {Text, View} from '../../components/Themed';
 import styled from 'styled-components/native';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -27,7 +27,11 @@ const {width, height} = Dimensions.get("screen")
 const userSelector = ({user} : RootState) => user;
 const jobSelector = ({jobs:{latest}} : RootState) => latest;
 const bannerSelector = ({banner} : RootState) => banner;
-
+const wait = (timeout:any) => {
+    return new Promise(resolve => {
+      setTimeout(resolve, timeout);
+    });
+  };
 
 export default function JobsScreen() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -74,11 +78,24 @@ export default function JobsScreen() {
     const goweb = (i:number)=>{
         navigation.navigate("WebScreen", {link: banner.data[i].link}) 
     }
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        if (post.length) {       
+          dispatch(jobsactions.getNewJob.request(post[0].createdAt));
+      }     
+      dispatch(banneractions.getBanner.request());     
+        wait(2000).then(() => {          
+              setRefreshing(false)
+        });
+      }, []);
 
     return (
 <SafeAreaView style={{flex:1}}>
 <View>
-<ScrollView onScroll={refresh} scrollEventThrottle={300}>
+<ScrollView onScroll={refresh} 
+    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+    scrollEventThrottle={300}>
     <Container>
     <Header>
         
@@ -381,3 +398,4 @@ margin-left:${width * 0.05}px;
 margin-bottom:2px;
 margin-right:${width * 0.05}px;
 `
+

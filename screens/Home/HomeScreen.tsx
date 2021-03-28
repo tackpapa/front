@@ -1,6 +1,6 @@
 import React, {useEffect, Fragment} from "react";
 import {useSelector, useDispatch} from 'react-redux'
-import { TouchableOpacity, ScrollView, SafeAreaView, Image} from 'react-native';
+import { TouchableOpacity, ScrollView, RefreshControl, SafeAreaView, Image} from 'react-native';
 import {Text, View} from '../../components/Themed';
 import styled from 'styled-components/native';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -35,6 +35,11 @@ const userSelector = ({user} : RootState) => user;
 const homeSelector = ({post:{latest}} : RootState) => latest;
 const bannerSelector = ({banner} : RootState) => banner;
 
+const wait = (timeout:any) => {
+    return new Promise(resolve => {
+      setTimeout(resolve, timeout);
+    });
+  };
 
 export default function HomeScreen() {
     const user = useSelector(userSelector);
@@ -47,6 +52,7 @@ export default function HomeScreen() {
     React.useEffect(() => {
         if(user._id !== ""){       
         (async () => {
+            dispatch(useractions.getOne.request(user._id));
           const token = await getPushToken();
           if (token){
               dispatch(useractions.fetchToken.request(token));       
@@ -93,12 +99,29 @@ export default function HomeScreen() {
     const goweb = (i:number)=>{
         navigation.navigate("WebScreen", {link: banner.data[i].link}) 
     }
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+      setRefreshing(true);
+      if (post.length) {
+        console.log("refreshing")
+        dispatch(postactions.getNewPost.request(post[0].createdAt));
+    }     
+    dispatch(banneractions.getBanner.request());     
+    dispatch(useractions.getOne.request(user._id));
+      wait(2000).then(() => {          
+            setRefreshing(false)
+      });
+    }, []);
+  
     
 
     return (
 <SafeAreaView style={{flex:1}}>
 <View>
-    <ScrollView onScroll={refresh} scrollEventThrottle={300}>
+    <ScrollView onScroll={refresh} 
+    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+    scrollEventThrottle={300}>
     <Container>
     <Header>
      <Event>바이커스</Event>
@@ -130,11 +153,11 @@ export default function HomeScreen() {
 
      <Cut style={{marginTop:10}}></Cut>
 
-     <View>
+     <View style={{backgroundColor:'white'}}>
          <GesipanMenu> BYKERS<Gesipan> 게시판 </Gesipan> </GesipanMenu>    
          
          <View  style={{padding:10, flexWrap: 'wrap', 
-                justifyContent:'space-around',
+                justifyContent:'space-around', backgroundColor:'white',
                 alignItems:'flex-start',
                 flexDirection:'row', marginTop:7}}>
 
@@ -204,13 +227,13 @@ export default function HomeScreen() {
                             
                             <Card>
                                  <TouchableOpacity
-                                    style={{flex:1}}
+                                    style={{flex:1, backgroundColor:'white'}}
                                     onPress={() => {
                                     move(item._id);}}>
 
-                                <View style={{justifyContent:'space-between', alignItems:'center', flexDirection:'row'}}>
+                                <View style={{justifyContent:'space-between',backgroundColor:'white', alignItems:'center', flexDirection:'row'}}>
                                      <View  style={{flexWrap: 'wrap', 
-                                    flexDirection:'row', 
+                                    flexDirection:'row', backgroundColor:'white'
                                     }}>
                                         { item.tags?.map((tag, i) =>
                                                ( <Tag key={i}>{tag}</Tag> )                       
@@ -278,6 +301,7 @@ export default function HomeScreen() {
 const Container = styled.ScrollView `
 flex:1;
 padding-bottom:300px;
+background-color:white;
 `
 const Card = styled.View `
 padding-top:5px;

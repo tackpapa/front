@@ -4,6 +4,8 @@ import {
   Actions,
   GetMarketRequestPayload,
   GetMarketSuccessPayload,
+  NewMarketRequestPayload,
+  NewMarketSuccessPayload,
   DeleteResultRequestPayload,
   DeleteResultSuccessPayload,
   GetCategoryMarketRequestPayload,
@@ -26,6 +28,13 @@ const getMarket = createAsyncAction(
   Actions.GET_MARKET_FAILURE,
   Actions.GET_MARKET_CANCEL
 )<GetMarketRequestPayload, GetMarketSuccessPayload, undefined, undefined>();
+
+const getNewMarket = createAsyncAction(
+  Actions.GET_NEW_MARKET_REQUEST,
+  Actions.GET_NEW_MARKET_SUCCESS,
+  Actions.GET_NEW_MARKET_FAILURE,
+  Actions.GET_NEW_MARKET_CANCEL
+)<NewMarketRequestPayload, NewMarketSuccessPayload, undefined, undefined>();
 
 const deleteResult = createAsyncAction(
   Actions.DELETERESULT_REQUEST,
@@ -57,8 +66,8 @@ const searchMarket = createAsyncAction(
   Actions.SEARCH_MARKET_FAILURE,
   Actions.SEARCH_MARKET_CANCEL
 )<
-  GetCategoryMarketRequestPayload,
-  GetCategoryMarketSuccessPayload,
+  SearchMarketRequestPayload,
+  SearchMarketSuccessPayload,
   undefined,
   undefined
 >();
@@ -115,6 +124,7 @@ export default {
   getMarket,
   searchMarket,
   deleteResult,
+  getNewMarket,
   getCategoryMarket,
   updateMarket,
   createMarket,

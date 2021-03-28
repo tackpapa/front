@@ -2,6 +2,7 @@ import { ActionType } from "typesafe-actions";
 import { Epic as RxEpic } from "redux-observable";
 import { UserState } from "./user/usertypes";
 import { PostState } from "./post/posttypes";
+import { ConfigState } from "./config/configtypes";
 import { JobsState } from "./jobs/jobstypes";
 import { MarketState } from "./market/markettypes";
 import { ChatState } from "./chat/chattypes";
@@ -16,9 +17,11 @@ import chatActions from "./chat/chatactions";
 import commentActions from "./comment/commentactions";
 import bannerActions from "./banner/banneractions";
 import searchActions from "./search/searchactions";
+import configActions from "./config/configactions";
 
 export interface RootState {
   user: UserState;
+  config: ConfigState;
   post: PostState;
   market: MarketState;
   jobs: JobsState;
@@ -30,6 +33,7 @@ export interface RootState {
 
 export type RootAction =
   | ActionType<typeof userActions>
+  | ActionType<typeof configActions>
   | ActionType<typeof postActions>
   | ActionType<typeof marketActions>
   | ActionType<typeof jobsActions>

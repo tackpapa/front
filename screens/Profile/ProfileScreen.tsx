@@ -15,6 +15,7 @@ import Myjob from './Myjob'
 import Mymarket from './Mymarket'
 import { TabView, TabBar, SceneMap, Route, SceneRendererProps, TabBarIndicatorProps, TabBarProps } from 'react-native-tab-view';
 import { Scene } from 'react-native-tab-view/lib/typescript/src/types';
+import { trimText } from '../../utils/util';
 
 const userSelector = ({ user }:RootState)=> user;
 
@@ -107,7 +108,7 @@ export default function ProfileScreen() {
         </View>
         <View style={{flex:3, alignItems:'flex-start', justifyContent:'center', marginLeft:0}}>                               
             <View style={{flexDirection:'column', justifyContent:'center'}}>
-              <Layer style={{fontSize:20}}>{user.name}  </Layer>
+              <Layer style={{fontSize:20}}>{trimText(`${user.name}`, 10) } </Layer>
               <View style={{flexDirection:'row'}}>
                 
                 <Image style={{height:20, width:20}}source={getTier?.img} />

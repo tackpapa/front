@@ -24,6 +24,13 @@ const job = createReducer<JobsState>(initialState, {
       onejob: payload,
     };
   },
+  [getType(jobActions.getNewJob.success)]: (state, { payload }) => {
+    const index = payload.filter((val: any) => !state.latest.includes(val));
+    return {
+      ...state,
+      latest: [...index, ...state["latest"]],
+    };
+  },
 
   [getType(jobActions.searchJob.success)]: (state, { payload }) => {
     return {
@@ -93,14 +100,14 @@ const job = createReducer<JobsState>(initialState, {
         onepost: state.onejob
           ? {
               ...state.onejob,
-              comments: [payload, ...state.onejob.comments],
+              comments: [...state.onejob.comments, payload],
             }
           : undefined,
         latest: state.latest.map((item) => {
           if (item._id === payload.post) {
             return {
               ...item,
-              comments: [payload, ...item.comments],
+              comments: [...item.comments, payload],
             };
           }
           return item;

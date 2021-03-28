@@ -23,6 +23,11 @@ export enum Actions {
   GET_MARKET_FAILURE = "GETMARKET#FAILURE",
   GET_MARKET_CANCEL = "GETMARKET#CANCEL",
 
+  GET_NEW_MARKET_REQUEST = "GET_NEW_MARKET#REQUEST",
+  GET_NEW_MARKET_SUCCESS = "GET_NEW_MARKET#SUCCESS",
+  GET_NEW_MARKET_FAILURE = "GET_NEW_MARKET#FAILURE",
+  GET_NEW_MARKET_CANCEL = "GET_NEW_MARKET#CANCEL",
+
   DELETERESULT_REQUEST = "DELETERESULT#REQUEST",
   DELETERESULT_SUCCESS = "DELETERESULT#SUCCESS",
   DELETERESULT_FAILURE = "DELETERESULT#FAILURE",
@@ -129,3 +134,5 @@ export type DeleteMarketSuccessPayload = String;
 export type GetLatestMarketSuccessPayload = Market[];
 export type CreateMarketSuccessPayload = Market;
 export type UpdateMarketSuccessPayload = Market;
+export type NewMarketRequestPayload = string;
+export type NewMarketSuccessPayload = Market[];

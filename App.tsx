@@ -13,6 +13,7 @@ import socket from './utils/socket'
 
 LogBox.ignoreAllLogs(true);
 socket.connectStore(store);
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();

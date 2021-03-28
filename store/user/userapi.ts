@@ -6,6 +6,10 @@ import {
   SignUpSuccessPayload,
   UpdateRequestPayload,
   UpdateSuccessPayload,
+  DeleteNotiRequestPayload,
+  DeleteNotiSuccessPayload,
+  GetOneSuccessPayload,
+  GetOneRequestPayload,
   TokenRequestPayload,
   TokenSuccessPayload,
   DeleteRequestPayload,
@@ -14,6 +18,7 @@ import {
   UploadProfileSuccessPayload,
   UserProfileSuccessPayload,
   UserProfileRequestPayload,
+  fetchSessionPayload,
 } from "./usertypes";
 
 export const requestFetchSignIn = (payload: SignInRequestPayload) => {
@@ -26,6 +31,17 @@ export const requestFetchSignUp = (payload: SignUpRequestPayload) =>
   request
     .post("/user/create", payload)
     .then<SignUpSuccessPayload>(({ data }) => data);
+
+export const requestGETONE = (payload: GetOneRequestPayload) =>
+  request
+    .get(`/user/${payload}`)
+    .then<GetOneSuccessPayload>(({ data }) => data);
+
+export const requestDeleteNoti = (payload: DeleteNotiRequestPayload) => {
+  return request
+    .get(`/user/deletenoti/${payload}`)
+    .then<DeleteNotiSuccessPayload>(({ data }) => data);
+};
 
 export const requestUpdate = (payload: UpdateRequestPayload) =>
   request
@@ -45,7 +61,11 @@ export const requestDelete = (payload: DeleteRequestPayload) =>
 
 export const requestUploadProfile = (payload: UploadProfileRequestPayload) => {
   var form_data = new FormData();
-  form_data.append("pic", (payload.pic as unknown) as Blob);
+  form_data.append("pic", ({
+    ...payload.pic,
+    type: "image/jpeg",
+  } as unknown) as Blob);
+
   return request
     .post("/user/uploadProfile", form_data)
     .then<UploadProfileSuccessPayload>(({ data }) => data);

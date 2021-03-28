@@ -1,6 +1,6 @@
 import React, {useEffect, useState, Fragment} from "react";
 import {useSelector, useDispatch} from 'react-redux'
-import {Image, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native';
+import {Image, TouchableOpacity, ScrollView, SafeAreaView, RefreshControl} from 'react-native';
 import {Text, View} from '../../components/Themed';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
@@ -24,6 +24,12 @@ const {width, height} = Dimensions.get("screen")
 const homeSelector = ({market:{latest}} : RootState) => latest;
 const bannerSelector = ({banner} : RootState) => banner;
 const userSelector = ({user} : RootState) => user;
+
+const wait = (timeout:any) => {
+    return new Promise(resolve => {
+      setTimeout(resolve, timeout);
+    });
+  };
 
 export default function HomeScreen() {   
     const post = useSelector(homeSelector);
@@ -64,11 +70,24 @@ export default function HomeScreen() {
     const goweb = (i:number)=>{
         navigation.navigate("WebScreen", {link: banner.data[i].link}) 
     }
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        if (post.length) {       
+          dispatch(marketactions.getNewMarket.request(post[0].createdAt));
+      }     
+      dispatch(banneractions.getBanner.request());     
+        wait(2000).then(() => {          
+              setRefreshing(false)
+        });
+      }, []);
 
     return (
 <SafeAreaView style={{flex:1}}>
 <View>
-    <ScrollView onScroll={refresh} scrollEventThrottle={50}>
+<ScrollView onScroll={refresh} 
+    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+    scrollEventThrottle={300}>
     <Container>
     <Header>
         
