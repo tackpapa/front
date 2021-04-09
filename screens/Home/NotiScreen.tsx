@@ -18,7 +18,7 @@ export default function Noti() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const user = useSelector(userSelector)
-  const not = user.Noti.reverse();
+  const not = user.Noti;
   useEffect(() => {
     if(user._id ===""){
       navigation.navigate('KakaoScreen')

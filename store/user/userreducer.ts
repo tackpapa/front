@@ -34,7 +34,11 @@ const user = createReducer<UserState>(initialState, {
     };
   },
   [getType(userActions.getOne.success)]: (state, { payload }) => {
-    return payload;
+    const Reversed = payload.Noti.reverse();
+    return {
+      ...payload,
+      Noti: Reversed,
+    };
   },
   [getType(postActions.dislikePost.success)]: (state, { payload }) => {
     const index = state.liked.filter((item) =>

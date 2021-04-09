@@ -43,6 +43,7 @@ const chat = createReducer<ChatState>(initialState, {
     return {
       ...state,
       users: {
+        ...state.users,
         [payload.from._id]: {
           ...obj,
           data: obj.data.concat([payload]),
@@ -62,8 +63,9 @@ const chat = createReducer<ChatState>(initialState, {
     return {
       ...state,
       users: {
+        ...state.users,
         [payload._id]: {
-          ...state,
+          ...state.users[payload._id],
           lastred: payload.lastred,
         },
       },
@@ -78,6 +80,7 @@ const chat = createReducer<ChatState>(initialState, {
     return {
       ...state,
       users: {
+        ...state.users,
         [payload.to._id]: {
           ...obj,
           data: obj.data.concat([payload]),

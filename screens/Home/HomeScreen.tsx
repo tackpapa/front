@@ -104,7 +104,7 @@ export default function HomeScreen() {
     const onRefresh = React.useCallback(() => {
       setRefreshing(true);
       if (post.length) {
-        console.log("refreshing")
+        
         dispatch(postactions.getNewPost.request(post[0].createdAt));
     }     
     dispatch(banneractions.getBanner.request());     
@@ -112,7 +112,7 @@ export default function HomeScreen() {
       wait(2000).then(() => {          
             setRefreshing(false)
       });
-    }, []);
+    }, [post, dispatch]);
   
     
 

@@ -116,10 +116,10 @@ const post = createReducer<PostState>(initialState, {
     };
   },
   [getType(postActions.getNewPost.success)]: (state, { payload }) => {
-    const index = payload.filter((val: any) => !state.latest.includes(val));
+    // const index = payload.filter((val: any) => !state.latest.includes(val));
     return {
       ...state,
-      latest: [...index, ...state["latest"]],
+      latest: [...payload, ...state["latest"]],
     };
   },
   [getType(postActions.getHotPost.success)]: (state, { payload }) => {

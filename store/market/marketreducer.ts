@@ -24,10 +24,10 @@ const market = createReducer<MarketState>(initialState, {
     };
   },
   [getType(marketActions.getNewMarket.success)]: (state, { payload }) => {
-    const index = payload.filter((val: any) => !state.latest.includes(val));
+    // const index = payload.filter((val: any) => !state.latest.includes(val));
     return {
       ...state,
-      latest: [...index, ...state["latest"]],
+      latest: [...payload, ...state["latest"]],
     };
   },
   [getType(marketActions.getCategoryMarket.success)]: (

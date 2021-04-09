@@ -88,7 +88,7 @@ export default function JobsScreen() {
         wait(2000).then(() => {          
               setRefreshing(false)
         });
-      }, []);
+      }, [post, dispatch]);
 
     return (
 <SafeAreaView style={{flex:1}}>

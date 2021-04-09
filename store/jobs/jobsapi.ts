@@ -43,7 +43,7 @@ export const requestDeleteJob = (payload: DeleteJobRequestPayload) =>
 
 export const requestNewJob = (payload: NewJobRequestPayload) => {
   return request
-    .get(`/post/newones/${payload}`)
+    .get(`/job/newones/${payload}`)
     .then<NewJobSuccessPayload>(({ data }) => data);
 };
 

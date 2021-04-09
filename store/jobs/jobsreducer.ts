@@ -25,10 +25,9 @@ const job = createReducer<JobsState>(initialState, {
     };
   },
   [getType(jobActions.getNewJob.success)]: (state, { payload }) => {
-    const index = payload.filter((val: any) => !state.latest.includes(val));
     return {
       ...state,
-      latest: [...index, ...state["latest"]],
+      latest: [...payload, ...state["latest"]],
     };
   },
 

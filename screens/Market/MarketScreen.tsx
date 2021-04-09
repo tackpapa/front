@@ -74,13 +74,14 @@ export default function HomeScreen() {
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         if (post.length) {       
+            console.log("zz")
           dispatch(marketactions.getNewMarket.request(post[0].createdAt));
       }     
       dispatch(banneractions.getBanner.request());     
         wait(2000).then(() => {          
               setRefreshing(false)
         });
-      }, []);
+      }, [post, dispatch]);
 
     return (
 <SafeAreaView style={{flex:1}}>

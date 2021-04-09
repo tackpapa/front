@@ -4,6 +4,7 @@ import {
   requestCreateMarket,
   requestUpdateMarket,
   requestGetMarket,
+  requestNewMarket,
   requestSearchMarket,
   requestGetCategoryMarket,
   requestGetLatestMarket,
@@ -12,6 +13,7 @@ import {
 import { createAsyncEpic } from "../utils";
 
 const getMarketEpic = createAsyncEpic(actions.getMarket, requestGetMarket);
+const newMarketEpic = createAsyncEpic(actions.getNewMarket, requestNewMarket);
 
 const getCategoryMarketEpic = createAsyncEpic(
   actions.getCategoryMarket,
@@ -42,6 +44,7 @@ export default combineEpics(
   getMarketEpic,
   getCategoryMarketEpic,
   searchMarketEpic,
+  newMarketEpic,
   createMarketEpic,
   updateMarketEpic,
   getLatestMarketEpic,

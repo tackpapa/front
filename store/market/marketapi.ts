@@ -49,7 +49,7 @@ export const requestGetLatestMarket = (
 
 export const requestNewMarket = (payload: NewMarketRequestPayload) => {
   return request
-    .get(`/post/newones/${payload}`)
+    .get(`/market/newones/${payload}`)
     .then<NewMarketSuccessPayload>(({ data }) => data);
 };
 

@@ -61,7 +61,7 @@ export default function WriteProfileScreen() {
   }
   const logout = ()=>{
     dispatch(useractions.logout());
-    navigation.navigate("HomeScreen")
+    navigation.goBack();
   }
 
   const payload = {
