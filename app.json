@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "front",
-    "slug": "front",
+    "name": "바이커스 - 라이더 커뮤니티",
+    "slug": "bykers",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,21 +15,22 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "userInterfaceStyle": "light",
       "infoPlist": {
         "UIUserInterfaceStyle": "Light"
-      }
+      },
+      "bundleIdentifier": "com.byker.io"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "userInterfaceStyle": "light"
+      "userInterfaceStyle": "light",
+      "package": "com.byker.io"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

@@ -7,7 +7,7 @@ import { isActionOf } from "typesafe-actions";
 
 import { Epic } from "./types";
 
-axios.defaults.baseURL = "http://192.168.0.21:3000";
+axios.defaults.baseURL = "http://localhost:3000";
 
 export const request = axios;
 
