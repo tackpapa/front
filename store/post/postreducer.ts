@@ -110,11 +110,13 @@ const post = createReducer<PostState>(initialState, {
     };
   },
   [getType(postActions.getLatestPost.success)]: (state, { payload }) => {
+    console.log("zzzz");
     return {
       ...state,
       latest: state.latest.concat(payload),
     };
   },
+
   [getType(postActions.getNewPost.success)]: (state, { payload }) => {
     // const index = payload.filter((val: any) => !state.latest.includes(val));
     return {

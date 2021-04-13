@@ -230,7 +230,9 @@ export default function HomeScreen() {
     )
 }
 const Container = styled.ScrollView `
-flex:1
+flex:1;
+padding-bottom:500px;
+background-color:white;
 `
 const Card = styled.View `
 padding-top:5px;

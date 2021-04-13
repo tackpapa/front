@@ -91,7 +91,7 @@ export default function JobsScreen() {
       }, [post, dispatch]);
 
     return (
-<SafeAreaView style={{flex:1}}>
+<SafeAreaView style={{flex:1, backgroundColor:'white'}}>
 <View>
 <ScrollView onScroll={refresh} 
     refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
@@ -238,7 +238,9 @@ export default function JobsScreen() {
     )
 }
 const Container = styled.ScrollView `
-flex:1
+flex:1;
+padding-bottom:500px;
+background-color:white;
 `
 const Card = styled.View `
 padding-top:5px;

@@ -12,6 +12,11 @@ const socket = socketio.connect("http://192.168.0.15:3000", {
   autoConnect: true,
 });
 
+// const socket = socketio.connect("http://localhost:3000", {
+//   transports: ["websocket"],
+//   autoConnect: true,
+// });
+
 socket.on("message", (action: any) => {
   if (store) {
     store.dispatch(action);

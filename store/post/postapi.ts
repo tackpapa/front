@@ -48,10 +48,12 @@ export const requestSearchPost = (payload: SearchPostRequestPayload) =>
     .get(`/post/search/${payload}`)
     .then<SearchPostSuccessPayload>(({ data }) => data);
 
-export const requestGetLatestPost = (payload: GetLatestPostRequestPayload) =>
-  request
+export const requestGetLatestPost = (payload: GetLatestPostRequestPayload) => {
+  console.log("ss");
+  return request
     .get(`/post/latest/${payload}`)
     .then<GetLatestPostSuccessPayload>(({ data }) => data);
+};
 
 export const requestNewPost = (payload: NewPostRequestPayload) => {
   return request

@@ -90,6 +90,7 @@ const job = createReducer<JobsState>(initialState, {
       ...state,
       [payload.category]: [payload, ...state[payload.category]],
       latest: [payload, ...state["latest"]],
+      usercall: [payload, ...state["usercall"]],
     };
   },
   [getType(commentActions.createComment.success)]: (state, { payload }) => {
