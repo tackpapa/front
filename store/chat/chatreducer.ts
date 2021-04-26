@@ -83,7 +83,7 @@ const chat = createReducer<ChatState>(initialState, {
         ...state.users,
         [payload.to._id]: {
           ...obj,
-          data: obj.data.concat([payload]),
+          data: (obj.data || []).concat([payload]),
         },
       },
 

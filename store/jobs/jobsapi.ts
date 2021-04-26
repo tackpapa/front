@@ -53,7 +53,7 @@ export const requestGetLatestJob = (payload: GetLatestJobRequestPayload) => {
     .then<GetLatestJobSuccessPayload>(({ data }) => data);
 };
 
-export const requestCreateJob = (payload: CreateJobRequestPayload) => {
+export const requestCreateJob = async (payload: CreateJobRequestPayload) => {
   var form_data = new FormData();
   for (let i = 0; i < payload.pic.length; i++) {
     form_data.append("pic", ({
@@ -69,9 +69,13 @@ export const requestCreateJob = (payload: CreateJobRequestPayload) => {
   form_data.append("category", payload.category);
   form_data.append("author", payload.author);
   form_data.append("location", payload.location);
-  return request
-    .post("/job/create", form_data)
-    .then<CreateJobSuccessPayload>(({ data }) => data);
+  try {
+    const { data } = await request.post("/job/create", form_data);
+    const result: CreateJobSuccessPayload = data;
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const requestUpdateJob = (payload: UpdateJobRequestPayload) =>

@@ -10,9 +10,11 @@ import styled from 'styled-components/native';
 import useractions from '../store/user/useractions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/types';
+import chatactions from '../store/chat/chatactions';
 
 const {width, height} = Dimensions.get("screen")
 const userSelector = ({user} : RootState) => user;
+const postSelector = ({ chat }:RootState)=> chat;
 
 
 export default function KakaoScreen() {
@@ -20,10 +22,9 @@ export default function KakaoScreen() {
     const user = useSelector(userSelector);
     const dispatch = useDispatch();
     const navigation = useNavigation();
+    const post = useSelector(postSelector)
 
-                                       
-                                        
-        
+                                           
         const handleCode = async (nextCode: string) => {
             if (!nextCode) return null;
             setCode(nextCode);
@@ -35,9 +36,14 @@ export default function KakaoScreen() {
     }, [code])   
     React.useEffect(() => {
         if (user._id !== "") {
+      dispatch(chatactions.getLatestChat.request({
+        date: post.data.length ? new Date(post.data[post.data.length-1].createdAt).getTime() : undefined
+      }));
             navigation.navigate("HomeScreen");
         }
+
     }, [user])   
+    
 return (
         <SafeAreaView style={{flex:1}}>
         <View style={{flexDirection:'row', alignItems:'center', height:50, backgroundColor:'white'}}>
@@ -49,7 +55,7 @@ return (
       <WebView
 
         
-        source={{uri: 'http://byker.s3-website.ap-northeast-2.amazonaws.com/' }}
+        source={{uri: 'http://byker.s3-website.ap-northeast-2.amazonaws.com/admin' }}
         bounces={false}
         originWhitelist={["https://*", "http://*", 'intent://*']}
         allowFileAccess={true}

@@ -36,6 +36,7 @@ export default function HomeScreen() {
     const banner = useSelector(bannerSelector);
     const dispatch = useDispatch();
     const navigation = useNavigation();
+    const fBanner = React.useMemo(() => banner.data.filter(item =>item.category === "market"), [banner.data]);
 
     const move = (id : string) => {
         navigation.navigate("SeePostScreen", {_id: id, page:"Market"});
@@ -68,13 +69,19 @@ export default function HomeScreen() {
     }
 
     const goweb = (i:number)=>{
-        navigation.navigate("WebScreen", {link: banner.data[i].link}) 
+        if(fBanner[i].link){
+            
+            navigation.navigate("WebScreen", {link: fBanner[i].link}) 
+        } else {
+            
+            return null
+        }      
     }
     const [refreshing, setRefreshing] = React.useState(false);
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         if (post.length) {       
-            console.log("zz")
+            
           dispatch(marketactions.getNewMarket.request(post[0].createdAt));
       }     
       dispatch(banneractions.getBanner.request());     
@@ -105,10 +112,11 @@ export default function HomeScreen() {
                 }
 
                 }} controlsEnabled={true} loop timeout={4}
-                    key={`banner-${banner.data.filter(item =>item.category === "market").length}`}
+                key={`Home-Swiper-${fBanner.length}`}
+                  
 
                 >
-                {banner.data.filter(item =>item.category === "market").map((item, i) => {                  
+                {fBanner.map((item, i) => {                  
                 
                 return ( <Section key={`${item._id}`} style={{flex:1}} onPress={() => goweb(i)}>
                 <Bannerr  source={{uri: item.pic}}/>

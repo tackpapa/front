@@ -22,6 +22,29 @@ const job = createReducer<JobsState>(initialState, {
     return {
       ...state,
       onejob: payload,
+      isLoading: false,
+    };
+  },
+  [getType(jobActions.getJob.request)]: (state, { payload }) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  },
+  [getType(jobActions.getJob.failure)]: (state, { payload }) => {
+    const index = state.latest.filter((item) =>
+      item._id === payload.id ? false : true
+    );
+    const index2 = state.usercall.filter((item) =>
+      item._id === payload.id ? false : true
+    );
+
+    return {
+      ...state,
+      isLoading: false,
+      onepost: undefined,
+      latest: index,
+      usercall: index2,
     };
   },
   [getType(jobActions.getNewJob.success)]: (state, { payload }) => {
@@ -62,6 +85,7 @@ const job = createReducer<JobsState>(initialState, {
       [payload.category]: index3,
     };
   },
+
   [getType(userActions.fetchUserProfile.success)]: (state, { payload }) => {
     return {
       ...state,

@@ -21,10 +21,32 @@ const market = createReducer<MarketState>(initialState, {
     return {
       ...state,
       onemarket: payload,
+      isLoading: false,
+    };
+  },
+  [getType(marketActions.getMarket.request)]: (state, { payload }) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  },
+  [getType(marketActions.getMarket.failure)]: (state, { payload }) => {
+    const index = state.latest.filter((item) =>
+      item._id === payload.id ? false : true
+    );
+    const index2 = state.usercall.filter((item) =>
+      item._id === payload.id ? false : true
+    );
+
+    return {
+      ...state,
+      isLoading: false,
+      onepost: undefined,
+      latest: index,
+      usercall: index2,
     };
   },
   [getType(marketActions.getNewMarket.success)]: (state, { payload }) => {
-    // const index = payload.filter((val: any) => !state.latest.includes(val));
     return {
       ...state,
       latest: [...payload, ...state["latest"]],

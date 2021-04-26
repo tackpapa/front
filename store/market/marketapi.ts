@@ -18,10 +18,12 @@ import {
   GetLatestMarketSuccessPayload,
 } from "./markettypes";
 
-export const requestGetMarket = (payload: GetMarketRequestPayload) =>
-  request
+export const requestGetMarket = (payload: GetMarketRequestPayload) => {
+  console.log(payload);
+  return request
     .get(`/market/findone/${payload._id}`)
     .then<GetMarketSuccessPayload>(({ data }) => data);
+};
 
 export const requestGetCategoryMarket = (
   payload: GetCategoryMarketRequestPayload
@@ -53,9 +55,10 @@ export const requestNewMarket = (payload: NewMarketRequestPayload) => {
     .then<NewMarketSuccessPayload>(({ data }) => data);
 };
 
-export const requestCreateMarket = (payload: CreateMarketRequestPayload) => {
+export const requestCreateMarket = async (
+  payload: CreateMarketRequestPayload
+) => {
   var form_data = new FormData();
-
   for (let i = 0; i < payload.pic.length; i++) {
     form_data.append("pic", ({
       ...payload.pic[i],
@@ -73,9 +76,13 @@ export const requestCreateMarket = (payload: CreateMarketRequestPayload) => {
   form_data.append("price", `${payload.price}`);
   form_data.append("location", payload.location);
 
-  return request
-    .post("/market/create", form_data)
-    .then<CreateMarketSuccessPayload>(({ data }) => data);
+  try {
+    const { data } = await request.post("/market/create", form_data);
+    const result: CreateMarketSuccessPayload = data;
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const requestUpdateMarket = (payload: UpdateMarketRequestPayload) =>

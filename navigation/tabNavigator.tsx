@@ -24,11 +24,14 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 export default function BottomTabNavigator() {
   
 
-  const colorScheme = useColorScheme();
+  
   return (
    <BottomTab.Navigator
       initialRouteName="Home"     
-      tabBarOptions={{  inactiveTintColor: 'gray', adaptive:true,  labelStyle:{fontSize:13, padding:0}}}>
+      tabBarOptions={{ 
+        inactiveTintColor: 'gray', adaptive:true,  labelStyle:{fontSize:13, padding:0},
+      style: { display: 'flex', flexDirection:'column'}
+      }}>
    
       <BottomTab.Screen
         name="Home"

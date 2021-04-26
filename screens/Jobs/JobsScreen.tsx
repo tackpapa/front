@@ -42,11 +42,12 @@ export default function JobsScreen() {
     const navigation = useNavigation();
     const route = useRoute();
     const getTier =tier(user.exp)
-    
+    const fBanner = React.useMemo(() => banner.data.filter(item =>item.category === "job"), [banner.data]);
 
-    const move = (id : string) => {
+    const move = React.useCallback((id : string) => {
         navigation.navigate("SeePostScreen", {_id: id, page:"Job"});
-    }
+    }, [navigation]);
+    
     const gesi = (value : string) => {
         navigation.navigate("CommunityScreen", {value: value, page:"jobing"});
     }
@@ -76,7 +77,13 @@ export default function JobsScreen() {
     }
 
     const goweb = (i:number)=>{
-        navigation.navigate("WebScreen", {link: banner.data[i].link}) 
+        if(fBanner[i].link){
+            
+            navigation.navigate("WebScreen", {link: fBanner[i].link}) 
+        } else {
+            
+            return null
+        }      
     }
     const [refreshing, setRefreshing] = React.useState(false);
     const onRefresh = React.useCallback(() => {
@@ -112,18 +119,16 @@ export default function JobsScreen() {
                 }
 
                 }} controlsEnabled={true} loop timeout={4}
-                    key={`banner-${banner.data.filter(item =>item.category === "job").length}`}
-
-                >
-                {banner.data.filter(item =>item.category === "market").map((item, i) => {                  
-                
+                key={`Home-Swiper-${fBanner.length}`}
+    >
+                {fBanner.map((item, i) => {                                 
                 return ( <Section key={`${item._id}`} style={{flex:1}} onPress={() => goweb(i)}>
                 <Bannerr  source={{uri: item.pic}}/>
                 </Section>) }) }
                 </Swiper>
     </Header>
 
-     <Cut></Cut>
+     <Cut style={{marginTop:10}}></Cut>
 
      <View>
          <GesipanMenu> BYKERS<Gesipan> 구인공고 카테고리 </Gesipan> </GesipanMenu>    

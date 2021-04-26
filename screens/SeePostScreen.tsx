@@ -22,51 +22,57 @@ import { useState } from 'react';
 import { CreateCommentRequestPayload } from '../store/comment/commenttypes';
 
 
-
-
-
-const postSelector = ({ comment:{data}, post:{onepost}, market:{onemarket}, jobs:{onejob} }:RootState)=> ({ Post: onepost, Job: onejob, Market:onemarket, comment:data});
+const postSelector = ({ comment:{data}, post:{
+  onepost,
+  isLoading: isPostLoading,
+}, market:{onemarket, isLoading: isMarketLoading,}, jobs:{onejob,isLoading: isJobLoading, } }:RootState)=> ({
+  Post: onepost,
+  Job: onejob,
+  Market:onemarket,
+  comment:data,
+  isLoading: isPostLoading || isMarketLoading || isJobLoading,
+});
 const userSelector = ({user} : RootState) => user;
 
 const {width, height} = Dimensions.get("screen")
 
 const dropposting = {
-  'free':'자유게시판',
+  'free':'자유',
   'help':'도와주세요',
   'accident':'사건사고',
   'tour':'투어번개',
   'fraud':'사기꾼신고',
   'bedal':'배달대행',
   'domestic':'국산바이크',
-  'imported':'수입바이크'
-}
-const dropjobing = {
-  'free':'자유게시판',
+  'imported':'수입바이크',
   'ride':'배달대행',
   'fix':'수리',
   'etc':'기타',
-}
-const dropmarketing = {
-  'free':'아무거나',
   'part':'부품',
   'safety':'안전용품',
   'acc':'액세서리',
 }
 
+
 export default function SeePostScreen() {
   const user = useSelector(userSelector);
   const navigation = useNavigation();
   const route = useRoute<any>();
-  const { comment, Post, Job, Market } = useSelector(postSelector);
+  const { comment, isLoading, ...posts } = useSelector(postSelector);
+  const post = posts[route.params.page as keyof typeof posts];
   const [text, setText] = useState("");
   const [heart, setHeart] = useState(false);
-  const dispatch = useDispatch();
-
+  const dispatch = useDispatch(); 
+  const [init, setInit] = useState<boolean>(false); 
   useEffect(() => {
     if (route.params?._id) {
-      dispatch(postactions.getPost.request({_id:route.params._id}));
-      dispatch(jobsactions.getJob.request({_id:route.params._id}));
-      dispatch(marketactions.getMarket.request({_id:route.params._id}));
+      const apicall = {
+        "Post" : postactions.getPost.request,
+        "Job":   jobsactions.getJob.request,
+        "Market": marketactions.getMarket.request,
+      }
+
+      dispatch(apicall[route.params.page as keyof typeof apicall]({_id:route?.params._id}));
       dispatch(commentactions.getComment.request({post:route.params._id, postmodel:route.params.page}));
     }
     }
@@ -76,7 +82,21 @@ export default function SeePostScreen() {
     if(user.liked.includes(`${route.params._id}`)){
       setHeart(true)
     }
-  },[user])
+
+  },[user, post])
+  
+  useEffect(() => {
+    if (isLoading) {
+      setInit(true);
+    }
+  }, [isLoading]);
+  useEffect(() => {
+  if(post === undefined && init && !isLoading){
+    alert("삭제된 게시물 입니다.")
+    navigation.goBack()
+  }
+  },[navigation, post, init, isLoading]);
+
 
   const handlelike = (id:string)=>{
     if(user._id === ""){Alert.alert("로그인해주세요")}else{
@@ -89,11 +109,7 @@ export default function SeePostScreen() {
     }}
   }
 
-  const pagetype = {
-    "Post":Post,
-    "Job":Job,
-    "Market":Market,
-  }
+
 
   const newComment:CreateCommentRequestPayload = {
     text,
@@ -108,33 +124,34 @@ export default function SeePostScreen() {
     setText('');
     }else {null}   
   }
-  const delpost = (id:string)=>{
-    dispatch(postactions.deletePost.request({_id:id}))
-    navigation.goBack()
-  }
-  const deljob = (id:string)=>{
-    dispatch(jobsactions.deleteJob.request({_id:id}))
-    navigation.goBack()
-  }
-  const delmarket = (id:string)=>{
-    dispatch(marketactions.deleteMarket.request({_id:id}))
+  const del = (id:string)=>{
+    const apicall = {
+      "Post" : postactions.deletePost.request,
+      "Job":   jobsactions.deleteJob.request,
+      "Market": marketactions.deleteMarket.request,
+    }  
+    dispatch(apicall[route.params.page as keyof typeof apicall]({_id: id}));
     navigation.goBack()
   }
 
-  
   
   const gochat = ()=>{
     if(user._id===""){
       navigation.navigate("KakaoScreen");
     }else{     
-      const target = pagetype[route.params.page as keyof typeof pagetype];
+      const target = post;
       navigation.navigate('Chat', {
         screen: 'SeeChatScreen',
         params: { name: target?.author.name, msg:target?.title+"  글보고 연락드립니다.", id:target?.author._id},
       });
     }
   }
+
+  
   const KeyboardComponent = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
+  if (!post) {
+    return null;
+  }
   return (
   <SafeAreaView style={{flex:1}}>
   <Container>
@@ -142,196 +159,85 @@ export default function SeePostScreen() {
   <View style={{flexDirection:'row', alignItems:'center', height:50, justifyContent:'space-between'}}>
     <TouchableOpacity style={{flexDirection:'row', alignItems:'center'}} onPress={() =>{ navigation.goBack()}}>    
       <Ionicons size={18} name="chevron-back-outline"/>
-      <Text style={{fontSize:16}}>목록으로</Text>   
+      <Text style={{fontSize:18}}>목록으로</Text>   
     </TouchableOpacity>
 
-    {(Post && Post?.author?._id === user._id ?
-         <TouchableOpacity onPress={()=>{delpost(Post._id)}}> 
+    {(post.author?._id === user._id ?
+         <TouchableOpacity onPress={()=>{del(post._id)}}> 
          <Text style={{color:'red',fontSize:15, marginRight:20}}><Ionicons size={15} name="trash-outline"/>글 삭제</Text>
       </TouchableOpacity>
       : null)}
-      {(Job && Job?.author?._id === user._id ?
-         <TouchableOpacity onPress={()=>{deljob(Job._id)}}> 
-         <Text style={{color:'red',fontSize:15, marginRight:20}}><Ionicons size={15} name="trash-outline"/>글 삭제</Text>
-      </TouchableOpacity>
-      : null)}
-      {(Market && Market?.author?._id === user._id ?
-         <TouchableOpacity onPress={()=>{delmarket(Market._id)}}> 
-         <Text style={{color:'red',fontSize:15, marginRight:20}}><Ionicons size={15} name="trash-outline"/>글 삭제</Text>
-      </TouchableOpacity>
-      : null)}
- 
 
-   
   </View>
        
     <View style={{}}>
-
-      {    ( Post && Post !== undefined ? 
-              <View key={`${Post._id}`} style={{minHeight:400}}>       
+              <View key={`post-${post._id}`} style={{minHeight:400}}>       
                 <View style={{justifyContent:'space-between', flexDirection:'row'}}>
 
                           <View style={{flexWrap: 'wrap', flexDirection:'row', marginLeft:10 }}>
-                                            { Post.tags.map((tag, i) =>
-                                                  ( <Tag key={i}>{tag}</Tag> )                       
+                                            { post.tags.map((tag, i) =>
+                                                  ( <Tag key={`posttag-${i}`}>{tag}</Tag> )                       
                                                 )}
                       </View>
 
                       <View style={{flexDirection:'row'}}>
                         
-                        <Author style={{marginRight:25}}>조회수 {Post.views}</Author>
+                        <Author style={{marginRight:25}}>조회수 {post.views}</Author>
                       </View>
 
                 </View>    
 
     <View style={{flexDirection:'row',alignItems:'center', justifyContent:'space-between'}}>                                   
-       <Title >{Post.title} </Title>
-       <Author style={{marginRight:20, color:'#4e76e0'}}>{dropposting[Post.category as keyof typeof dropposting]}</Author>
+       <Title >{post.title} </Title>
+       <Author style={{marginRight:20, color:'#4e76e0'}}>{dropposting[post.category as keyof typeof dropposting]}</Author>
     </View>
 
   <View style={{flexDirection:'row', marginLeft:20, alignItems:'center', justifyContent:'space-between'}}>
     <View style={{flexDirection:'row', alignItems:'center'}}>
-    <AuthorPic style={{ width: 20,height: 20}} source={{uri: Post.author.profilepic }}/>
-    <Image style={{height:25, width:25}} source={tier(Post.author?.exp).img} />
-    <Author>{Post.author.name}  </Author>
+    <AuthorPic style={{ width: 20,height: 20}} source={{uri: post.author.profilepic }}/>
+    <Image style={{height:25, width:25}} source={tier(post.author?.exp).img} />
+    <Author>{post.author.name}  </Author>
    
     </View>
     <View>
-    <Author style={{marginRight:25}}>{formatDate(Post.createdAt as unknown as string)}</Author>
+    <Author style={{marginRight:25}}>{formatDate(post.createdAt as unknown as string)}</Author>
   </View>
   </View>
 
-                    {( Post.pics.length > 0 ? 
+                    {( post.pics.length > 0 ? 
                       <View style={{flexWrap: 'wrap', marginLeft:20, marginTop:20}}>
-                                            { Post.pics.map((item, i) => {return (
-                                                    (<AuthorPic key={i} style={{ width: width*0.9,height:width*0.9, marginBottom:20}}
+                                            { post.pics.map((item, i) => {return (
+                                                    (<AuthorPic key={`post-author-pic-${i}`} style={{ width: width*0.9,height:width*0.9, marginBottom:20}}
                                                     source={{
                                                     uri: item}}/> ))} )}    
                       </View>: null )}  
 
             <View style={{}}>
-               <Context style={{}}>{Post.context}</Context>
+               <Context style={{}}>{post.context}</Context>
             </View>   
                                             
               </View>     
-                      
-          :null        
-        )
-      }
-        {    ( Job && Job !== undefined? 
-             <View key={`${Job._id}`} style={{minHeight:400}}>               
-              <View style={{justifyContent:'space-between', flexDirection:'row'}}>
+ 
+                
 
-<View style={{flexWrap: 'wrap', flexDirection:'row', marginLeft:10 }}>
-                  { Job.tags.map((tag, i) =>
-                        ( <Tag key={i}>{tag}</Tag> )                       
-                      )}
-</View>
-
-<View style={{flexDirection:'row'}}>
-
-<Author style={{marginRight:25}}>조회수 {Job.views}</Author>
-</View>
-
-</View>   
-
-<View style={{flexDirection:'row',alignItems:'center', justifyContent:'space-between'}}>                                   
-       <Title >{Job.title} </Title>
-       <Author style={{marginRight:20, color:'#4e76e0'}}>{dropjobing[Job.category as keyof typeof dropjobing]}</Author>
-    </View>
-
-<View style={{flexDirection:'row', marginLeft:20, alignItems:'center', justifyContent:'space-between'}}>
-    <View style={{flexDirection:'row'}}>
-    <AuthorPic style={{ width: 20,height: 20}} source={{uri: Job.author.profilepic }}/>
-    <Author>{Job.author.name}  </Author>
-    </View>
-    <View>
-    <Author style={{marginRight:25}}>{formatDate(Job.createdAt as unknown as string)}</Author>
-  </View>
-  </View>
-
-             {( Job.pics.length > 0 ? 
-               <View style={{flexWrap: 'wrap', marginLeft:20, marginTop:20}}>
-                                     { Job.pics.map((item, i) => {return (
-                                             (<AuthorPic key={i} style={{ width: width*0.9,height:width*0.9, marginBottom:20}}
-                                             source={{
-                                             uri: item}}/> ))} )}    
-               </View>: null )}  
-
-     <View style={{}}>
-        <Context style={{}}>{Job.context}</Context>
-     </View>   
-{ Job.author._id !== user._id     ?
+{ post.author._id !== user._id && (route.params.page === 'Market' || route.params.page === 'Job') ?(
   <Update onPress={()=>gochat()} style={{backgroundColor:'#4e76e0'}}>
-   <Btntext>지원하기</Btntext>
+   <Btntext>{route.params.page === 'Market' ? '문의하기' : '지원하기'}</Btntext>
   </Update>     
-: null}
-       </View>               
-   :null         
-          )
-        }
-        {    ( Market && Market !== undefined? 
-               <View key={`${Market._id}`}  style={{minHeight:400}}>               
-               <View style={{justifyContent:'space-between', flexDirection:'row'}}>
+): null}
+               
+    
 
-<View style={{flexWrap: 'wrap', flexDirection:'row', marginLeft:10 }}>
-                  { Market.tags.map((item, i) =>
-                        ( <Tag key={i}>{item}</Tag> )                       
-                      )}
-</View>
-
-<View style={{flexDirection:'row'}}>
-
-<Author style={{marginRight:25}}>조회수 {Market.views}</Author>
-</View>
-
-</View>   
-
-<View style={{flexDirection:'row',alignItems:'center', justifyContent:'space-between'}}>                                   
-       <Title >{Market.title} </Title>
-       <Author style={{marginRight:20, color:'#4e76e0'}}>{dropmarketing[Market.category as keyof typeof dropmarketing]}</Author>
-    </View>
-
-<View style={{flexDirection:'row', marginLeft:20, alignItems:'center', justifyContent:'space-between'}}>
-    <View style={{flexDirection:'row'}}>
-    <AuthorPic style={{ width: 20,height: 20}} source={{uri: Market.author.profilepic }}/>
-    <Author>{Market.author.name}  </Author>
-    </View>
-    <View>
-    <Author style={{marginRight:25}}>{formatDate(Market.createdAt as unknown as string)}</Author>
-  </View>
-  </View>
-
-               {( Market.pics.length > 0 ? 
-                 <View style={{flexWrap: 'wrap', marginLeft:20, marginTop:20}}>
-                                       { Market.pics.map((item, i) => {return (
-                                               (<AuthorPic key={i} style={{ width: width*0.9,height:width*0.9, marginBottom:20}}
-                                               source={{
-                                               uri: item}}/> ))} )}    
-                 </View>: null )}  
-
-       <View style={{height:'auto'}}>
-          <Context style={{}}>{Market.context}</Context>
-       </View>   
-       { Market.author._id !== user._id     ?
-  <Update onPress={()=>gochat()} style={{backgroundColor:'#4e76e0'}}>
-   <Btntext>지원하기</Btntext>
-  </Update>     
-: null} 
-         </View>               
-     :null        
-          )
-        }
         
       <View style={{flex:1}}>
 
 
-        {Post && Post !== undefined ?
+        {post && post !== undefined && route.params.page === 'Post' ?
 
         <View style={{height:30, backgroundColor:'white', justifyContent:'center', alignItems:'center'}}>
-          <TouchableOpacity onPress={()=>handlelike(Post._id)}>
+          <TouchableOpacity onPress={()=>handlelike(post._id)}>
           <Text style={{fontSize:18,  justifyContent:'center', alignItems:'center'}}> 
-          {(heart === true ? <Ionicons size={20} name="heart"/>  : <Ionicons size={20} name="heart-outline"/>)} 추천 {Post.likes} 개                  
+          {(heart === true ? <Ionicons size={20} name="heart"/>  : <Ionicons size={20} name="heart-outline"/>)} 추천 {(post as any).likes} 개                  
           </Text>
           </TouchableOpacity>
         </View> 

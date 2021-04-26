@@ -20,7 +20,30 @@ const post = createReducer<PostState>(initialState, {
   [getType(postActions.getPost.success)]: (state, { payload }) => {
     return {
       ...state,
+      isLoading: false,
       onepost: payload,
+    };
+  },
+  [getType(postActions.getPost.failure)]: (state, { payload }) => {
+    const index = state.latest.filter((item) =>
+      item._id === payload.id ? false : true
+    );
+    const index2 = state.usercall.filter((item) =>
+      item._id === payload.id ? false : true
+    );
+
+    return {
+      ...state,
+      isLoading: false,
+      onepost: undefined,
+      latest: index,
+      usercall: index2,
+    };
+  },
+  [getType(postActions.getPost.request)]: (state, { payload }) => {
+    return {
+      ...state,
+      isLoading: true,
     };
   },
   [getType(postActions.likePost.success)]: (state, { payload }) => {
@@ -110,7 +133,6 @@ const post = createReducer<PostState>(initialState, {
     };
   },
   [getType(postActions.getLatestPost.success)]: (state, { payload }) => {
-    console.log("zzzz");
     return {
       ...state,
       latest: state.latest.concat(payload),
@@ -118,7 +140,6 @@ const post = createReducer<PostState>(initialState, {
   },
 
   [getType(postActions.getNewPost.success)]: (state, { payload }) => {
-    // const index = payload.filter((val: any) => !state.latest.includes(val));
     return {
       ...state,
       latest: [...payload, ...state["latest"]],
@@ -207,6 +228,26 @@ const post = createReducer<PostState>(initialState, {
       [payload.category]: index3,
     };
   },
+  [getType(postActions.deletePost.success)]: (state, { payload }) => {
+    const index = state.latest.filter((item) =>
+      item._id === payload.id ? false : true
+    );
+    const index2 = state.usercall.filter((item) =>
+      item._id === payload.id ? false : true
+    );
+    const index3 = (state as any)[payload.category].filter((item: any) =>
+      item._id === payload.id ? false : true
+    );
+
+    return {
+      ...state,
+      onepost: undefined,
+      latest: index,
+      usercall: index2,
+      [payload.category]: index3,
+    };
+  },
+
   [getType(userActions.fetchUserProfile.success)]: (state, { payload }) => {
     return {
       ...state,

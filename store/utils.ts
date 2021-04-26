@@ -7,8 +7,11 @@ import { isActionOf } from "typesafe-actions";
 
 import { Epic } from "./types";
 
-axios.defaults.baseURL = "http://192.168.0.15:3000";
-// axios.defaults.baseURL = "http://54.180.86.64:3000"
+if (process.env.NODE_ENV === "development") {
+  axios.defaults.baseURL = "http://192.168.0.15:3000";
+} else {
+  axios.defaults.baseURL = "http://54.180.86.64:3000";
+}
 
 export const request = axios;
 
@@ -43,7 +46,7 @@ export const createAsyncEpic = (
               )
             )
           ),
-          catchError((e) => [asyncActionCreator.failure(e)])
+          catchError((e) => [asyncActionCreator.failure(e.response.data)])
         )
       )
     );

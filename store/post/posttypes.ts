@@ -4,6 +4,7 @@ export type CategoryPostState = {
 
 export interface PostState extends CategoryPostState {
   onepost?: Post;
+  isLoading: Boolean;
   result?: Post[];
   usercall: Post[];
 }
@@ -99,6 +100,7 @@ export const initialState: PostState = {
   hot1: [],
   hot7: [],
   hot30: [],
+  isLoading: false,
 };
 
 export interface Post {

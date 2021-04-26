@@ -35,22 +35,11 @@ const back = useSelector(backSelector)
   useEffect(() => {
     if(user._id ===""){
       navigation.navigate('KakaoScreen')
-    }else{
-      
-      dispatch(chatactions.getLatestChat.request({
-        date: post.data.length ? new Date(post.data[post.data.length-1].createdAt).getTime() : undefined
-      }));
+
     }
   },[user])
 
-  useEffect(() => {
-    
-    if(back === false)
-     {        
-       dispatch(chatactions.getLatestChat.request({
-        date: post.data.length ? new Date(post.data[post.data.length-1].createdAt).getTime() : undefined
-      })); }
-  },[back])
+
 
   return (
   
@@ -64,6 +53,9 @@ const back = useSelector(backSelector)
       </TouchableOpacity>   
      :
      aaaa.map(([id, items])=>{   
+       if (!items.data) {
+          return null;
+       }
        const item = items.data[items.data.length-1];     
       const user2 = item.from._id === user._id ? item.to : item.from;
     

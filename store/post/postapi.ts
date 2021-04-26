@@ -49,7 +49,6 @@ export const requestSearchPost = (payload: SearchPostRequestPayload) =>
     .then<SearchPostSuccessPayload>(({ data }) => data);
 
 export const requestGetLatestPost = (payload: GetLatestPostRequestPayload) => {
-  console.log("ss");
   return request
     .get(`/post/latest/${payload}`)
     .then<GetLatestPostSuccessPayload>(({ data }) => data);

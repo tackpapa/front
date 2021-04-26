@@ -15,14 +15,19 @@ import RegisterScreen from '../screens/Onboarding/RegisterScreen';
 import KakaoScreen from '../screens/KakaoScreen';
 import BestScreen from '../screens/BestScreen';
 import configactions from '../store/config/configactions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import chatactions from '../store/chat/chatactions';
+import { RootState } from '../store/types';
 
 
-
+const backSelector = ({ config }:RootState)=> config.isBackground;
+const postSelector = ({ chat }:RootState)=> chat;
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   const dispatch = useDispatch();
   const appState = React.useRef<string>(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = React.useState(appState.current);
+  const post = useSelector(postSelector)
+  const back = useSelector(backSelector)
 
   React.useEffect(() => {
     AppState.addEventListener("change", _handleAppStateChange);
@@ -46,6 +51,14 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
     setAppStateVisible(appState.current);
     
   };
+  React.useEffect(() => {
+    if(back === false)
+     {        
+       dispatch(chatactions.getLatestChat.request({
+        date: post.data.length ? new Date(post.data[post.data.length-1].createdAt).getTime() : undefined
+      })); }
+  },[back])
+  
   return (
     <NavigationContainer
       linking={LinkingConfiguration}

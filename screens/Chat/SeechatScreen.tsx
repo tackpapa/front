@@ -24,7 +24,8 @@ export default function SeeChatScreen() {
   const user = useSelector(userSelector);
   const navigation = useNavigation();
   const [text, setText] = useState("");
-  const post = useSelector(postSelector).users[route.params?.id].data;
+  const post = useSelector(postSelector).users[route.params?.id]?.data || [];
+  
 
   useEffect(() => {
     if(user._id ===""){
@@ -32,7 +33,11 @@ export default function SeeChatScreen() {
     }else{
       dispatch(chatactions.setLastred({_id: route.params?.id, lastred: post.length }))
     }
-  },[user, post])
+  },[user, post.length])
+
+  useEffect(() => {
+    setText(route.params.msg);
+  }, [route.params.msg])
 
   const submit = ()=>{
     if(text.length > 0 ){
@@ -98,7 +103,7 @@ export default function SeeChatScreen() {
         <Rec>          
             <><Com
               underlineColorAndroid="transparent"
-              placeholder="  댓글을 입력해주세요"
+              placeholder="  메세지를 입력해주세요"
               placeholderTextColor="black"
               selectionColor={'black'}
               value={text}            

@@ -48,6 +48,10 @@ export default function HomeScreen() {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const route = useRoute<any>();
+    const fBanner = React.useMemo(() => banner.data.filter(item =>item.category === "post"), [banner.data]);
+
+
+
 
     React.useEffect(() => {
         if(user._id !== ""){       
@@ -97,7 +101,13 @@ export default function HomeScreen() {
     }
 
     const goweb = (i:number)=>{
-        navigation.navigate("WebScreen", {link: banner.data[i].link}) 
+        if(fBanner[i].link){
+            
+            navigation.navigate("WebScreen", {link: fBanner[i].link}) 
+        } else {
+            
+            return null
+        }      
     }
     const [refreshing, setRefreshing] = React.useState(false);
 
@@ -139,10 +149,10 @@ export default function HomeScreen() {
                 }
 
                 }} controlsEnabled={true} loop timeout={4}
-                    key={`banner-${banner.data.filter(item =>item.category === "post").length}`}
+                key={`Home-Swiper-${fBanner.length}`}
 
                 >
-                {banner.data.filter(item =>item.category === "post").map((item, i) => {                  
+                {fBanner.map((item, i) => {                  
                 
                 return ( <Section key={`${item._id}`} style={{flex:1}} onPress={() => goweb(i)}>
                 <Bannerr  source={{uri: item.pic}}/>
@@ -343,7 +353,7 @@ elevation:30;
 `
 
 const Header = styled.View `
-height:${height*0.25}px;
+height:${height*0.27}px;
 background-color:white;
 `;
 
