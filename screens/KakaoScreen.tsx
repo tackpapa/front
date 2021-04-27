@@ -55,7 +55,7 @@ return (
       <WebView
 
         
-        source={{uri: 'http://byker.s3-website.ap-northeast-2.amazonaws.com/admin' }}
+        source={{uri: 'http://bykerlogin.s3-website.ap-northeast-2.amazonaws.com' }}
         bounces={false}
         originWhitelist={["https://*", "http://*", 'intent://*']}
         allowFileAccess={true}
