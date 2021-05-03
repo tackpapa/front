@@ -36,7 +36,7 @@ const user = createReducer<UserState>(initialState, {
   [getType(userActions.getOne.success)]: (state, { payload }) => {
     const Reversed = payload.Noti.reverse();
     return {
-      ...payload,
+      ...state,
       Noti: Reversed,
     };
   },
@@ -69,6 +69,12 @@ const user = createReducer<UserState>(initialState, {
   },
   [getType(userActions.fetchToken.success)]: (state, { payload }) => {
     return state;
+  },
+  [getType(userActions.fetchToken.failure)]: (state, { payload }) => {
+    handleSignIn(state.token, state._id);
+    return {
+      ...state,
+    };
   },
 
   [getType(userActions.fetchDelete.success)]: (_state, { payload }) => {

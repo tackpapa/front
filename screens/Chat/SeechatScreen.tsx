@@ -64,6 +64,7 @@ export default function SeeChatScreen() {
     <Ionicons size={25} name="chevron-back-outline"/>
     <Text style={{fontSize:20, marginBottom:3}}>{route.params?.name}</Text>
   </TouchableOpacity>   
+  {/* 채팅방 삭제 이후 뒤로 */}
   </View>
   <Container ref={scrollRef}
    onContentSizeChange={(contentHeight) =>{ 

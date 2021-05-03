@@ -77,6 +77,7 @@ export const requestCreateMarket = async (
   form_data.append("location", payload.location);
 
   try {
+    console.log("api 들어옴");
     const { data } = await request.post("/market/create", form_data);
     const result: CreateMarketSuccessPayload = data;
     return result;
