@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
-import { StyleSheet, Image, ScrollView } from 'react-native';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import React, {useEffect} from "react";
+import {Image, ScrollView } from 'react-native';
+import { useRoute} from '@react-navigation/native';
 import { Text, View } from '../components/Themed';
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
@@ -105,10 +105,10 @@ const refresh =(e: any)=>{
         dispatch(pageToAction[route.params.page as keyof typeof pageToAction].request(payload))   
     }
 }
-
+console.log(markets, posts, jobs)
  
   return (
-  <SafeAreaView style={{flex: 1}}>
+  <SafeAreaView style={{flex: 1, backgroundColor:'white'}}>
       <ScrollView onScroll={refresh} scrollEventThrottle={300}>
       <View style={{height:40}}>
     <TouchableOpacity style={{flexDirection:'row', alignItems:'center', margin:10}} onPress={() =>{ navigation.goBack();}}>        
@@ -126,10 +126,9 @@ const refresh =(e: any)=>{
       <Topdiv>
       <Head>{pagename}</Head>
       </Topdiv>
-  
-      {(posts && route.params.page ==="posting"?  
+      {(posts && route.params.page ==="posting" ?  
        <CardLine>
-       <GesipanMenu><Gesipan> </Gesipan>게시글 </GesipanMenu>    
+       <GesipanMenu><Gesipan>{pagename}</Gesipan> 게시글 </GesipanMenu>    
        <Cut style={{marginBottom:5}}></Cut>
                   {posts.map((item) => {
                           return (
@@ -194,16 +193,15 @@ const refresh =(e: any)=>{
                                </TouchableOpacity>
                                
                            </Card>
-                           <Cut style={{marginTop:5, marginBottom:5}}></Cut></Fragment>
-                              
+                           <Cut style={{marginTop:5, marginBottom:5}}></Cut></Fragment>                             
                           )
                       })}
-       </CardLine> 
 
-    :null)}
+       </CardLine> 
+    : null )}
     {(jobs && route.params.page ==="jobing"?  
         <CardLine>
-        <GesipanMenu><Gesipan> {}</Gesipan>게시글 </GesipanMenu>    
+        <GesipanMenu><Gesipan> {pagename}</Gesipan> 게시글 </GesipanMenu>    
         <Cut style={{marginBottom:5}}></Cut>
                    {jobs.map((item) => {
                            return (
@@ -259,10 +257,10 @@ const refresh =(e: any)=>{
                            )
                        })}
         </CardLine>  
-    :null)}
+    : null )}
     {(markets && route.params.page ==="marketing"?  
         <CardLine>
-        <GesipanMenu><Gesipan> </Gesipan>게시글 </GesipanMenu>    
+        <GesipanMenu><Gesipan> {pagename}</Gesipan> 게시글 </GesipanMenu>    
         <Cut style={{marginBottom:5}}></Cut>
                    {markets.map((item) => {
                            return (
@@ -318,7 +316,11 @@ const refresh =(e: any)=>{
                            )
                        })}
         </CardLine>  
-    :null)}
+    : null)}
+
+      {(
+      posts === undefined||posts.length === 0  && jobs === undefined||jobs.length === 0  && markets === undefined||markets.length === 0 ? <Text style={{fontSize:15, textAlign:'center', padding:30, opacity:0.5}}> 게시물이 없습니다. </Text> : null
+        )}
 
     </ScrollView>
     </Container>

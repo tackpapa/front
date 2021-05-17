@@ -35,7 +35,6 @@ const back = useSelector(backSelector)
   useEffect(() => {
     if(user._id ===""){
       navigation.navigate('KakaoScreen')
-
     }
   },[user])
 

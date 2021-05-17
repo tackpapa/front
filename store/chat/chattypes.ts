@@ -14,6 +14,11 @@ export enum Actions {
   CREATE_CHAT_FAILURE = "CREATE_CHAT#FAILURE",
   CREATE_CHAT_CANCEL = "CREATE_CHAT#CANCEL",
 
+  DELETE_CHAT_REQUEST = "DELETE_CHAT#REQUEST",
+  DELETE_CHAT_SUCCESS = "DELETE_CHAT#SUCCESS",
+  DELETE_CHAT_FAILURE = "DELETE_CHAT#FAILURE",
+  DELETE_CHAT_CANCEL = "DELETE_CHAT#CANCEL",
+
   GET_LATEST_CHAT_REQUEST = "GET_LATEST_CHAT#REQUEST",
   GET_LATEST_CHAT_SUCCESS = "GET_LATEST_CHAT#SUCCESS",
   GET_LATEST_CHAT_FAILURE = "GET_LATEST_CHAT#FAILURE",
@@ -45,9 +50,12 @@ export interface CreateChatRequestPayload {
   to: any;
   msg: string;
 }
-
+export interface DeleteChatRequestPayload {
+  _id: string;
+}
 export type GetLatestChatSuccessPayload = Chat[];
 export type CreateChatSuccessPayload = Chat;
+export type DeleteChatSuccessPayload = string;
 export type GetChatPayload = Chat;
 export interface SetLastRedPayload {
   _id: string;

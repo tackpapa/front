@@ -4,6 +4,8 @@ import {
   Actions,
   CreateChatSuccessPayload,
   CreateChatRequestPayload,
+  DeleteChatSuccessPayload,
+  DeleteChatRequestPayload,
   GetChatPayload,
   SetLastRedPayload,
   GetLatestChatRequestPayload,
@@ -33,9 +35,17 @@ const createChat = createAsyncAction(
   Actions.CREATE_CHAT_CANCEL
 )<CreateChatRequestPayload, CreateChatSuccessPayload, undefined, undefined>();
 
+const deleteChat = createAsyncAction(
+  Actions.DELETE_CHAT_REQUEST,
+  Actions.DELETE_CHAT_SUCCESS,
+  Actions.DELETE_CHAT_FAILURE,
+  Actions.DELETE_CHAT_CANCEL
+)<DeleteChatRequestPayload, DeleteChatSuccessPayload, undefined, undefined>();
+
 export default {
   createChat,
   setLastred,
+  deleteChat,
   getChat,
   getLatestChat,
 };

@@ -2,6 +2,8 @@ import { request } from "../utils";
 import {
   CreateChatRequestPayload,
   CreateChatSuccessPayload,
+  DeleteChatRequestPayload,
+  DeleteChatSuccessPayload,
   GetLatestChatRequestPayload,
   GetLatestChatSuccessPayload,
 } from "./chattypes";
@@ -20,4 +22,9 @@ export const requestCreateChat = (payload: CreateChatRequestPayload) => {
   return request
     .post("/chat/send", payload)
     .then<CreateChatSuccessPayload>(({ data }) => data);
+};
+export const requestDeleteChat = (payload: DeleteChatRequestPayload) => {
+  return request
+    .post("/chat/delete", payload)
+    .then<DeleteChatSuccessPayload>(({ data }) => data);
 };

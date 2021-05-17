@@ -31,6 +31,6 @@ const store = createStore(
 epicMiddleware.run(rootEpic);
 
 const persistor = persistStore(store, undefined, persistHandler(store));
-// persistor.purge();
+persistor.purge();
 
 export { store, persistor };

@@ -53,6 +53,17 @@ const chat = createReducer<ChatState>(initialState, {
     };
   },
 
+  [getType(chatActions.deleteChat.success)]: (state, { payload }) => {
+    delete state.users[payload];
+    const data = state.data.filter(
+      (item) => item.from._id === payload || item.to._id === payload
+    );
+    return {
+      ...state,
+      data,
+    };
+  },
+
   [getType(userActions.logout)]: () => initialState,
 
   //seechatscreen 에 갔을때 lastred 를 넣는다.

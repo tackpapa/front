@@ -19,7 +19,6 @@ import {
 } from "./markettypes";
 
 export const requestGetMarket = (payload: GetMarketRequestPayload) => {
-  console.log(payload);
   return request
     .get(`/market/findone/${payload._id}`)
     .then<GetMarketSuccessPayload>(({ data }) => data);
@@ -77,7 +76,6 @@ export const requestCreateMarket = async (
   form_data.append("location", payload.location);
 
   try {
-    console.log("api 들어옴");
     const { data } = await request.post("/market/create", form_data);
     const result: CreateMarketSuccessPayload = data;
     return result;

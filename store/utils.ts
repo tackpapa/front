@@ -8,7 +8,8 @@ import { isActionOf } from "typesafe-actions";
 import { Epic } from "./types";
 
 if (process.env.NODE_ENV === "development") {
-  axios.defaults.baseURL = "http://192.168.0.15:3000";
+  console.log("dev mode");
+  axios.defaults.baseURL = "http://192.168.0.21:3000";
 } else {
   axios.defaults.baseURL = "http://54.180.86.64:3000";
 }

@@ -27,7 +27,6 @@ import { getPushToken } from "../../utils/push";
 import useractions from "../../store/user/useractions";
 
 
-
 const {width, height} = Dimensions.get("screen")
 
 
@@ -58,6 +57,7 @@ export default function HomeScreen() {
         (async () => {
             dispatch(useractions.getOne.request(user._id));
           const token = await getPushToken();
+
           if (token){
               dispatch(useractions.fetchToken.request(token));       
           }

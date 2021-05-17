@@ -56,15 +56,22 @@ export default function SeeChatScreen() {
 
   const scrollRef = React.useRef<any>();
 
+  const del = (id:string)=>{
+    dispatch(chatactions.deleteChat.request({_id:id}));
+    navigation.goBack()
+  }
+
 
   return (
   <SafeAreaView style={{flex:1, backgroundColor:'white'}}>
-    <View style={{flexDirection:'row', alignItems:'center', height:60}}>
+    <View style={{flexDirection:'row', alignItems:'center', height:50, justifyContent:'space-between'}}>
     <TouchableOpacity style={{flexDirection:'row', alignItems:'center'}} onPress={() =>{ navigation.navigate("ChatScreen")}}>        
     <Ionicons size={25} name="chevron-back-outline"/>
     <Text style={{fontSize:20, marginBottom:3}}>{route.params?.name}</Text>
   </TouchableOpacity>   
-  {/* 채팅방 삭제 이후 뒤로 */}
+  <TouchableOpacity onPress={()=>{del(post[0].from._id)}}> 
+         <Text style={{color:'red',fontSize:15, marginRight:20}}><Ionicons size={15} name="trash-outline"/>채팅 삭제</Text>
+      </TouchableOpacity>
   </View>
   <Container ref={scrollRef}
    onContentSizeChange={(contentHeight) =>{ 
