@@ -69,7 +69,7 @@ export default function SeeChatScreen() {
     <Ionicons size={25} name="chevron-back-outline"/>
     <Text style={{fontSize:20, marginBottom:3}}>{route.params?.name}</Text>
   </TouchableOpacity>   
-  <TouchableOpacity onPress={()=>{del(post[0].from._id)}}> 
+  <TouchableOpacity onPress={()=>{del(user._id === post[0].from._id ? post[0].to._id : post[0].from._id)}}> 
          <Text style={{color:'red',fontSize:15, marginRight:20}}><Ionicons size={15} name="trash-outline"/>채팅 삭제</Text>
       </TouchableOpacity>
   </View>
