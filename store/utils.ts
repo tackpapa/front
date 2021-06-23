@@ -9,9 +9,9 @@ import { Epic } from "./types";
 
 if (process.env.NODE_ENV === "development") {
   console.log("dev mode");
-  axios.defaults.baseURL = "http://192.168.0.28:3000";
+  axios.defaults.baseURL = "http://192.168.0.28/";
 } else {
-  axios.defaults.baseURL = "http://54.180.86.64:3000";
+  axios.defaults.baseURL = "https://back.byker.io";
 }
 
 export const request = axios;

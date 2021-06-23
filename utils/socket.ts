@@ -7,10 +7,15 @@ const connectStore = (initedStore: Store) => {
   store = initedStore;
 };
 
-const socket = socketio.connect("http://192.168.0.28:3000", {
-  transports: ["websocket"],
-  autoConnect: true,
-});
+const socket = socketio.connect(
+  process.env.NODE_ENV === "development"
+    ? "http://192.168.0.28/"
+    : "https://back.byker.io",
+  {
+    transports: ["websocket"],
+    autoConnect: true,
+  }
+);
 
 socket.on("message", (action: any) => {
   if (store) {
