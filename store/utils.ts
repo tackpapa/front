@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === "development") {
   console.log("dev mode");
   axios.defaults.baseURL = "http://192.168.0.28/";
 } else {
-  axios.defaults.baseURL = "https://back.byker.io";
+  axios.defaults.baseURL = "https://back.byker.io/";
 }
 
 export const request = axios;
@@ -25,7 +25,7 @@ export const setHeader = (name: string, value: string) => {
 
 export const handleSignIn = (token: string, userId: string) => {
   setHeader("authorization", `Bearer ${token}`);
-  console.log("handlesignin");
+
   socket.init(userId);
 };
 

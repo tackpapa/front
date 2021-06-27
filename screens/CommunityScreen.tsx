@@ -105,7 +105,7 @@ const refresh =(e: any)=>{
         dispatch(pageToAction[route.params.page as keyof typeof pageToAction].request(payload))   
     }
 }
-console.log(markets, posts, jobs)
+
  
   return (
   <SafeAreaView style={{flex: 1, backgroundColor:'white'}}>

@@ -36,7 +36,6 @@ const chat = createReducer<ChatState>(initialState, {
     };
   },
   [getType(chatActions.getChat)]: (state, { payload }) => {
-    console.log("coming");
     let obj = state.users[payload.from._id] || {
       data: [],
       lastred: 0,
