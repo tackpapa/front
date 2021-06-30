@@ -319,7 +319,10 @@ const refresh =(e: any)=>{
     : null)}
 
       {(
-      posts === undefined||posts.length === 0  && jobs === undefined||jobs.length === 0  && markets === undefined||markets.length === 0 ? <Text style={{fontSize:15, textAlign:'center', padding:30, opacity:0.5}}> 게시물이 없습니다. </Text> : null
+      (posts === undefined||posts.length === 0)  && 
+      (jobs === undefined||jobs.length === 0)  && 
+      (markets === undefined||markets.length === 0) ? 
+      <Text style={{fontSize:15, textAlign:'center', padding:30, opacity:0.5}}> 게시물이 없습니다. </Text> : null
         )}
 
     </ScrollView>

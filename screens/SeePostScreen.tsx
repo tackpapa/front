@@ -22,10 +22,21 @@ import { useState } from 'react';
 import { CreateCommentRequestPayload } from '../store/comment/commenttypes';
 
 
-const postSelector = ({ comment:{data}, post:{
-  onepost,
-  isLoading: isPostLoading,
-}, market:{onemarket, isLoading: isMarketLoading,}, jobs:{onejob,isLoading: isJobLoading, } }:RootState)=> ({
+const postSelector = ({
+  comment: { data }, 
+  post: {
+    onepost,
+    isLoading: isPostLoading,
+  },
+  market: {
+    onemarket,
+    isLoading: isMarketLoading
+  }, 
+  jobs: {
+    onejob,
+    isLoading: isJobLoading,
+  } 
+}: RootState)=> ({
   Post: onepost,
   Job: onejob,
   Market:onemarket,
@@ -34,7 +45,7 @@ const postSelector = ({ comment:{data}, post:{
 });
 const userSelector = ({user} : RootState) => user;
 
-const {width, height} = Dimensions.get("screen")
+const {width} = Dimensions.get("screen")
 
 const dropposting = {
   'free':'자유',
@@ -55,6 +66,7 @@ const dropposting = {
 
 
 export default function SeePostScreen() {
+  
   const user = useSelector(userSelector);
   const navigation = useNavigation();
   const route = useRoute<any>();
@@ -71,8 +83,10 @@ export default function SeePostScreen() {
         "Job":   jobsactions.getJob.request,
         "Market": marketactions.getMarket.request,
       }
-
-      dispatch(apicall[route.params.page as keyof typeof apicall]({_id:route?.params._id}));
+      
+      dispatch(apicall[route.params.page as keyof typeof apicall]({_id:route.params?._id}));
+      // dispatch(postactions.getPost.request({_id:route.params?._id}))
+      console.log("날라")
       dispatch(commentactions.getComment.request({post:route.params._id, postmodel:route.params.page}));
     }
     }
@@ -117,7 +131,7 @@ export default function SeePostScreen() {
     postmodel:route.params.page,
   };
 
-
+  
   const submit = ()=>{
     if(text.length > 0 ){
       dispatch(commentactions.createComment.request(newComment));
@@ -146,12 +160,14 @@ export default function SeePostScreen() {
       });
     }
   }
-
+  
+  console.log(posts)
   
   const KeyboardComponent = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
   if (!post) {
     return null;
   }
+  
   return (
   <SafeAreaView style={{flex:1}}>
   <Container>

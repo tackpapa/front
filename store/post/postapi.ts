@@ -25,7 +25,6 @@ export const requestGetPost = (payload: GetPostRequestPayload) =>
   request
     .get(`/post/findone/${payload._id}`)
     .then<GetPostSuccessPayload>(({ data }) => data);
-
 export const requestLikePost = (payload: LikePostRequestPayload) =>
   request
     .get(`/post/likeone/${payload._id}`)
