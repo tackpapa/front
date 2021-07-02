@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "바이커스 - 라이더 커뮤니티",
-    "slug": "bykers",
-    "version": "1.0.0",
+    "name": "바이커스",
+    "slug": "front",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -30,7 +30,8 @@
         "backgroundColor": "#FFFFFF"
       },
       "userInterfaceStyle": "light",
-      "package": "com.byker.io"
+      "package": "com.byker.io",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

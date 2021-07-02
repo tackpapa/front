@@ -85,8 +85,8 @@ export default function SeePostScreen() {
       }
       
       dispatch(apicall[route.params.page as keyof typeof apicall]({_id:route.params?._id}));
-      // dispatch(postactions.getPost.request({_id:route.params?._id}))
-      console.log("날라")
+      
+      
       dispatch(commentactions.getComment.request({post:route.params._id, postmodel:route.params.page}));
     }
     }
@@ -161,7 +161,7 @@ export default function SeePostScreen() {
     }
   }
   
-  console.log(posts)
+  
   
   const KeyboardComponent = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
   if (!post) {

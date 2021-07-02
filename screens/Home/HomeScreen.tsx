@@ -65,7 +65,7 @@ export default function HomeScreen() {
     }
       }, [user._id]);
 
-    
+    ''
     const move = (id : string) => {
         navigation.navigate("SeePostScreen", {_id: id, page:"Post"});
     }
